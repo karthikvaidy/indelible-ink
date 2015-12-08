@@ -1,12 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Routing;
+
 //using System.Speech.Synthesis;
 
 namespace MyRandomSamples
@@ -137,6 +140,20 @@ namespace MyRandomSamples
                 }
 
                 return s;
+            }
+        }
+
+        public class AStarUnit
+        {
+            public int row;
+            public int col;
+            public int cost;
+
+            public AStarUnit(int r, int c, int cs)
+            {
+                row = r;
+                col = c;
+                cost = cs;
             }
         }
 
@@ -299,13 +316,196 @@ namespace MyRandomSamples
                 Console.WriteLine(i);
             }
  
-             */
+            Node root = p.buildSampleTree();
+            int minVal = Int32.MinValue;
+            Console.WriteLine(p.isValidBST(root));
+            Console.WriteLine(p.isValidBSTRange(root, Int32.MinValue, Int32.MaxValue));
+            Console.WriteLine(p.isValidBSTVal(root, ref minVal));
+
+            root = p.buildValidBinaryTree();
+            minVal = Int32.MinValue;
+            Console.WriteLine(p.isValidBST(root));
+            Console.WriteLine(p.isValidBSTRange(root, Int32.MinValue, Int32.MaxValue));
+            Console.WriteLine(p.isValidBSTVal(root, ref minVal));
+            
+            */
             #endregion
 
-            Console.WriteLine(p.minCut("ab"));
-            Console.WriteLine(p.minCut("aab"));
-            Console.WriteLine(p.minCut("abc"));
-            Console.WriteLine(p.minCut("abbcbabc"));
+            //Console.WriteLine(p.minCut("ab"));
+            //Console.WriteLine(p.minCut("aab"));
+            //Console.WriteLine(p.minCut("abc"));
+            //Console.WriteLine(p.minCut("abbcbabc"));
+
+            int[,] map = new int[,]
+            {
+                {1, 2, 3},
+                {2, 3, 4},
+                {2, 9, 1}
+            };
+
+            List<int> costs = p.AStarSearch(map);
+
+            foreach (int i in costs)
+            {
+                Console.WriteLine(i);
+            }
+
+        }
+
+        public bool isValidBST(Node root)
+        {
+            if (root == null)
+                return true;
+
+            if (root.leftNode != null)
+            {
+                if (root.leftNode.rightNode != null)
+                {
+                    if (root.value > root.leftNode.rightNode.value &&
+                        root.leftNode.rightNode.value > root.leftNode.value)
+                    {
+                        return isValidBST(root.leftNode);
+                    }
+                    return false;
+                }
+                else
+                {
+                    if (root.value > root.leftNode.value)
+                    {
+                        return isValidBST(root.leftNode);
+                    }
+                    return false;
+                }
+            }
+
+            if (root.rightNode != null)
+            {
+                if (root.rightNode.leftNode != null)
+                {
+                    if (root.value < root.rightNode.leftNode.value &&
+                        root.rightNode.leftNode.value < root.rightNode.value)
+                    {
+                        return isValidBST(root.rightNode);
+                    }
+                    return false;
+                }
+                else
+                {
+                    if (root.value < root.rightNode.value)
+                    {
+                        return isValidBST(root.rightNode);
+                    }
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public bool isValidBSTRange(Node root, int min, int max)
+        {
+            if (root == null)
+                return true;
+
+            if (root.value > min && root.value < max)
+            {
+                return (isValidBSTRange(root.leftNode, min, root.value) &&
+                        isValidBSTRange(root.rightNode, root.value, max));
+            }
+            return false;
+        }
+
+        public bool isValidBSTVal(Node root, ref int minVal)
+        {
+            if (root == null)
+                return true;
+
+            if (isValidBSTVal(root.leftNode, ref minVal))
+            {
+                if (minVal > root.value)
+                    return false;
+                minVal = root.value;
+                if (isValidBSTVal(root.rightNode, ref minVal))
+                    return true;
+            }
+
+            return false;
+        }
+
+        // finds least cost search from 0,0 to row-1,col-1
+        // each cell has an int that represents the cost of that cell.
+        // objective is to keep total cost to a minimum.
+        // cells with value of 9 are walls and should not part of the final route
+        // uses 4 point connectivity - no diagonal movement
+        public List<int> AStarSearch(int[,] map)
+        {
+            int startX = 0, startY = 0, endX = map.GetLength(0) - 1, endY = map.GetLength(1) - 1;
+            bool[,] visited = new bool[map.GetLength(0), map.GetLength(1)];
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    visited[i, j] = false;
+                }
+            }
+            List<AStarUnit> priorityList = new List<AStarUnit>();
+            priorityList.Add(new AStarUnit(startX, startY, map[startX, startY]));
+
+            return aStarSearchInner(map, map.GetLength(0), map.GetLength(1), priorityList, endX, endY, visited);
+        }
+
+        private List<int> aStarSearchInner(int[,] map, int mapRows, int mapCols, List<AStarUnit> priorityList, int endX,
+            int endY, bool[,] visited)
+        {
+            // base cases
+            if (priorityList == null || priorityList.Count == 0)
+            {
+                return null;
+            }
+
+            // get least cost cell from priorityList to determine startX and startY
+            priorityList = priorityList.OrderBy(unit => unit.cost).ToList();
+
+            int startX = -1;
+            int startY = -1;
+
+            AStarUnit leastCostUnit = priorityList[0];
+            startX = leastCostUnit.row;
+            startY = leastCostUnit.col;
+
+            priorityList.Remove(leastCostUnit);
+
+
+            // goal reached?
+            if (startX == endX && startY == endY)
+            {
+                return new List<int>() {map[startX, startY]};
+            }
+
+            // meat
+            // set visited in cell to true
+            visited[startX, startY] = true;
+
+            // get next cells to explore
+            // check if cell is unexplored and within bounds
+            if (startX - 1 >= 0 && map[startX - 1, startY] != 9 && visited[startX - 1, startY] == false)
+                priorityList.Add(new AStarUnit(startX - 1, startY, leastCostUnit.cost + map[startX - 1, startY]));
+            if (startY - 1 >= 0 && map[startX, startY - 1] != 9 && visited[startX, startY - 1] == false)
+                priorityList.Add(new AStarUnit(startX, startY - 1, leastCostUnit.cost + map[startX, startY - 1]));
+            if (startX + 1 < mapRows && map[startX + 1, startY] != 9 && visited[startX + 1, startY] == false)
+                priorityList.Add(new AStarUnit(startX + 1, startY, leastCostUnit.cost + map[startX + 1, startY]));
+            if (startY + 1 < mapCols && map[startX, startY + 1] != 9 && visited[startX, startY + 1] == false)
+                priorityList.Add(new AStarUnit(startX, startY + 1, leastCostUnit.cost + map[startX, startY + 1]));
+
+            List<int> routeFromStart = aStarSearchInner(map, mapRows, mapCols, priorityList, endX, endY, visited);
+
+            if (routeFromStart == null)
+                return null;
+
+            List<int> fullRoute = new List<int>() {leastCostUnit.cost};
+            fullRoute.AddRange(routeFromStart);
+
+            return fullRoute;
         }
 
         public int minCut(string s)
@@ -1621,6 +1821,21 @@ namespace MyRandomSamples
             Node node3 = new Node(3, node6, node7);
 
             Node node1 = new Node(1, node2, node3);
+
+            return node1;
+        }
+
+        public Node buildValidBinaryTree()
+        {
+            Node node1 = new Node(1, null, null);
+            Node node5 = new Node(5, null, null);
+            Node node7 = new Node(7, null, null);
+            Node node3 = new Node(3, null, null);
+
+            Node node2 = new Node(2, node1, node3);
+            Node node6 = new Node(6, node5, node7);
+
+            Node node4 = new Node(4, node2, node6);            
 
             return node1;
         }
