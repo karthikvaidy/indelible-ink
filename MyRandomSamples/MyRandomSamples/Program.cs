@@ -165,6 +165,11 @@ namespace MyRandomSamples
             p.findPatternMatch("aaaa", "asdasdasdasd");
             p.findPatternMatch("aabb", "xyzabcxzyabc");
 
+            p.findPatternMatchImproved("abba", "redbluebluered");
+            p.findPatternMatchImproved("aaaa", "asdasdasdasd");
+            p.findPatternMatchImproved("aabb", "xyzabcxzyabc");
+            p.findPatternMatchImproved("aabba", "catcatgogocat");
+
             p.getPermutations(new List<int> { 1, 2, 3 });
 
             Console.WriteLine(p.binarySearch(new int[] { 1, 2, 3, 4, 5 }, 0, 4, 2));
@@ -223,6 +228,13 @@ namespace MyRandomSamples
             Console.WriteLine(p.subStringMatch("abcdefdefgghijlkmnop", "defg"));
             Console.WriteLine(p.subStringMatch("abcdefhdefgghijlkmnop", "defg"));
 
+            Console.WriteLine(p.subStringMatchHash("abcdefghijlkmnop", "defg"));
+            Console.WriteLine(p.subStringMatchHash("abcdefghijlkmnop", ""));
+            Console.WriteLine(p.subStringMatchHash("", "defg"));
+            Console.WriteLine(p.subStringMatchHash("abcdefghijlkmnop", "defga"));
+            Console.WriteLine(p.subStringMatchHash("abcdefdefgghijlkmnop", "defg"));
+            Console.WriteLine(p.subStringMatchHash("abcdefhdefgghijlkmnop", "defg"));
+             
             Console.WriteLine(p.medianOfSortedArrays(new int[] { 1, 2, 3 }, new int[] { 4, 5, 6 }));
             Console.WriteLine(p.medianOfSortedArrays(new int[] { 1, 2, 3 }, new int[] { 4, 5, 6, 7 }));
             Console.WriteLine(p.medianOfSortedArrays(new int[] { 1, 2, 3 }, new int[] { }));
@@ -290,16 +302,10 @@ namespace MyRandomSamples
              */
             #endregion
 
-
             //Console.WriteLine(p.minCut("ab"));
-            //Console.WriteLine(p.minCut("aab"));
+            Console.WriteLine(p.minCut("aab"));
             //Console.WriteLine(p.minCut("abc"));
             //Console.WriteLine(p.minCut("abbcbabc"));
-
-            p.findPatternMatch("abba", "redbluebluered");
-            p.findPatternMatch("aaaa", "asdasdasdasd");
-            p.findPatternMatch("aabb", "xyzabcxzyabc");
-            p.findPatternMatch("aabba", "catcatgogocat");
         }
 
         public int minCut(string s)
@@ -309,7 +315,35 @@ namespace MyRandomSamples
                 return 0;
             }
             Dictionary<string, int> memory = new Dictionary<string, int>();
-            return minCutInner(s, new List<string>(), string.Empty, memory);
+            //return minCutInner(s, new List<string>(), string.Empty, memory);
+            return minCutInner(s, string.Empty);
+        }
+
+        private int minCutInner(string s, string temp)
+        {
+            // base cases
+            if (s.Length < 2)
+            {
+                return 0;
+            }
+
+            char ch = s[0];
+            temp = temp + ch;
+
+            int val1 = s.Length, val2 = s.Length;
+
+            val2 = minCutInner(s.Substring(1), temp);
+
+            if (isPalindrome(temp))
+            {
+                val1 = 1 + minCutInner(s.Substring(1), string.Empty);
+            }
+            else
+            {
+                val2 += temp.Length;
+            }
+
+            return Math.Min(val1, val2);
         }
 
         // TO BE FIXED
@@ -345,7 +379,7 @@ namespace MyRandomSamples
                     splitsCopy.Add(str);
                 } 
                 splitsCopy.Add(temp);
-                cand1 = minCutInner(s.Substring(1), splitsCopy, string.Empty, memory);
+                cand1 = 1 + minCutInner(s.Substring(1), splitsCopy, string.Empty, memory);
                 if (!memory.ContainsKey(s.Substring(1)))
                 {
                     //memory.Add(s.Substring(1), cand1);
@@ -1180,6 +1214,57 @@ namespace MyRandomSamples
             return -1;
         }
 
+        //Hash based solution
+        public int subStringMatchHash(string text, string pattern)
+        {
+            if((text == null) || (pattern == null) || (text.Length < pattern.Length))
+            {
+                return -1;
+            }
+            
+            int patternHash = getHashedValue(pattern);
+
+            int currentTextHash = -1;
+
+            for (int i = 0; i < text.Length - pattern.Length; i++)
+            {
+                //first time calculation
+                if (currentTextHash == -1)
+                {
+                    currentTextHash = getHashedValue(text.Substring(0, pattern.Length));
+                }
+
+                //repeated calculation - use previous value so as to not get O(N^2) solution
+                else
+                {
+                    currentTextHash = currentTextHash - getHashedValue(text.Substring(i - 1, 1)) +
+                                      getHashedValue(text.Substring(i + pattern.Length - 1, 1));
+                }
+
+                if (currentTextHash == patternHash)
+                {
+                    if (pattern == text.Substring(i, pattern.Length))
+                    {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        // rudimentary hashing function - add ascii values of all chars
+        // multiple strings can hash to the same value, but same string will never hash to different values.
+        private int getHashedValue(string s)
+        {
+            int hash = 0;
+            foreach (char ch in s)
+            {
+                hash += ch;
+            }
+            return hash;
+        }
+
         public string getShortestPalindrome(string word)
         {
             // init upper and lower
@@ -1715,8 +1800,13 @@ namespace MyRandomSamples
          */
         private void findPatternMatch(string pattern, string text)
         {
-            //bool isMatch = findPatternMatchInner(pattern, text, new Dictionary<char, string>());
+            bool isMatch = findPatternMatchInner(pattern, text, new Dictionary<char, string>());
 
+            Console.WriteLine(pattern + "  " + text + "  " + isMatch);
+        }
+
+        private void findPatternMatchImproved(string pattern, string text)
+        {
             /*
              * code for improved logic - counting chars in pattern
              */

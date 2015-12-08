@@ -1,2 +1,16 @@
 *.suo
 *.exe
+*.pdb
+*.manifest
+MyRandomSamples/MyRandomSamples/bin/Debug/Newtonsoft.Json.dll
+*.dll
+MyRandomSamples/MyRandomSamples/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+**/bin/Debug/
+**/bin/Release/
+**/obj/
+**/net40/
+*.pk5
+*.zas
+MyRandomSamples/pingme.txt
+*.lyr
+*.nbx
