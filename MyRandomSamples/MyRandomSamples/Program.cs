@@ -302,10 +302,10 @@ namespace MyRandomSamples
              */
             #endregion
 
-            //Console.WriteLine(p.minCut("ab"));
+            Console.WriteLine(p.minCut("ab"));
             Console.WriteLine(p.minCut("aab"));
-            //Console.WriteLine(p.minCut("abc"));
-            //Console.WriteLine(p.minCut("abbcbabc"));
+            Console.WriteLine(p.minCut("abc"));
+            Console.WriteLine(p.minCut("abbcbabc"));
         }
 
         public int minCut(string s)
