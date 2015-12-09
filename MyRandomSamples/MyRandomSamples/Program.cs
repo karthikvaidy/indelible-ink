@@ -1,16 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Routing;
-
-//using System.Speech.Synthesis;
 
 namespace MyRandomSamples
 {
@@ -327,14 +319,11 @@ namespace MyRandomSamples
             Console.WriteLine(p.isValidBST(root));
             Console.WriteLine(p.isValidBSTRange(root, Int32.MinValue, Int32.MaxValue));
             Console.WriteLine(p.isValidBSTVal(root, ref minVal));
-            
-            */
-            #endregion
 
-            //Console.WriteLine(p.minCut("ab"));
-            //Console.WriteLine(p.minCut("aab"));
-            //Console.WriteLine(p.minCut("abc"));
-            //Console.WriteLine(p.minCut("abbcbabc"));
+            Console.WriteLine(p.minCut("ab"));
+            Console.WriteLine(p.minCut("aab"));
+            Console.WriteLine(p.minCut("abc"));
+            Console.WriteLine(p.minCut("abbcbabc"));
 
             int[,] map = new int[,]
             {
@@ -349,7 +338,134 @@ namespace MyRandomSamples
             {
                 Console.WriteLine(i);
             }
+ 
+            */
+            #endregion
 
+            //List<int> complements = p.numberComplements(new List<int>() { });
+            //p.printList(complements);
+
+            //complements = p.numberComplements(null);
+            //p.printList(complements);
+
+            //complements = p.numberComplements(new List<int>() { 1, 2, 3, 4, 5, 6, -3, -5 });
+            //p.printList(complements);
+
+            Console.WriteLine(p.minWindow("ADOBECODEBANC", "ABC"));
+            Console.WriteLine(p.minWindow("75902135791158897", "159"));
+        }
+
+        /*
+            https://leetcode.com/problems/minimum-window-substring/
+            Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+            For example,
+            S = "ADOBECODEBANC"
+            T = "ABC"
+            Minimum window is "BANC".
+
+            Note:
+            If there is no such window in S that covers all characters in T, return the empty string "".
+         */
+        public string minWindow(string s, string t)
+        {
+            // error checking
+            if (s == null || t == null)
+                return null;
+
+            int[] closures = getClosures(s,t);
+            return minString(closures, s);
+        }
+
+        private int[] getClosures(string s, string t)
+        {
+            int[] closures = new int[s.Length];
+            for (int i = 0; i < t.Length; i++)
+            {
+                sweepForClosures(s, closures, t[i]);
+            }
+
+            return closures;
+        }
+
+        private void sweepForClosures(string s, int[] closures, char c)
+        {
+            int next = -1;
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                if (s[i] == c)
+                {
+                    next = i;
+                }
+
+                if ((next == -1 || closures[i] < next) && closures[i] != -1)
+                    closures[i] = next;
+            }
+        }
+
+        private string minString(int[] closures, string s)
+        {
+            string str = string.Empty;
+            int minLen = Int32.MaxValue;
+
+            for (int i = 0; i < closures.Length; i++)
+            {
+                if (closures[i] != -1)
+                {
+                    if ((closures[i] - i) < minLen)
+                    {
+                        minLen = closures[i] - i;
+                        str = s.Substring(i, minLen+1);
+                    }
+                }
+            }
+
+            return str;
+        }
+
+        private void printList(List<int> list)
+        {
+            if (list == null)
+                return;
+
+            foreach (int i in list)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        // input -> 1,2,3,4,5,6,-3,-5
+        // output -> 3,5
+        // assumes no repetitions
+        public List<int> numberComplements(List<int> numbers)
+        {
+            if (numbers == null)
+                return null;
+
+            List<int> complements = new List<int>();
+            numbers.Sort(CompareNumbersByAbsoluteValue);
+
+            for (int i = 1; i < numbers.Count; i++)
+            {
+                if (numbers[i - 1] + numbers[i] == 0)
+                {
+                    complements.Add(Math.Abs(numbers[i]));
+                }
+            }
+            return complements;
+        }
+
+        private int CompareNumbersByAbsoluteValue(int a, int b)
+        {
+            if (Math.Abs(a) == Math.Abs(b))
+            {
+                if (a == b)
+                    return 0;
+                else
+                    return (a > b) ? -1 : 1;
+            }
+            else
+                return (Math.Abs(a) > Math.Abs(b)) ? -1 : 1;
         }
 
         public bool isValidBST(Node root)
