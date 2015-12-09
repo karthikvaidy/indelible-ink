@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+﻿//using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -276,13 +276,9 @@ namespace MyRandomSamples
                                                                 };
 
             List<int> commonElements = p.getCommonElements(listOfListOfInts);
+            p.PrintList(commonElements);
 
-            foreach (int i in commonElements)
-            {
-                Console.WriteLine(i);
-            }
-
-                        string s = "1234";
+            string s = "1234";
             Console.WriteLine(s[0]);
 
             Console.WriteLine(p.reverseStringOfStrings("abc-efg-hij-klm-nop-qrs"));
@@ -302,10 +298,64 @@ namespace MyRandomSamples
              */
             #endregion
 
-            Console.WriteLine(p.minCut("ab"));
-            Console.WriteLine(p.minCut("aab"));
-            Console.WriteLine(p.minCut("abc"));
-            Console.WriteLine(p.minCut("abbcbabc"));
+            //Console.WriteLine(p.minCut("ab"));
+            //Console.WriteLine(p.minCut("aab"));
+            //Console.WriteLine(p.minCut("abc"));
+            //Console.WriteLine(p.minCut("abbcbabc"));
+
+            List<int> complements = p.numberComplements(new List<int>() { });
+            p.printList(complements);
+
+            complements = p.numberComplements(null);
+            p.printList(complements);
+
+            complements = p.numberComplements(new List<int>() { 1,2,3,4,5,6,-3,-5});
+            p.printList(complements);
+        }
+
+        private void printList(List<int> list)
+        {
+            if (list == null)
+                return;
+
+            foreach (int i in list)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        // input -> 1,2,3,4,5,6,-3,-5
+        // output -> 3,5
+        // assumes no repetitions
+        public List<int> numberComplements(List<int> numbers)
+        {
+            if (numbers == null)
+                return null;
+
+            List<int> complements = new List<int>();
+            numbers.Sort(CompareNumbersByAbsoluteValue);
+
+            for (int i = 1; i < numbers.Count; i++)
+            {
+                if (numbers[i - 1] + numbers[i] == 0)
+                {
+                    complements.Add(Math.Abs(numbers[i]));
+                }
+            }
+            return complements;
+        }
+
+        private int CompareNumbersByAbsoluteValue(int a, int b)
+        {
+            if (Math.Abs(a) == Math.Abs(b))
+            {
+                if (a == b)
+                    return 0;
+                else
+                    return (a > b) ? -1 : 1;
+            }
+            else
+                return (Math.Abs(a) > Math.Abs(b)) ? -1 : 1;
         }
 
         public int minCut(string s)
