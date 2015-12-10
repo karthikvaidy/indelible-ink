@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web.Hosting;
 
 namespace MyRandomSamples
 {
-    class Program
+    internal class Program
     {
         public ColorsEnum color;
+
         public enum ColorsEnum
         {
             Red = 1,
@@ -30,7 +32,7 @@ namespace MyRandomSamples
             }
         }
 
-        class Pair
+        private class Pair
         {
             public int row;
             public int col;
@@ -56,10 +58,10 @@ namespace MyRandomSamples
 
         public class LRUCache
         {
-            int capacity;
-            Dictionary<int, LRUNode> keyNodeMap;
-            LinkedList<LRUNode> lruNodeList;
-            int numNodes;
+            private int capacity;
+            private Dictionary<int, LRUNode> keyNodeMap;
+            private LinkedList<LRUNode> lruNodeList;
+            private int numNodes;
 
             public class LRUNode
             {
@@ -149,11 +151,12 @@ namespace MyRandomSamples
             }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Program p = new Program();
 
             #region OldCode
+
             /*
             MySection section = (MySection)ConfigurationManager.GetSection("mySection");
             Console.WriteLine(section.MyCollection.Default);
@@ -340,6 +343,7 @@ namespace MyRandomSamples
             }
  
             */
+
             #endregion
 
             //List<int> complements = p.numberComplements(new List<int>() { });
@@ -351,9 +355,198 @@ namespace MyRandomSamples
             //complements = p.numberComplements(new List<int>() { 1, 2, 3, 4, 5, 6, -3, -5 });
             //p.printList(complements);
 
-            Console.WriteLine(p.minWindow("ADOBECODEBANC", "ABC"));
-            Console.WriteLine(p.minWindow("75902135791158897", "159"));
+            //Console.WriteLine(p.minWindow("ADOBECODEBANC", "ABC"));
+            //Console.WriteLine(p.minWindow("75902135791158897", "159"));
+
+            //Console.WriteLine(p.evaluateExpression("1+2*3+4")); //11
+            //Console.WriteLine(p.evaluateExpression("1+2*3-4")); //3
+
+            int[,] map = {
+                             {1,2,3,1}, 
+                             {1,2,4,5}, 
+                             {1,2,3,4},
+                             {1,2,1,4},
+                             {2,2,1,4}
+                         };
+
+            List<int> lakes = p.fillLake(map);
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    Console.Write(map[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+
+            p.printList(lakes);
         }
+
+        public List<int> fillLake(int[,] map)
+        {
+            if (map == null)
+            {
+                return null;
+            }
+
+            List<int> lakes = new List<int>();
+
+            for (int i = 0; i < map.GetLength(0); i++)
+            {
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    if (map[i, j] == 1)
+                    {
+                        int size = getLakeSize(map, i, j);
+                        lakes.Add(size);
+                    }
+                }
+            }
+
+            return lakes;
+        }
+
+        // 4 point connectivity
+        private int getLakeSize(int[,] map, int row, int col)
+        {
+            int mapRows = map.GetLength(0);
+            int mapCols = map.GetLength(1);
+
+            // out of bounds or not a lake
+            if (row < 0 || row >= mapRows || col < 0 || col > mapCols - 1 || map[row,col] != 1)
+            {
+                return 0;
+            }
+
+            int lakeSize = 1;
+            map[row, col] = -1;
+            lakeSize += getLakeSize(map, row + 1, col);
+            lakeSize += getLakeSize(map, row - 1, col);
+            lakeSize += getLakeSize(map, row, col - 1);
+            lakeSize += getLakeSize(map, row, col + 1);
+
+            return lakeSize;
+        }
+
+        // evaluates expression like: 1+2-3*4-5/6
+        // assumptions:
+        // only single digit numbers
+        // nothing else in the string apart from digits, and +,-,*,/
+        public int evaluateExpression(string expression)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+            {
+                return Int32.MinValue;
+            }
+
+            int evaluationResult = 0;
+
+            Stack<int> operandStack = new Stack<int>();
+            Stack<char> operatorStack = new Stack<char>();
+
+            foreach (char ch in expression)
+            {
+                if (isDigit(ch))
+                {
+                    operandStack.Push(ch - '0');
+                }
+                else
+                {
+                    if (operatorStack.Count == 0)
+                    {
+                        operatorStack.Push(ch);
+                    }
+                    else
+                    {
+                        char topOperator = operatorStack.Peek();
+
+                        while (getPriority(topOperator) >= getPriority(ch))
+                        {
+                            topOperator = operatorStack.Pop();
+                            if (operandStack.Count < 2)
+                                return -1;// throw exception
+
+                            int num2 = operandStack.Pop();
+                            int num1 = operandStack.Pop();
+
+                            int result = applyOperator(num1, num2, topOperator);
+                            operandStack.Push(result);
+
+                            if (operatorStack.Count > 0)
+                            {
+                                topOperator = operatorStack.Peek();
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        operatorStack.Push(ch);
+                    }
+                }
+            }
+
+            if (operatorStack.Count == 1 && operandStack.Count == 2)
+            {
+                char topOperator = operatorStack.Pop();
+                int num2 = operandStack.Pop();
+                int num1 = operandStack.Pop();
+
+                evaluationResult = applyOperator(num1, num2, topOperator);
+            }
+            else
+            {
+                evaluationResult = Int32.MinValue;
+                //throw exception.
+            }
+
+            return evaluationResult;
+        }
+
+        private bool isDigit(char ch)
+        {
+            return (ch - '0' >= 0 && ch - '0' <= 9);
+        }
+
+        private int getPriority(char op)
+        {
+            switch (op)
+            {
+                case ' ':
+                    return 0;
+                case '+':
+                case '-':
+                    return 1;
+                case '*':
+                case '/':
+                    return 2;
+                default:
+                    return -1;
+            }
+        }
+
+        private int applyOperator(int num1, int num2, char op)
+        {
+            switch (op)
+            {
+                case '+':
+                    return num1 + num2;
+                case '-':
+                    return num1 - num2;
+                case '*':
+                    return num1 * num2;
+                case '/':
+                    if (num2 != 0)
+                    {
+                        return num1 / num2;
+                    }
+                    throw new DivideByZeroException();
+                default:
+                    return -1; // throw exception
+            }
+        }
+
 
         /*
             https://leetcode.com/problems/minimum-window-substring/
