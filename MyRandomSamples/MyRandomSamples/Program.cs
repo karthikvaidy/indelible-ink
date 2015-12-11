@@ -342,24 +342,20 @@ namespace MyRandomSamples
                 Console.WriteLine(i);
             }
  
-            */
+            List<int> complements = p.numberComplements(new List<int>() { });
+            p.printList(complements);
 
-            #endregion
+            complements = p.numberComplements(null);
+            p.printList(complements);
 
-            //List<int> complements = p.numberComplements(new List<int>() { });
-            //p.printList(complements);
+            complements = p.numberComplements(new List<int>() { 1, 2, 3, 4, 5, 6, -3, -5 });
+            p.printList(complements);
 
-            //complements = p.numberComplements(null);
-            //p.printList(complements);
+            Console.WriteLine(p.minWindow("ADOBECODEBANC", "ABC"));
+            Console.WriteLine(p.minWindow("75902135791158897", "159"));
 
-            //complements = p.numberComplements(new List<int>() { 1, 2, 3, 4, 5, 6, -3, -5 });
-            //p.printList(complements);
-
-            //Console.WriteLine(p.minWindow("ADOBECODEBANC", "ABC"));
-            //Console.WriteLine(p.minWindow("75902135791158897", "159"));
-
-            //Console.WriteLine(p.evaluateExpression("1+2*3+4")); //11
-            //Console.WriteLine(p.evaluateExpression("1+2*3-4")); //3
+            Console.WriteLine(p.evaluateExpression("1+2*3+4")); //11
+            Console.WriteLine(p.evaluateExpression("1+2*3-4")); //3
 
             int[,] map = {
                              {1,2,3,1}, 
@@ -381,8 +377,190 @@ namespace MyRandomSamples
             }
 
             p.printList(lakes);
+
+            Console.WriteLine(p.IsInterleave("aabcc", "dbbca", "aadbbcbcac"));
+            Console.WriteLine(p.IsInterleave("aabcc", "dbbca", "aadbbbaccc"));
+            Console.WriteLine(p.IsInterleave("adbcc", "abbca", "aadbbbcacc"));
+
+            List<string> sol = p.AddOperators("123", 6);
+            List<string> sol = p.AddOperators("232", 8);
+            List<string> sol = p.AddOperators("105", 5); // fails because digit combination is not accounted for
+            List<string> sol = p.AddOperators("00", 0);
+            List<string> sol = p.AddOperators("3456237490", 9191);
+
+            foreach (string s in sol)
+            {
+                Console.WriteLine(s);
+            }
+            */
+
+            #endregion
+
+
         }
 
+        /*  https://leetcode.com/problems/interleaving-string/
+            Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+
+            For example,
+            Given:
+            s1 = "aabcc",
+            s2 = "dbbca",
+
+            When s3 = "aadbbcbcac", return true.
+            When s3 = "aadbbbaccc", return false.
+        */
+        public bool IsInterleave(string s1, string s2, string s3)
+        {
+            if (s1 == null || s2 == null || s3 == null)
+                return false;
+
+            if (string.IsNullOrEmpty(s1))
+            {
+                if (s2 != s3)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else if (string.IsNullOrEmpty(s2))
+            {
+                if (s1 != s3)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+
+            int index1 = 0, index2 = 0, index3 = 0;
+
+            while (true) //check condition
+            {
+                // base cases
+                if (index1 == s1.Length && index2 == s2.Length && index3 == s3.Length)
+                {
+                    return true;
+                }
+                if (index1 == s1.Length)
+                {
+                    if (s2.Substring(index2) == s3.Substring(index3))
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                if (index2 == s2.Length)
+                {
+                    if (s1.Substring(index1) == s3.Substring(index3))
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+                if (index3 == s3.Length)
+                    return false;
+
+                if (s1[index1] != s2[index2])
+                {
+                    if (s1[index1] == s3[index3])
+                    {
+                        index1++;
+                        index3++;
+                    }
+                    else if (s2[index2] == s3[index3])
+                    {
+                        index2++;
+                        index3++;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (s1[index1] == s3[index3])
+                    {
+                        if (IsInterleave(s1.Substring(index1 + 1), s2.Substring(index2), s3.Substring(index3 + 1)) ||
+                            IsInterleave(s1.Substring(index1), s2.Substring(index2 + 1), s3.Substring(index3 + 1)))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        /* https://leetcode.com/problems/expression-add-operators/
+           Given a string that contains only digits 0-9 and a target value, return all possibilities to add binary operators (not unary) +, -, or * 
+           between the digits so they evaluate to the target value.
+
+            Examples: 
+            "123", 6 -> ["1+2+3", "1*2*3"] 
+            "232", 8 -> ["2*3+2", "2+3*2"]
+            "105", 5 -> ["1*0+5","10-5"]
+            "00", 0 -> ["0+0", "0-0", "0*0"]
+            "3456237490", 9191 -> []
+         */
+        public List<string> AddOperators(string num, int target)
+        {
+            if (num == null)
+                return null;
+
+            return addOperatorsInner(num, target, string.Empty, new List<string>());
+        }
+
+        private List<string> addOperatorsInner(string num, int target, string currExpression, List<string> currSolutions)
+        {
+            if (String.IsNullOrEmpty(num))
+            {
+                int evaluation;
+                try
+                {
+                    evaluation = this.evaluateExpression(currExpression);
+                }
+                catch (DivideByZeroException)
+                {
+                    return null;
+                }
+
+                if (evaluation == target)
+                {
+                    if (!currSolutions.Contains(currExpression))
+                    {
+                        currSolutions.Add(currExpression);
+                    }
+                }
+                return null;
+            }
+            char[] symbols = {'+', '-', '*', '/'};
+            currExpression += num[0];
+
+            if (num.Length > 1)
+            {
+                for (int i = 0; i < symbols.Length; i++)
+                {
+                    addOperatorsInner(num.Substring(1), target, currExpression + symbols[i], currSolutions);
+                }
+            }
+            else
+            {
+                addOperatorsInner(string.Empty, target, currExpression, currSolutions);
+            }
+
+            return currSolutions;
+        }
         public List<int> fillLake(int[,] map)
         {
             if (map == null)
@@ -487,18 +665,25 @@ namespace MyRandomSamples
                 }
             }
 
-            if (operatorStack.Count == 1 && operandStack.Count == 2)
+            while (operatorStack.Count != 0 && operandStack.Count != 0)
             {
                 char topOperator = operatorStack.Pop();
                 int num2 = operandStack.Pop();
                 int num1 = operandStack.Pop();
 
-                evaluationResult = applyOperator(num1, num2, topOperator);
+                int val = applyOperator(num1, num2, topOperator);
+
+                operandStack.Push(val);
+            }
+
+            if (operandStack.Count == 1 && operatorStack.Count == 0)
+            {
+                evaluationResult = operandStack.Pop();
             }
             else
             {
                 evaluationResult = Int32.MinValue;
-                //throw exception.
+                //throw exception!?
             }
 
             return evaluationResult;
