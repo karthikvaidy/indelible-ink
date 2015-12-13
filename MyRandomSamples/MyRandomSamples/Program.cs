@@ -396,7 +396,116 @@ namespace MyRandomSamples
 
             #endregion
 
+            //Console.WriteLine(p.LongestValidParentheses("(()"));
+            //Console.WriteLine(p.LongestValidParentheses(")()())"));
+            //Console.WriteLine(p.LongestValidParentheses(")))"));
+            //Console.WriteLine(p.LongestValidParentheses("((("));
+            //Console.WriteLine(p.LongestValidParentheses("())"));
+            //Console.WriteLine(p.LongestValidParentheses("(()()()()"));
+            //Console.WriteLine(p.LongestValidParentheses("(((())))"));
+            //Console.WriteLine(p.LongestValidParentheses("()()()(((()()()()"));
 
+            //Console.WriteLine(p.LargestRectangleArea(new int[] { 2, 1, 5, 6, 2, 3 }));
+
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            int[] nums = { 2, 0, 1, 0, 3, 12 };
+            p.MoveZeroes(nums);
+
+            foreach (int i in nums)
+            {
+                Console.WriteLine(i);
+            }
+
+        }
+
+        /* https://leetcode.com/problems/move-zeroes/
+            Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+            For example, given nums = [0, 1, 0, 3, 12], after calling your function, nums should be [1, 3, 12, 0, 0].
+            Note:
+            You must do this in-place without making a copy of the array.
+            Minimize the total number of operations.
+         */
+        public void MoveZeroes(int[] nums)
+        {
+            if (nums == null || nums.Count() == 0)
+                return;
+
+            int fastIndex = 0, slowIndex = 0;
+
+            while (fastIndex != nums.Count())
+            {
+                if (nums[fastIndex] != 0)
+                {
+                    if (fastIndex != slowIndex)
+                    {
+                        nums[slowIndex] = nums[fastIndex];
+                    }
+                    slowIndex++;
+                }
+                fastIndex++;
+            }
+
+            while (slowIndex != fastIndex)
+            {
+                nums[slowIndex++] = 0;
+            }
+        }
+
+        /* https://leetcode.com/problems/largest-rectangle-in-histogram/
+           Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+           For example,
+           Given height = [2,1,5,6,2,3], return 10.
+         */
+        public int LargestRectangleArea(int[] height)
+        {
+            Stack<int> stack = new Stack<int>();
+            Array.Resize(ref height, height.Count() + 1);
+            height.SetValue(0, height.Count()-1);
+            
+            int index = 0, maxA = 0;
+            while (index < height.Count())
+            {
+                if (stack.Count == 0) stack.Push(index++);
+                else if (height[index] >= height[stack.Peek()]) stack.Push(index++);
+                else
+                {
+                    int t = stack.Peek();
+                    stack.Pop();
+                    maxA = max(maxA, stack.Count == 0 ? height[t] * index : height[t] * (index - stack.Peek() - 1));
+                }
+            }
+            return maxA;
+        }
+
+        /* https://leetcode.com/problems/longest-valid-parentheses/
+           Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+           For "(()", the longest valid parentheses substring is "()", which has length = 2.
+           Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
+         */
+        public int LongestValidParentheses(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return -1;
+
+            Stack<Tuple<char, int>> stack = new Stack<Tuple<char, int>>();
+            int len = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (stack.Count > 0 && stack.Peek().Item1 == '(' && s[i] == ')')
+                {
+                    stack.Pop();
+                }
+                else
+                {
+                    int gap = (stack.Count() == 0) ? i : i - stack.Peek().Item2 - 1;
+                    len = max(len, gap);
+                    stack.Push(new Tuple<char, int>(s[i], i));
+                }
+            }
+            len = (stack.Count() == 0) ? s.Count() : max(len, s.Count() -1 - stack.Peek().Item2);
+
+            return len;
         }
 
         /*  https://leetcode.com/problems/interleaving-string/
