@@ -408,14 +408,216 @@ namespace MyRandomSamples
             //Console.WriteLine(p.LargestRectangleArea(new int[] { 2, 1, 5, 6, 2, 3 }));
 
             //int[] nums = { 0, 1, 0, 3, 12 };
-            int[] nums = { 2, 0, 1, 0, 3, 12 };
-            p.MoveZeroes(nums);
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //p.MoveZeroes(nums);
 
-            foreach (int i in nums)
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //int[] result = p.SetsUnionHash(new int[] { 1, 2, 3, 3 }, new int[] { 3, 3, 5 });
+
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //result = p.SetsUnionMerge(new int[] { 1, 2, 3, 3 }, new int[] { 3, 3, 5 });
+
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //Node root = p.buildValidBinaryTree();
+            //root = p.InvertBinaryTree(root);
+
+            Console.WriteLine(p.IsStrobogrammatic("8"));
+            Console.WriteLine(p.IsStrobogrammatic("69"));
+            Console.WriteLine(p.IsStrobogrammatic("818"));
+            Console.WriteLine(p.IsStrobogrammatic("801689108"));
+            Console.WriteLine(p.IsStrobogrammatic("801679108"));
+            Console.WriteLine(p.IsStrobogrammatic(" "));
+            Console.WriteLine(p.IsStrobogrammatic(null));
+            Console.WriteLine(p.IsStrobogrammatic(string.Empty));
+            Console.WriteLine(p.IsStrobogrammatic("2"));
+        }
+
+        /*
+            A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+            Write a function to determine if a number is strobogrammatic. The number is represented as a string.
+         */
+
+        public bool IsStrobogrammatic(string number)
+        {
+            if (string.IsNullOrWhiteSpace(number))
             {
-                Console.WriteLine(i);
+                return true;
             }
 
+            Dictionary<char, char> stroboMap = new Dictionary<char, char>();
+            stroboMap.Add('0', '0');
+            stroboMap.Add('1', '1');
+            stroboMap.Add('6', '9');
+            stroboMap.Add('8', '8');
+            stroboMap.Add('9', '6');
+
+            for (int i = 0; i <= number.Length / 2; i++)
+            {
+                char ch = number[i];
+                if (stroboMap.ContainsKey(ch))
+                {
+                    if (stroboMap[ch] != number[number.Length - i - 1])
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /* https://leetcode.com/problems/invert-binary-tree/ 
+                 4
+               /   \
+              2     7
+             / \   / \
+            1   3 6   9
+         
+            to
+         
+                 4
+               /   \
+              7     2
+             / \   / \
+            9   6 3   1
+
+         */
+
+        public Node InvertBinaryTree(Node root)
+        {
+            if (root == null)
+                return null;
+
+            Node temp = root.leftNode;
+            root.leftNode = root.rightNode;
+            root.rightNode = temp;
+
+            root.leftNode = this.InvertBinaryTree(root.leftNode);
+            root.rightNode = this.InvertBinaryTree(root.rightNode);
+
+            return root;
+        }
+
+        // set union
+        // assumptions: each list only contains unique elements - no repetitions within the same set
+        // approach 1: add all elements to a hash table (key = num; value - bool) - if there's a collition, ignore. return all keys.
+        // approach 2: sort both sets - do a modified merge sort that will ignore common elements - gets confused with repeated common elements
+        public int[] SetsUnionHash(int[] setA, int[] setB)
+        {
+            // validations
+            if (setA == null && setB == null)
+            {
+                return null;
+            }
+            else if (setA == null || setA.Count() == 0)
+            {
+                return setB;
+            }
+            else if (setB == null || setB.Count() == 0)
+            {
+                return setA;
+            }
+
+            // algo
+            Dictionary<int, bool> union = new Dictionary<int, bool>();
+            foreach (int a in setA)
+            {
+                if (!union.ContainsKey(a))
+                {
+                    union.Add(a, true);
+                }
+            }
+
+            foreach (int b in setB)
+            {
+                if (!union.ContainsKey(b))
+                {
+                    union.Add(b, true);
+                }
+            }
+
+            int[] unions = new int[union.Keys.Count];
+            int ctr = 0;
+            foreach (KeyValuePair<int, bool> kvp in union)
+            {
+                unions[ctr++] = kvp.Key;
+            }
+
+            return unions;
+        }
+
+        public int[] SetsUnionMerge(int[] setA, int[] setB)
+        {
+            // validations
+            if (setA == null && setB == null)
+            {
+                return null;
+            }
+            else if (setA == null || setA.Count() == 0)
+            {
+                return setB;
+            }
+            else if (setB == null || setB.Count() == 0)
+            {
+                return setA;
+            }
+
+            //algo
+            Array.Sort(setA);
+            Array.Sort(setB);
+
+            int indexA = 0, indexB = 0;
+            List<int> union = new List<int>();
+
+            while (true)
+            {
+                if (indexA < setA.Count() && indexB < setB.Count())
+                {
+                    if (setA[indexA] == setB[indexB])
+                    {
+                        union.Add(setA[indexA++]);
+                        indexB++;
+                    }
+                    else if (setA[indexA] < setB[indexB])
+                    {
+                        union.Add(setA[indexA++]);
+                    }
+                    else
+                    {
+                        union.Add(setB[indexB++]);
+                    }
+                }
+                else if (indexA < setA.Count())
+                {
+                    union.Add(setA[indexA++]);
+                }
+                else if (indexB < setB.Count())
+                {
+                    union.Add(setB[indexB++]);
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return union.ToArray();
         }
 
         /* https://leetcode.com/problems/move-zeroes/
@@ -2440,7 +2642,7 @@ namespace MyRandomSamples
 
             Node node4 = new Node(4, node2, node6);            
 
-            return node1;
+            return node4;
         }
 
         public void runGetPathSumTests()
