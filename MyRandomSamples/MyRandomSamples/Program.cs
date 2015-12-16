@@ -392,46 +392,43 @@ namespace MyRandomSamples
             {
                 Console.WriteLine(s);
             }
-            */
+              
+            Console.WriteLine(p.LongestValidParentheses("(()"));
+            Console.WriteLine(p.LongestValidParentheses(")()())"));
+            Console.WriteLine(p.LongestValidParentheses(")))"));
+            Console.WriteLine(p.LongestValidParentheses("((("));
+            Console.WriteLine(p.LongestValidParentheses("())"));
+            Console.WriteLine(p.LongestValidParentheses("(()()()()"));
+            Console.WriteLine(p.LongestValidParentheses("(((())))"));
+            Console.WriteLine(p.LongestValidParentheses("()()()(((()()()()"));
 
-            #endregion
+            Console.WriteLine(p.LargestRectangleArea(new int[] { 2, 1, 5, 6, 2, 3 }));
 
-            //Console.WriteLine(p.LongestValidParentheses("(()"));
-            //Console.WriteLine(p.LongestValidParentheses(")()())"));
-            //Console.WriteLine(p.LongestValidParentheses(")))"));
-            //Console.WriteLine(p.LongestValidParentheses("((("));
-            //Console.WriteLine(p.LongestValidParentheses("())"));
-            //Console.WriteLine(p.LongestValidParentheses("(()()()()"));
-            //Console.WriteLine(p.LongestValidParentheses("(((())))"));
-            //Console.WriteLine(p.LongestValidParentheses("()()()(((()()()()"));
+            int[] nums = { 0, 1, 0, 3, 12 };
+            int[] nums = { 2, 0, 1, 0, 3, 12 };
+            p.MoveZeroes(nums);
 
-            //Console.WriteLine(p.LargestRectangleArea(new int[] { 2, 1, 5, 6, 2, 3 }));
+            foreach (int i in nums)
+            {
+                Console.WriteLine(i);
+            }
 
-            //int[] nums = { 0, 1, 0, 3, 12 };
-            //int[] nums = { 2, 0, 1, 0, 3, 12 };
-            //p.MoveZeroes(nums);
+            int[] result = p.SetsUnionHash(new int[] { 1, 2, 3, 3 }, new int[] { 3, 3, 5 });
 
-            //foreach (int i in nums)
-            //{
-            //    Console.WriteLine(i);
-            //}
+            foreach (int i in result)
+            {
+                Console.WriteLine(i);
+            }
 
-            //int[] result = p.SetsUnionHash(new int[] { 1, 2, 3, 3 }, new int[] { 3, 3, 5 });
+            result = p.SetsUnionMerge(new int[] { 1, 2, 3, 3 }, new int[] { 3, 3, 5 });
 
-            //foreach (int i in result)
-            //{
-            //    Console.WriteLine(i);
-            //}
+            foreach (int i in result)
+            {
+                Console.WriteLine(i);
+            }
 
-            //result = p.SetsUnionMerge(new int[] { 1, 2, 3, 3 }, new int[] { 3, 3, 5 });
-
-            //foreach (int i in result)
-            //{
-            //    Console.WriteLine(i);
-            //}
-
-            //Node root = p.buildValidBinaryTree();
-            //root = p.InvertBinaryTree(root);
+            Node root = p.buildValidBinaryTree();
+            root = p.InvertBinaryTree(root);
 
             Console.WriteLine(p.IsStrobogrammatic("8"));
             Console.WriteLine(p.IsStrobogrammatic("69"));
@@ -441,7 +438,96 @@ namespace MyRandomSamples
             Console.WriteLine(p.IsStrobogrammatic(" "));
             Console.WriteLine(p.IsStrobogrammatic(null));
             Console.WriteLine(p.IsStrobogrammatic(string.Empty));
-            Console.WriteLine(p.IsStrobogrammatic("2"));
+            Console.WriteLine(p.IsStrobogrammatic("2")); 
+              
+             
+            */
+
+            #endregion
+
+            //IsBinaryTreeBalanced
+            //RotateMatrix
+            //TopologicalSort
+            //BST to DLL
+
+            //Node root = p.buildValidBinaryTree();
+            //Console.WriteLine(p.IsBinaryTreeBalanced(root));
+
+            //root = p.buildUnbalancedBinaryTree();
+            //Console.WriteLine(p.IsBinaryTreeBalanced(root));
+
+            //int[,] matrix = {{1, 1, 1, 1, 1}, {2, 2, 2, 2, 2}, {3, 3, 3, 3, 3}, {4, 4, 4, 4, 4}, {5, 5, 5, 5, 5}};
+            //int[,] matrix = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 }};
+            //p.RotateMatrix(matrix);
+            //for (int i = 0; i < matrix.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < matrix.GetLength(1); j++)
+            //    {
+            //        Console.Write(matrix[i,j] + "\t");
+            //    }
+            //    Console.WriteLine();
+            //}
+        }
+
+        // does a clockwise rotate of the matrix
+        public void RotateMatrix(int[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+            if ((rows != cols) || rows < 2)
+                return;
+
+            int depth = 0;
+            for (int i = 0; i <= rows / 2; i++)
+            {
+                for (int j = depth; j < cols - depth - 1; j++)
+                {
+                    int temp = matrix[i, j];
+                    matrix[i, j] = matrix[rows - j - 1, i];
+                    matrix[rows - j - 1, i] = matrix[rows - i - 1, cols - j - 1];
+                    matrix[rows - i - 1, cols - j - 1] = matrix[j, cols - i - 1];
+                    matrix[j, cols - i - 1] = temp;
+                }
+                depth++;
+            }
+        }
+
+        public bool IsBinaryTreeBalanced(Node root)
+        {
+            if (root == null)
+                return false;
+
+            int min = Int32.MaxValue;
+            int max = Int32.MinValue;
+
+            getTreeMinMaxHeight(root, 0, ref min, ref max);
+            Console.WriteLine(min + " " + max);
+
+            if (max - min > 1)
+                return false;
+            return true;
+        }
+
+        private void getTreeMinMaxHeight(Node root, int currHeight, ref int minHeight, ref int maxHeight)
+        {
+            if (root == null)
+            {
+                return;
+            }
+
+            if (root.leftNode == null && root.rightNode == null) //leaf node
+            {
+                currHeight++;
+
+                maxHeight = currHeight > maxHeight ? currHeight : maxHeight;
+                minHeight = currHeight < minHeight ? currHeight : minHeight;
+            }
+            else
+            {
+                getTreeMinMaxHeight(root.leftNode, 1 + currHeight, ref minHeight, ref maxHeight);
+                getTreeMinMaxHeight(root.rightNode, 1 + currHeight, ref minHeight, ref maxHeight);
+            }
+
         }
 
         /*
@@ -2641,6 +2727,24 @@ namespace MyRandomSamples
             Node node6 = new Node(6, node5, node7);
 
             Node node4 = new Node(4, node2, node6);            
+
+            return node4;
+        }
+
+        public Node buildUnbalancedBinaryTree()
+        {
+            Node node5 = new Node(5, null, null);
+            Node node7 = new Node(7, null, null);
+            Node node3 = new Node(3, null, null);
+            Node node9 = new Node(9, null, null);
+
+            Node node8 = new Node(8, node9, null);
+            Node node1 = new Node(1, node8, null);
+
+            Node node2 = new Node(2, node1, node3);
+            Node node6 = new Node(6, node5, node7);
+
+            Node node4 = new Node(4, node2, node6);
 
             return node4;
         }
