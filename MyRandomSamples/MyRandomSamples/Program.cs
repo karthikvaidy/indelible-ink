@@ -151,6 +151,73 @@ namespace MyRandomSamples
             }
         }
 
+        public class QueueUsingStacks
+        {
+            private Stack<int> enqueueStack;
+            private Stack<int> dequeueStack;
+            private int count;
+
+            public QueueUsingStacks()
+            {
+                enqueueStack = new Stack<int>();
+                dequeueStack = new Stack<int>();
+                count = 0;
+            }
+
+            public void Enqueue(int i)
+            {
+                enqueueStack.Push(i);
+                count++;
+            }
+
+            public int Dequeue()
+            {
+                if (count == 0)
+                    return 0; // throw exception
+
+                if (dequeueStack.Count == 0)
+                {
+                    while (enqueueStack.Count != 0)
+                    {
+                        int val = enqueueStack.Pop();
+                        dequeueStack.Push(val);
+                    }
+                }
+
+                if (dequeueStack.Count == 0)
+                {
+                    return 0; //throw exception - something went wrong.
+                }
+                int i = dequeueStack.Pop();
+                count--;
+                return i;
+            }
+
+            public bool isEmpty()
+            {
+                return count == 0;
+            }
+
+            public int Count
+            {
+                get
+                {
+                    return count;
+                }
+            }
+        }
+
+        public class Person
+        {
+            public int birth;
+            public int death;
+            public Person(int b, int d)
+            {
+                birth = b;
+                death = d;
+            }
+        }
+
         private static void Main(string[] args)
         {
             Program p = new Program();
@@ -467,6 +534,71 @@ namespace MyRandomSamples
             //    }
             //    Console.WriteLine();
             //}
+
+            Person p1 = new Person(12, 15);
+            Person p2 = new Person(20, 90);
+            Person p3 = new Person(10, 98);
+            Person p4 = new Person(1, 72);
+            Person p5 = new Person(10, 98);
+            Person p6 = new Person(23, 82);
+            Person p7 = new Person(13, 98);
+            Person p8 = new Person(90, 98);
+            Person p9 = new Person(83, 99);
+            Person p10 = new Person(75, 94);
+            List<Person> people = new List<Person> { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 };
+            Console.WriteLine(p.GetMaxAliveYear(people));
+        }
+
+        public int GetMaxAliveYear(List<Person> people)
+        {
+            if (people == null)
+                return -1;
+
+            List<int> sortedBirths = sortPersonByAttribute(people, false);
+            List<int> sortedDeaths = sortPersonByAttribute(people, true);
+
+            int maxAlive = 0;
+            int maxYear = -1;
+            int birthIndex = 0, deathIndex = 0;
+            int currAlive = 0;
+
+            while (birthIndex < sortedBirths.Count)
+            {
+                if (sortedBirths[birthIndex] <= sortedDeaths[deathIndex])
+                {
+                    currAlive++;
+                    if (currAlive > maxAlive)
+                    {
+                        maxAlive = currAlive;
+                        maxYear = sortedBirths[birthIndex];
+                    }
+                    birthIndex++;
+                }
+                else
+                {
+                    currAlive--;
+                    deathIndex++;
+                }
+            }
+            return maxYear;
+        }
+
+        private List<int> sortPersonByAttribute(List<Person> people, bool useDeathYear)
+        {
+            List<int> years = new List<int>();
+            foreach (Person p in people)
+            {
+                if (useDeathYear)
+                {
+                    years.Add(p.death);
+                }
+                else
+                {
+                    years.Add(p.birth);
+                }
+            }
+            years.Sort();
+            return years;
         }
 
         // does a clockwise rotate of the matrix
@@ -534,7 +666,6 @@ namespace MyRandomSamples
             A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
             Write a function to determine if a number is strobogrammatic. The number is represented as a string.
          */
-
         public bool IsStrobogrammatic(string number)
         {
             if (string.IsNullOrWhiteSpace(number))
