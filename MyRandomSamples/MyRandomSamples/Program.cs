@@ -218,6 +218,207 @@ namespace MyRandomSamples
             }
         }
 
+        public class DLLNode
+        {
+            public int value;
+            public DLLNode prev;
+            public DLLNode next;
+
+            public DLLNode()
+                : this(0)
+            {
+            }
+
+            public DLLNode(int v)
+            {
+                value = v;
+                prev = null;
+                next = null;
+            }
+
+            public DLLNode(int v, DLLNode p, DLLNode n)
+            {
+                value = v;
+                prev = p;
+                next = n;
+            }
+        }
+
+        public class DoublyLinkedList
+        {
+            public DLLNode head;
+            public DLLNode tail;
+            private int count;
+
+            public DoublyLinkedList()
+            {
+                head = null;
+                tail = null;
+                count = 0;
+            }
+
+            public void CreateSortedDLL()
+            {
+                DLLNode node0 = new DLLNode(0, null, null);
+                DLLNode node1 = new DLLNode(1, node0, null);
+                DLLNode node2 = new DLLNode(2, node1, null);
+                DLLNode node3 = new DLLNode(3, node2, null);
+                DLLNode node4 = new DLLNode(4, node3, null);
+                DLLNode node5 = new DLLNode(5, node4, null);
+                DLLNode node6 = new DLLNode(6, node5, null);
+                DLLNode node7 = new DLLNode(7, node6, null);
+                DLLNode node8 = new DLLNode(8, node7, null);
+                DLLNode node9 = new DLLNode(9, node8, null);
+
+                node8.next = node9;
+                node7.next = node8;
+                node6.next = node7;
+                node5.next = node6;
+                node4.next = node5;
+                node3.next = node4;
+                node2.next = node3;
+                node1.next = node2;
+                node0.next = node1;
+
+                head = node0;
+                tail = node9;
+            }
+
+            public void InsertInSortedDLL(DLLNode node)
+            {
+                if (head == null)
+                {
+                    InsertAtBeginning(node);
+                }
+                else
+                {
+                    DLLNode n = head;
+                    while (true)
+                    {
+                        if (n == null)
+                            break;
+                        if (n == tail)
+                        {
+                            InsertAtEnd(node);
+                            break;
+                        }
+                        else
+                        {
+                            if (n.value < node.value && n.next.value >= node.value)
+                            {
+                                node.next = n.next;
+                                node.prev = n;
+                                n.next.prev = node;
+                                n.next = node;
+                                break;
+                            }
+                            else
+                            {
+                                n = n.next;
+                            }
+                        }
+                    }
+                }
+            }
+
+            public void InsertAtBeginning(DLLNode node)
+            {
+                if (head == null)
+                {
+                    head = node;
+                    tail = node;
+                    count = 1;
+                }
+                else
+                {
+                    head.prev = node;
+                    node.next = head;
+                    node.prev = null;
+
+                    head = node;
+
+                    count++;
+                }
+            }
+
+            public void InsertAtEnd(DLLNode node)
+            {
+                if (head == null)
+                {
+                    head = node;
+                    tail = node;
+                    count = 1;
+                }
+                else
+                {
+                    tail.next = node;
+                    node.prev = tail;
+
+                    tail = node;
+                    count++;
+                }
+            }
+
+            public DLLNode DeleteAtBeginning()
+            {
+                if (head == null)
+                {
+                    return null;
+                }
+
+                DLLNode node = head;
+
+                if (head.next == null)
+                {
+                    head = null;
+                    tail = null;
+                }
+                else
+                {
+                    head = head.next;
+                    head.prev = null;
+                }
+                count--;
+
+                node.next = null;
+                return node;
+            }
+
+            public DLLNode DeleteAtEnd()
+            {
+                if (head == null)
+                {
+                    return null;
+                }
+
+                DLLNode node = tail;
+
+                if (tail.prev == null)
+                {
+                    head = null;
+                    tail = null;
+                }
+                else
+                {
+                    tail = tail.prev;
+                    tail.next = null;
+                }
+
+                node.prev = null;
+                count--;
+                return node;
+            }
+
+            public int Count
+            {
+                get 
+                { 
+                    return count; 
+                }
+            }
+
+        }
+
         private static void Main(string[] args)
         {
             Program p = new Program();
@@ -507,17 +708,7 @@ namespace MyRandomSamples
             Console.WriteLine(p.IsStrobogrammatic(string.Empty));
             Console.WriteLine(p.IsStrobogrammatic("2")); 
               
-             
-            */
-
-            #endregion
-
-            //IsBinaryTreeBalanced
-            //RotateMatrix
-            //TopologicalSort
-            //BST to DLL
-
-            //Node root = p.buildValidBinaryTree();
+                        //Node root = p.buildValidBinaryTree();
             //Console.WriteLine(p.IsBinaryTreeBalanced(root));
 
             //root = p.buildUnbalancedBinaryTree();
@@ -535,18 +726,133 @@ namespace MyRandomSamples
             //    Console.WriteLine();
             //}
 
-            Person p1 = new Person(12, 15);
-            Person p2 = new Person(20, 90);
-            Person p3 = new Person(10, 98);
-            Person p4 = new Person(1, 72);
-            Person p5 = new Person(10, 98);
-            Person p6 = new Person(23, 82);
-            Person p7 = new Person(13, 98);
-            Person p8 = new Person(90, 98);
-            Person p9 = new Person(83, 99);
-            Person p10 = new Person(75, 94);
-            List<Person> people = new List<Person> { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 };
-            Console.WriteLine(p.GetMaxAliveYear(people));
+            //Person p1 = new Person(12, 15);
+            //Person p2 = new Person(20, 90);
+            //Person p3 = new Person(10, 98);
+            //Person p4 = new Person(1, 72);
+            //Person p5 = new Person(10, 98);
+            //Person p6 = new Person(23, 82);
+            //Person p7 = new Person(13, 98);
+            //Person p8 = new Person(90, 98);
+            //Person p9 = new Person(83, 99);
+            //Person p10 = new Person(75, 94);
+            //List<Person> people = new List<Person> { p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 };
+            //Console.WriteLine(p.GetMaxAliveYear(people));
+
+            //Node root = p.buildValidBinaryTree();
+            //Console.WriteLine(p.findNodeInBST(root, 2));
+            //Console.WriteLine(p.findNodeInBST(root, 0));
+            //Console.WriteLine(p.findNodeInBST(root, 10));
+            //Console.WriteLine(p.findNodeInBST(null, 2));
+
+            //int[] result = p.longMultiplicationReverse(new int[] { 1, 2, 3, 4 }, new int[] { 2 });
+            //int[] result = p.longMultiplicationReverse(new int[] { 1, 2, 3, 4 }, new int[] { 9 });
+            //int[] result = p.longMultiplicationReverse(new int[] { 2, 9, 8, 8, 9, 8 }, new int[] { 3, 6, 3, 4, 5, 8, 9, 1, 2 }); //{1,0,8,6,3,7,1,4,1,8,7,8,9,7,6}
+            //foreach (int i in result)
+            //{
+            //    Console.Write(i);
+            //}
+
+            //DoublyLinkedList dll = new DoublyLinkedList();
+            //DLLNode node;
+            //node = dll.DeleteAtEnd();
+            //node = dll.DeleteAtBeginning();
+            //dll.InsertAtBeginning(new DLLNode(5));
+            //dll.InsertAtBeginning(new DLLNode(10));
+            //dll.InsertAtBeginning(new DLLNode(15));
+            //dll.InsertAtEnd(new DLLNode(50));
+            //dll.InsertAtEnd(new DLLNode(60));
+            //dll.InsertAtEnd(new DLLNode(70));
+            //Console.WriteLine(dll.Count);
+            //node = dll.DeleteAtEnd();
+            //Console.WriteLine(node.value);
+            //node = dll.DeleteAtBeginning();
+            //Console.WriteLine(node.value);
+            //Console.WriteLine(dll.Count);
+
+            //dll = new DoublyLinkedList();
+            //dll.CreateSortedDLL();
+            //dll.InsertInSortedDLL(new DLLNode(4));
+ 
+            */
+
+            #endregion
+
+            //IsBinaryTreeBalanced
+            //RotateMatrix
+            //TopologicalSort
+            //BST to DLL
+
+        }
+
+
+        public int[] longMultiplicationReverse(int[] num1, int[] num2)
+        {
+            // error check
+            if (num1 == null || num1.Count() == 0 || num2 == null || num2.Count() == 0)
+            {
+                return null;
+            }
+
+            List<int> result = new List<int>();
+            int offset = 0;
+            for (int i = num1.Count()-1; i >=0; i--)
+            {
+                int index = 0;
+                int carry = 0;
+                for (int j = num2.Count()-1; j >= 0; j--)
+                {
+                    int temp = num1[i] * num2[j];
+                    temp += carry;
+
+                    while (result.Count <= index + offset)
+                    {
+                        result.Add(0);
+                    }
+                    temp += result[index + offset];
+
+                    int unitsPlace = temp % 10;
+                    carry = temp / 10;
+
+                    result[index + offset] = unitsPlace;
+                    index++;
+
+                }
+                while(carry != 0)
+                {
+                    while (result.Count <= index + offset)
+                    {
+                        result.Add(0);
+                    }
+                    int temp = result[index + offset] + carry;
+                    result[index + offset] = temp % 10;
+                    carry = temp / 10;
+                    index++;
+                }
+                carry = 0;
+                offset++;
+                index = 0;
+            }
+            result.Reverse();
+            return result.ToArray();
+        }
+
+        public bool findNodeInBST(Node root, int target)
+        {
+            if (root == null)
+                return false;
+            if (root.value == target)
+            {
+                return true;
+            }
+            else if (root.value > target)
+            {
+                return findNodeInBST(root.leftNode, target);
+            }
+            else
+            {
+                return findNodeInBST(root.rightNode, target);
+            }
         }
 
         public int GetMaxAliveYear(List<Person> people)
