@@ -926,13 +926,30 @@ namespace MyRandomSamples
             //TopologicalSort ts = new TopologicalSort("1 2;1 3;1 4;3 5;2 5;4 5");
             //Console.WriteLine(ts.DoTopologicalSort());
 
-            Console.WriteLine(p.isPatternMatchImproved("abba", "redbluebluered"));
-            Console.WriteLine(p.isPatternMatchImproved("aaaa", "asdasdasdasd"));
-            Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabc"));
-            Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabce"));
-            Console.WriteLine(p.isPatternMatchImproved("aabba", "catcatgogocat"));
+            //Console.WriteLine(p.isPatternMatchImproved("abba", "redbluebluered"));
+            //Console.WriteLine(p.isPatternMatchImproved("aaaa", "asdasdasdasd"));
+            //Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabc"));
+            //Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabce"));
+            //Console.WriteLine(p.isPatternMatchImproved("aabba", "catcatgogocat"));
 
+            Console.WriteLine(p.isBinaryPalindrome(0));
+            Console.WriteLine(p.isBinaryPalindrome(25));
+        }
 
+        public bool isBinaryPalindrome(int x)
+        {
+            int mask1 = 1 << 31;
+            int mask2 = 1;
+            for (int i = 0; i < 16; i++)
+            {
+                if ((x & mask1) != (x & mask2))
+                {
+                    return false;
+                }
+                mask1 = mask1 >> 1;
+                mask2 = mask2 << 1;
+            }
+            return true;
         }
 
         public bool isPatternMatchImproved(string pattern, string text)
