@@ -419,6 +419,119 @@ namespace MyRandomSamples
 
         }
 
+        public class TopologicalSort
+        {
+
+            public class TSNode
+            {
+                public int value;
+                public List<TSNode> incomingNodes;
+                public List<TSNode> outgoingNodes;
+
+                public TSNode(int v)
+                {
+                    value = v;
+                    outgoingNodes = new List<TSNode>();
+                    incomingNodes = new List<TSNode>();
+                }
+
+                public void AddOutgoingNode(TSNode n)
+                {
+                    outgoingNodes.Add(n);
+                }
+
+                public void RemoveOutgoingNode(TSNode n)
+                {
+                    outgoingNodes.Remove(n);
+                }
+
+                public void AddIncomingNode(TSNode n)
+                {
+                    incomingNodes.Add(n);
+                }
+
+                public void RemoveIncomingNode(TSNode n)
+                {
+                    incomingNodes.Remove(n);
+                }
+
+            }
+
+            Dictionary<int, TSNode> adjacencyMap;
+            List<TSNode> adjacencyNodes;
+
+            // takes string in this format:
+            // 1 2;1 3;1 4;3 5;2 5;4 5; 
+            public TopologicalSort(string list)
+            {
+                adjacencyMap = new Dictionary<int, TSNode>();
+                adjacencyNodes = new List<TSNode>();
+                string[] segments = list.Split(';');
+                foreach (string segment in segments)
+                {
+                    string[] parts = segment.Split(' ');
+                    int v0 = Convert.ToInt32(parts[0]);
+                    int v1 = Convert.ToInt32(parts[1]);
+                    if (!adjacencyMap.ContainsKey(v0))
+                    {
+                        TSNode n = new TSNode(v0);
+                        adjacencyMap.Add(v0, n);
+                        adjacencyNodes.Add(n);
+                    }
+                    if (!adjacencyMap.ContainsKey(v1))
+                    {
+                        TSNode n = new TSNode(v1);
+                        adjacencyMap.Add(v1, n);
+                        adjacencyNodes.Add(n);
+                    }
+
+                    TSNode incomingNode = adjacencyMap[v0];
+                    TSNode outgoingNode = adjacencyMap[v1];
+
+                    incomingNode.AddOutgoingNode(outgoingNode);
+                    outgoingNode.AddIncomingNode(incomingNode);
+                }
+            }
+
+            public string DoTopologicalSort()
+            {
+                StringBuilder sb = new StringBuilder();
+                Queue<int> queue = new Queue<int>();
+
+                foreach (TSNode n in adjacencyNodes)
+                {
+                    if (n.outgoingNodes.Count == 0)
+                    {
+                        queue.Enqueue(n.value);
+                    }
+                }
+
+                while (queue.Count() > 0)
+                {
+                    int value = queue.Dequeue();
+                    TSNode node = adjacencyMap[value];
+
+                    //process that node
+                    sb.Append(value);
+
+                    foreach (TSNode n in node.incomingNodes)
+                    {
+                        n.RemoveOutgoingNode(node);
+                        if (n.outgoingNodes.Count == 0)
+                        {
+                            queue.Enqueue(n.value);
+                        }
+                    }
+
+                }
+
+                return sb.ToString();
+
+            }
+
+        }
+
+
         private static void Main(string[] args)
         {
             Program p = new Program();
@@ -571,7 +684,7 @@ namespace MyRandomSamples
 
             List<int> sortedNums = new List<int> { 1, 10, 2, 9, 3, 8, 4, 7, 5, 6 };
 
-            //p.QuickSort(sortedNums);
+            p.QuickSort(sortedNums);
             sortedNums = p.mergeSort(sortedNums);
 
             foreach (int i in sortedNums)
@@ -783,8 +896,495 @@ namespace MyRandomSamples
             //TopologicalSort
             //BST to DLL
 
+            // substring search
+            // matrix update element with subsum
+            // FB => FooBar
+            // tic tac toe
+
+            //Console.WriteLine(p.maxNonContinuousSum(new List<int> { 1, -2, 3, -1, 5, 10, 3 }));
+
+            //List<int> nums = new List<int> { 4, 1, 2, 3 };
+            //p.GetCombinationSums(nums, 5);
+
+            //p.generateCombinations("star");
+
+            //Console.WriteLine(p.isPatternMatch("FB", "FooBar"));
+            //Console.WriteLine(p.isPatternMatch("FB", "FooFootBar"));
+            //Console.WriteLine(p.isPatternMatch("FoBa", "FooBar"));
+            //Console.WriteLine(p.isPatternMatch("FoBa", "FooBt"));
+            //Console.WriteLine(p.isPatternMatch("FBr", "FooBro"));
+            //Console.WriteLine(p.isPatternMatch("FBr", "FttBoo"));
+
+            //Console.WriteLine(p.getNthLargestMultiple(new int[] { 4, 6 }, 6));
+            //int[] result = p.GetMaxMergedArray(new int[] { 3, 4, 6, 5 }, new int[] { 9, 1, 2, 5, 8, 3 }, 5);
+            //int[] result = p.GetMaxMergedArray(new int[] { 4, 5 }, new int[] { 9, 1, 8, 6 }, 5);
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //TopologicalSort ts = new TopologicalSort("1 2;1 3;1 4;3 5;2 5;4 5");
+            //Console.WriteLine(ts.DoTopologicalSort());
+
+            Console.WriteLine(p.isPatternMatchImproved("abba", "redbluebluered"));
+            Console.WriteLine(p.isPatternMatchImproved("aaaa", "asdasdasdasd"));
+            Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabc"));
+            Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabce"));
+            Console.WriteLine(p.isPatternMatchImproved("aabba", "catcatgogocat"));
+
+
         }
 
+        public bool isPatternMatchImproved(string pattern, string text)
+        {
+            int na = countChars(pattern, 'a');
+            int nb = pattern.Length - na;
+            char firstChar = pattern[0];
+            char altChar = (firstChar == 'a') ? 'b' : 'a';
+            int firstCharCount = (firstChar == 'a') ? na : nb;
+            int altCharCount = (firstChar == 'a') ? nb : na;
+            int maxLen = text.Length / firstCharCount;
+
+            for (int i = 1; i < maxLen; i++)
+            {
+                int j = (text.Length - (i * firstCharCount));
+                if (altCharCount == 0 || (j % altCharCount == 0))
+                {
+                    if (doesStringMatch(pattern, text, i, (altCharCount == 0) ? 0 : (j / altCharCount)))
+                    {
+                        return true;
+                    }
+
+                }
+            }
+
+            return false;
+
+        }
+
+        private int countChars(string s, char c)
+        {
+            int count = 0;
+            foreach (char ch in s)
+            {
+                count = (ch == c) ? count+1 : count;
+            }
+            return count;
+        }
+
+        private bool doesStringMatch(string pattern, string text, int firstCharLen, int altCharLen)
+        {
+            Dictionary<char, string> map = new Dictionary<char, string>();
+            map.Add(pattern[0], text.Substring(0, firstCharLen));
+            int textIndex = 0;
+            foreach (char c in pattern)
+            {
+                if (!map.ContainsKey(c))
+                {
+                    map.Add(c, text.Substring(textIndex, altCharLen));
+                }
+                int endIndex = textIndex + map[c].Length;
+
+                if (text.Substring(textIndex, endIndex) != map[c])
+                {
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+
+
+        /*
+            You are given two arrays of length M and N having elements in range 0-9.
+            Your task is to create maximum number of length K from elements of these two arrays such that relative order of elements 
+            is same in the final number as in the array, they are taken from i.e. 
+            If two elements a,b are taken from array1 and and a comes before b in array1 so 
+            in the final number a should come before b (Relative order kept same) . 
+            Example: N=4 and M =6 
+            Array1 = { 3 , 4 , 6,5} 
+            Array2 ={9,1,2,5,8,3} 
+            Suppose K = 5, then number will be {9,8,6,5,3} 
+            You can see {9,8,3} are taken from array2 in the same order as they are in Array2. Similarly {6,5} are taken from Array1 in the 
+            same order and number 98653 is maximum possible number.
+         */
+        public int[] GetMaxMergedArray(int[] array1, int[] array2, int k)
+        {
+            if (array1 == null && array2 == null)
+                return null;
+
+            if (array1 == null && array2 != null)
+            {
+                int count = array2.Count() > k ? k : array2.Count();
+                return array2.Take(count).ToList().ToArray();
+            }
+
+            if (array1 != null && array2 == null)
+            {
+                int count = array1.Count() > k ? k : array1.Count();
+                return array1.Take(count).ToList().ToArray();
+            }
+
+            if (array1.Count() + array2.Count() < k)
+            {
+                //exception!?
+                k = array1.Count() + array2.Count();
+            }
+
+            int[] result = GetMaxMergedArrayInner(array1, array2, 0, 0, k, k, new List<int>());
+            return result;
+        }
+
+        private int[] GetMaxMergedArrayInner(int[] array1, int[] array2, int index1, int index2, int k, int remaining, List<int> currState)
+        {
+            if (currState != null)
+            {
+                Console.Write("Current state: ");
+                foreach (int i in currState)
+                {
+                    Console.Write(i + " ");
+                }
+                Console.WriteLine();
+            }
+            if (remaining == 0)
+            {
+                if (currState.Count() == k)
+                {
+                    return currState.ToArray();
+                }
+                return new List<int>().ToArray();
+            }
+            int[] result = new List<int>().ToArray();
+
+            if (index1 < array1.Length && index2 < array2.Length)
+            {
+                List<int> temp1 = getListCopy(currState);
+                temp1.Add(array1[index1]);
+                List<int> temp2 = getListCopy(currState);
+                temp2.Add(array2[index2]);
+
+                int[] candidate1 = GetMaxMergedArrayInner(array1, array2, index1 + 1, index2, k, remaining - 1, temp1); 
+                int[] candidate2 = GetMaxMergedArrayInner(array1, array2, index1, index2 + 1, k, remaining - 1, temp2);
+                int[] tempResult = getGreaterArray(candidate1, candidate2);
+
+                int[] ignoredCandidate = GetMaxMergedArrayInner(array1, array2, index1 + 1, index2 + 1, k, remaining, getListCopy(currState));
+                result = getGreaterArray(ignoredCandidate, tempResult);
+            }
+            else if (index1 < array1.Length)
+            {
+                List<int> temp = getListCopy(currState);
+                temp.Add(array1[index1]);
+                int[] tempResult = GetMaxMergedArrayInner(array1, array2, index1 + 1, index2, k, remaining - 1, temp);
+                int[] ignoredCandidate = GetMaxMergedArrayInner(array1, array2, index1 + 1, index2, k, remaining, getListCopy(currState));
+                result = getGreaterArray(ignoredCandidate, tempResult);
+            }
+            else if (index2 < array2.Length)
+            {
+                List<int> temp = getListCopy(currState);
+                temp.Add(array2[index2]);
+                int[] tempResult = GetMaxMergedArrayInner(array1, array2, index1, index2 + 1, k, remaining - 1, temp);
+                int[] ignoredCandidate = GetMaxMergedArrayInner(array1, array2, index1, index2 + 1, k, remaining, getListCopy(currState));
+                result = getGreaterArray(ignoredCandidate, tempResult);
+            }
+
+            return result;
+        }
+
+        private List<int> getListCopy(List<int> list)
+        {
+            List<int> copy = new List<int>();
+            foreach (int i in list)
+            {
+                copy.Add(i);
+            }
+            return copy;
+        }
+
+        private int[] getGreaterArray(int[] a, int[] b)
+        {
+            if (a.Length > b.Length)
+                return a;
+            else if (a.Length < b.Length)
+                return b;
+            else
+            {
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a[i] > b[i])
+                        return a;
+                    else if (a[i] < b[i])
+                        return b;
+                }
+
+                return a;
+            }
+
+        }
+
+        /*
+            Find the n-th smallest multiple given a set of numbers. For example, set = {4, 6}, n = 6: 
+            The sequence is: 
+            4, 6, 8, 12, 16, 18, etc... 
+            Answer is 18
+         * 
+         * MODIFIED TO: return nth number that is a pure factor of given numbers.
+        */
+        public int getNthLargest(int[] set, int n)
+        {
+            if (set == null || set.Count() == 0 || n <= 0)
+            {
+                return -1; // exception?!
+            }
+            // set has negative numbers?
+            // set has 1 or 0
+            // set has repetitions
+            // set has only 1 element, return Math.Pow(element,n)
+            // n == 1, return smallest of set
+
+            int ctr = 0;
+            int val = 0;
+
+            List<Dictionary<int,LinkedList<int>>> listOfLists = new List<Dictionary<int,LinkedList<int>>>();
+
+            foreach (int i in set)
+            {
+                LinkedList<int> ll = new LinkedList<int>();
+                ll.AddFirst(i);
+                Dictionary<int,LinkedList<int>> dict = new Dictionary<int,LinkedList<int>>();
+                dict.Add(i,ll);
+                listOfLists.Add(dict);
+            }
+
+            while (ctr <= n)
+            {
+                int min = Int32.MaxValue;
+                
+                foreach (Dictionary<int,LinkedList<int>> dict in listOfLists)
+                {
+                    int key = dict.Keys.First();
+                    LinkedList<int> ll = dict[key];
+                    if (ll.First.Value < min)
+                    {
+                        min = ll.First.Value;
+                    }
+                }
+                
+                ctr++;
+                if (ctr == n)
+                {
+                    val = min;
+                    break;
+                }
+
+                foreach (Dictionary<int, LinkedList<int>> dict in listOfLists)
+                {
+                    int key = dict.Keys.First();
+                    LinkedList<int> ll = dict[key];
+                    if (ll.First.Value == min)
+                    {
+                        ll.RemoveFirst();
+                    }
+                    ll.AddLast(min * key);
+                }
+            }
+
+            return val;
+        }
+
+        public int getNthLargestMultiple(int[] set, int n)
+        {
+            if (set == null || set.Count() == 0)
+            {
+                return -1;
+            }
+
+            List<Tuple<int, int>> listOfTuples = new List<Tuple<int, int>>();
+
+            foreach (int i in set)
+            {
+                Tuple<int, int> t = new Tuple<int, int>(i, i);
+                listOfTuples.Add(t);
+            }
+
+            int ctr = 0;
+            int val = -1;
+            int prevVal = -1;
+
+            while (ctr < n)
+            {
+                prevVal = val;
+                Tuple<int, int> minTuple = listOfTuples[0];
+                foreach (Tuple<int, int> t in listOfTuples)
+                {
+                    if (t.Item2 < minTuple.Item2)
+                    {
+                        minTuple = t;
+                    }
+                }
+
+                val = minTuple.Item2;
+
+                if (val != prevVal)
+                {
+                    ctr++;
+                }
+
+                Console.WriteLine(ctr + "  " + val);
+
+                if (ctr == n)
+                {
+                    break;
+                }
+
+                Tuple<int, int> updatedTuple = new Tuple<int, int>(minTuple.Item1, minTuple.Item1 * ((minTuple.Item2 / minTuple.Item1) + 1));
+                listOfTuples.Remove(minTuple);
+                listOfTuples.Add(updatedTuple);
+            }
+
+            return val;
+        }
+
+        public bool isPatternMatch(string pattern, string text)
+        {
+            if (string.IsNullOrEmpty(pattern))
+            {
+                if (string.IsNullOrEmpty(text))
+                {
+                    // both are empty.
+                    return true;
+                }
+                return false; // only pattern is empty
+            }
+            if (string.IsNullOrEmpty(text)) // tex is empty, pattern is not
+                return false;
+
+            int patternCtr = 0;
+            int textCtr = 0;
+            bool isMatch = false;
+            bool shouldIgnoreSmallLetter = true;
+
+            while (true)
+            {
+                if (textCtr == text.Length)
+                {
+                    if (patternCtr == pattern.Length)
+                    {
+                        isMatch = true; // both pattern and text are at end, and has matched till now.
+                    }
+                    else
+                    {
+                        isMatch = false; // text is at end but pattern still has characters
+                    }
+                    break;
+                }
+
+                if (patternCtr == pattern.Length) // pattern is done, text still has characters. ensure all remaining characters are small, if not no match.
+                {
+                    while (textCtr != text.Length)
+                    {
+                        if (text[textCtr] >= 'a' && text[textCtr] <= 'z')
+                        {
+                            textCtr++;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                    isMatch = true;
+                    break;
+                }
+
+                if (pattern[patternCtr] >= 'a' && pattern[patternCtr] <= 'z')
+                {
+                    shouldIgnoreSmallLetter = false;
+                }
+                else if (pattern[patternCtr] >= 'A' && pattern[patternCtr] <= 'Z')
+                {
+                    shouldIgnoreSmallLetter = true;
+                }
+
+                if (text[textCtr] >= 'a' && text[textCtr] <= 'z')
+                {
+                    if (shouldIgnoreSmallLetter) //pattern char is caps, so ignore all small letters
+                    {
+                        textCtr++;
+                    }
+                    else // pattern has small letter. see if there's a match
+                    {
+                        if (text[textCtr] == pattern[patternCtr]) // match found. increment both ctrs
+                        {
+                            textCtr++;
+                            patternCtr++;
+                        }
+                        else //no match. increment only text ctr.
+                        {
+                            textCtr++;
+                        }
+                    }
+                }
+                else if (text[textCtr] >= 'A' && text[textCtr] <= 'Z')
+                {
+                    if (shouldIgnoreSmallLetter) // if true, we're matching a caps text char with caps pattern char
+                    {
+                        if (text[textCtr] == pattern[patternCtr]) // match found. increment both counters
+                        {
+                            textCtr++;
+                            patternCtr++;
+                        }
+                        else // both are caps, but no match. set isMatch to false and break;
+                        {
+                            isMatch = false;
+                            break;
+                        }
+                    }
+                    else // if set to false, then pattern has small char, but text has caps letter, so isMatch = false.
+                    {
+                        isMatch = false;
+                        break;
+                    }
+                }
+            }
+
+            return isMatch;
+        }
+
+        public void generateCombinations(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return;
+
+            List<string> combinations = new List<string>();
+            combinations.Add(new string(str[0], 1));
+
+            generateCombinationsInner(str, combinations, 1);
+
+            foreach (string s in combinations)
+            {
+                Console.WriteLine(s);
+            }
+
+        }
+
+        private void generateCombinationsInner(string str, List<string> combinations, int currIndex)
+        {
+            if (currIndex >= str.Length)
+                return;
+
+            char c = str[currIndex];
+
+            List<string> combos = new List<string>();
+            combos.Add(new string(c, 1));
+            foreach (string s in combinations)
+            {
+                combos.Add(s + c);
+            }
+            combinations.AddRange(combos);
+
+            generateCombinationsInner(str, combinations, currIndex + 1);
+        }
 
         public int[] longMultiplicationReverse(int[] num1, int[] num2)
         {
@@ -1395,6 +1995,7 @@ namespace MyRandomSamples
 
             return currSolutions;
         }
+        
         public List<int> fillLake(int[,] map)
         {
             if (map == null)
@@ -1565,7 +2166,6 @@ namespace MyRandomSamples
                     return -1; // throw exception
             }
         }
-
 
         /*
             https://leetcode.com/problems/minimum-window-substring/
@@ -2592,6 +3192,53 @@ namespace MyRandomSamples
             return max(maxSumUntilEnd, maxSumUntilEndMinusOne);
         }
 
+        public int maxNonContinuousSum(List<int> numbers)
+        {
+            if (numbers == null)
+                return 0; // throw exception?!
+
+            return maxNonContinuousSumInner(numbers, new Dictionary<List<int>, int>());
+        }
+
+        //PRACTICE
+        private int maxNonContinuousSumInner(List<int> numbers, Dictionary<List<int>, int> memorizedSums)
+        {
+            if (numbers.Count == 0)
+                return 0;
+            else if (numbers.Count == 1)
+                return numbers[0];
+            else if (numbers.Count == 2)
+                return Math.Max(numbers[0], numbers[1]);
+
+            if (memorizedSums.ContainsKey(numbers))
+                return memorizedSums[numbers];
+
+            List<int> numbersCopy1 = new List<int>();
+            List<int> numbersCopy2 = new List<int>(); 
+            foreach (int i in numbers)
+            {
+                numbersCopy1.Add(i);
+                numbersCopy2.Add(i);
+            }
+
+            numbersCopy1.RemoveAt(numbersCopy1.Count - 1);
+            numbersCopy2.RemoveAt(numbersCopy2.Count - 1);
+            numbersCopy2.RemoveAt(numbersCopy2.Count - 1);
+
+            int sumPrev1 = maxNonContinuousSumInner(numbersCopy2, memorizedSums);
+            memorizedSums.Add(numbersCopy2, sumPrev1);
+            sumPrev1 += numbers[numbers.Count - 1];
+
+            int sumPrev2 = maxNonContinuousSumInner(numbersCopy1, memorizedSums);
+            memorizedSums.Add(numbersCopy1, sumPrev2);
+
+            if (sumPrev1 > sumPrev2)
+                return sumPrev1;
+
+            return sumPrev2;
+
+        }
+
         // Given stock prices over a set of days, get max profit
         public int maxProfit(int[] prices)
         {
@@ -3347,6 +3994,48 @@ namespace MyRandomSamples
                     }
                     updatedState.Add(n);
                     getPermutationsSum(rawNumbers, target - n, updatedState);
+                }
+            }
+        }
+
+        // PRACTICE
+        public void GetCombinationSums(List<int> numbers, int target)
+        {
+            if (numbers == null || numbers.Count == 0 || numbers.Contains(0) || target <= 0)
+                return;
+
+            List<List<int>> solutions = new List<List<int>>();
+            GetCombinationsSumsInner(numbers, target, new List<int>(), 0, solutions);
+
+            foreach (List<int> list in solutions)
+            {
+                foreach (int i in list)
+                {
+                    Console.Write(i + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private void GetCombinationsSumsInner(List<int> numbers, int target, List<int> currSeq, int currSum, List<List<int>> solutions)
+        {
+            if (currSum > target)
+                return;
+            else if (currSum == target)
+            {
+                solutions.Add(currSeq);
+            }
+            else
+            {
+                foreach (int n in numbers)
+                {
+                    List<int> seqCopy = new List<int>();
+                    foreach (int i in currSeq)
+                    {
+                        seqCopy.Add(i);
+                    }
+                    seqCopy.Add(n);
+                    GetCombinationsSumsInner(numbers, target, seqCopy, currSum + n, solutions);
                 }
             }
         }
