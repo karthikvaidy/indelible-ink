@@ -531,6 +531,156 @@ namespace MyRandomSamples
 
         }
 
+        public class TicTacToe
+        {
+            private int[,] board;
+            private const int dimension = 3;
+
+            private int oneWinner;
+            private int twoWinner;
+
+            private List<int> columnValues;
+            private List<int> rowValues;
+            private int diagonalValue;
+            private int reverseDiagonalValue;
+
+            private Dictionary<int, int> map;
+
+            public TicTacToe()
+            {
+                board = new int[dimension, dimension];
+                columnValues = new List<int>();
+                rowValues = new List<int>();
+                diagonalValue = 1;
+                reverseDiagonalValue = 1;
+
+                for (int i = 0; i < dimension; i++)
+                {
+                    for (int j = 0; j < dimension; j++)
+                    {
+                        board[i, j] = 0;
+                    }
+                    columnValues.Add(1);
+                    rowValues.Add(1);
+                }
+
+                map = new Dictionary<int, int>();
+                map.Add(0, 2);
+                map.Add(1, 3);
+                map.Add(2, 5);
+
+                for (int i = 0; i < dimension; i++)
+                {
+                    for (int j = 0; j < dimension; j++)
+                    {
+                        rowValues[i] *= map[board[i, j]];
+                        columnValues[j] *= map[board[i, j]];
+
+                        if (i == j)
+                        {
+                            diagonalValue *= map[board[i, j]];
+                        }
+                        else if (i == dimension - j - 1)
+                        {
+                            reverseDiagonalValue *= map[board[i, j]];
+                        }
+                    }
+                }
+
+                oneWinner = (int)Math.Pow(3, dimension);
+                twoWinner = (int)Math.Pow(5, dimension);
+            }
+
+            public void initRandomBoard()
+            {
+                Random rand = new Random();
+
+                for (int i = 0; i < dimension; i++)
+                {
+                    for (int j = 0; j < dimension; j++)
+                    {
+                        play(i, j, rand.Next(3));
+                    }
+                }
+            }
+
+            public void play(int row, int col, int val)
+            {
+                if (row < dimension && col < dimension && val > 0 && val < 3 && board[row, col] == 0)
+                {
+                    board[row, col] = val;
+
+                    rowValues[row] /= map[0];
+                    rowValues[row] *= map[val];
+
+                    columnValues[col] /= map[0];
+                    columnValues[col] *= map[val];
+                }
+            }
+
+            public int hasWon()
+            {
+                int winnerValue;
+                foreach (int i in rowValues)
+                {
+                    winnerValue = isValueWinner(i);
+                    if (winnerValue != -1) return winnerValue;
+                }
+                foreach (int j in columnValues)
+                {
+                    winnerValue = isValueWinner(j);
+                    if (winnerValue != -1) return winnerValue;
+                }
+                winnerValue = isValueWinner(diagonalValue);
+                if (winnerValue != -1) return winnerValue;
+
+                winnerValue = isValueWinner(reverseDiagonalValue);
+                if (winnerValue != -1) return winnerValue;
+
+                return -1;
+            }
+
+            private int isValueWinner(int i)
+            {
+                if (i == oneWinner)
+                {
+                    return 1;
+                }
+                else if (i == twoWinner)
+                {
+                    return 2;
+                }
+                return -1;
+            }
+
+            public override string ToString()
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < dimension; i++)
+                {
+                    for (int j = 0; j < dimension; j++)
+                    {
+                        sb.Append(board[i, j] + " ");
+                    }
+                    sb.AppendLine();
+                }
+                sb.AppendLine();
+                foreach (int i in rowValues)
+                {
+                    sb.Append(i + "  ");
+                }
+                sb.AppendLine();
+                sb.AppendLine();
+                foreach (int i in columnValues)
+                {
+                    sb.Append(i + "  ");
+                }
+                sb.AppendLine();
+
+                return sb.ToString();
+            }
+        }
+
 
         private static void Main(string[] args)
         {
@@ -932,9 +1082,122 @@ namespace MyRandomSamples
             //Console.WriteLine(p.isPatternMatchImproved("aabb", "xyzabcxzyabce"));
             //Console.WriteLine(p.isPatternMatchImproved("aabba", "catcatgogocat"));
 
-            Console.WriteLine(p.isBinaryPalindrome(0));
-            Console.WriteLine(p.isBinaryPalindrome(25));
+            //Console.WriteLine(p.isBinaryPalindrome(0));
+            //Console.WriteLine(p.isBinaryPalindrome(25));
+
+            //Interval i0 = new Interval(1, 2);
+            //Interval i1 = new Interval(3, 5);
+            //Interval i2 = new Interval(6, 7);
+            //Interval i3 = new Interval(8, 10);
+            //Interval i4 = new Interval(12, 16);
+            //List<Interval> intervals = new List<Interval> { i0, i1, i2, i3, i4 };
+            //Interval i5 = new Interval(4, 9);
+
+            //Interval i0 = new Interval(1, 3);
+            //Interval i1 = new Interval(6, 9);
+            //List<Interval> intervals = new List<Interval> { i0, i1 };
+            //Interval i5 = new Interval(2, 5);
+
+            //List<Interval> result = p.Insert(intervals, i5).ToList();
+
+            //foreach(Interval i in result)
+            //{
+            //    Console.WriteLine(i.ToString());
+            //}
+
+            TicTacToe ttt = new TicTacToe();
+            Console.WriteLine(ttt.ToString());
+            ttt.initRandomBoard();
+            Console.WriteLine(ttt.ToString());
+            Console.WriteLine(ttt.hasWon());
+
         }
+
+        // https://leetcode.com/problems/insert-interval/
+        /*
+        Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+
+        You may assume that the intervals were initially sorted according to their start times.
+
+        Example 1:
+        Given intervals [1,3],[6,9], insert and merge [2,5] in as [1,5],[6,9].
+        
+        Example 2:
+        Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10],[12,16].
+
+        This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
+        */
+        public class Interval
+        {
+            public int start;
+            public int end;
+            public Interval() { start = 0; end = 0; }
+            public Interval(int s, int e) { start = s; end = e; }
+            public override string ToString()
+            {
+                return "[" + start + "," + end + "]";
+            }
+        }
+
+        public IList<Interval> Insert(IList<Interval> intervals, Interval newInterval)
+        {
+            // error checks
+            // intervals is null
+            // newInterval is null
+
+            Interval mergedInterval = new Interval();
+            int startIndex = -1;
+            int endIndex = -1;
+
+            for (int i = 0; i < intervals.Count(); i++)
+            {
+                Interval interval = intervals[i];
+                if (startIndex == -1)
+                {
+                    if (
+                        ((interval.start <= newInterval.start) && (interval.end >= newInterval.start)) ||
+                        (interval.start > newInterval.start)
+                        )
+                    {
+                        startIndex = i;
+                        mergedInterval.start = (interval.start < newInterval.start) ? interval.start : newInterval.start;
+                        i--;
+                    }
+                }
+                else if (endIndex == -1)
+                {
+                    if((interval.start <= newInterval.end) && (interval.end >= newInterval.end))
+                    {
+                        endIndex = i;
+                        mergedInterval.end = interval.end;
+                        break;
+                    }
+                    else if (interval.start > newInterval.end)
+                    {
+                        if (i == 0)
+                        {
+                            endIndex = 0;
+                            mergedInterval.end = interval.end;
+                        }
+                        else
+                        {
+                            endIndex = i - 1;
+                            mergedInterval.end = newInterval.end;
+                        }
+                    }
+                }
+            }
+
+            intervals[startIndex] = mergedInterval;
+            startIndex++;
+            for (int i = startIndex; i <= endIndex; i++)
+            {
+                intervals.RemoveAt(startIndex);
+            }
+
+            return intervals;
+        }
+
 
         public bool isBinaryPalindrome(int x)
         {
