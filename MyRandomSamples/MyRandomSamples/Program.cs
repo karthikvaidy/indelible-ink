@@ -681,6 +681,30 @@ namespace MyRandomSamples
             }
         }
 
+        public class Building
+        {
+            public int left;
+            public int right;
+            public int height;
+
+            public Building(int[] coords)
+            {
+                if (coords.Count() == 3)
+                {
+                    left = coords[0];
+                    right = coords[1];
+                    height = coords[2];
+                }
+            }
+
+            public Building(int l,int r, int h)
+            {
+                    left = l;
+                    right = r;
+                    height = h;
+            }
+
+        }
 
         private static void Main(string[] args)
         {
@@ -1105,12 +1129,288 @@ namespace MyRandomSamples
             //    Console.WriteLine(i.ToString());
             //}
 
-            TicTacToe ttt = new TicTacToe();
-            Console.WriteLine(ttt.ToString());
-            ttt.initRandomBoard();
-            Console.WriteLine(ttt.ToString());
-            Console.WriteLine(ttt.hasWon());
+            //TicTacToe ttt = new TicTacToe();
+            //Console.WriteLine(ttt.ToString());
+            //ttt.initRandomBoard();
+            //Console.WriteLine(ttt.ToString());
+            //Console.WriteLine(ttt.hasWon());
 
+            //int[,] buildings = { { 2, 9, 10 }, { 3, 7, 15 }, { 5, 12, 12 }, { 15, 20, 10 }, { 19, 24, 8 } };
+            //p.GetSkyline(buildings);
+
+            //Console.WriteLine(p.IsScramble("great", "rgtae"));
+
+            int[] result = p.slidingWindowMax(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3);
+            foreach (int i in result)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+
+        /*
+        https://leetcode.com/problems/sliding-window-maximum/
+
+        Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+        For example,
+        Given nums = [1,3,-1,-3,5,3,6,7], and k = 3.
+
+        Window position                Max
+        ---------------               -----
+        [1  3  -1] -3  5  3  6  7       3
+         1 [3  -1  -3] 5  3  6  7       3
+         1  3 [-1  -3  5] 3  6  7       5
+         1  3  -1 [-3  5  3] 6  7       5
+         1  3  -1  -3 [5  3  6] 7       6
+         1  3  -1  -3  5 [3  6  7]      7
+        Therefore, return the max sliding window as [3,3,5,5,6,7].
+
+        Note: 
+        You may assume k is always valid, ie: 1 ≤ k ≤ input array's size for non-empty array.
+
+        Follow up:
+        Could you solve it in linear time?
+        */
+
+        public int[] slidingWindowMax(int[] array, int w)
+        {
+            int[] ans = new int[array.Length - w + 1];
+            // Queue stores indices of array, and values are in decreasing order.
+            // In this way, the top element in queue is the max in window
+            LinkedList<int> q = new LinkedList<int>();
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                // 1. remove element from head until first number within window
+                if (q.Count != 0 && q.ElementAt(0) + w <= i)
+                {
+                    // it's OK to change 'while' to 'if' in the line above
+                    // cuz we actually remove 1 element at most
+                    q.RemoveFirst();
+                }
+                // 2. before inserting i into queue, remove from the tail of the
+                // queue indices with smaller value they array[i]
+                while (q.Count !=0 && array[q.ElementAt(q.Count - 1)] <= array[i])
+                {
+                    int val = q.ElementAt(q.Count - 1);
+                    q.Remove(val);
+                }
+                q.AddLast(i);
+                // 3. set the max value in the window (always the top number in
+                // queue)
+                if (i + 1 >= w)
+                {
+                    ans[i + 1 - w] = array[q.ElementAt(0)];
+                }
+            }
+            return ans;
+        }
+
+        /*
+            https://leetcode.com/problems/scramble-string/
+            Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
+
+            Below is one possible representation of s1 = "great":
+
+                great
+               /    \
+              gr    eat
+             / \    /  \
+            g   r  e   at
+                       / \
+                      a   t
+            To scramble the string, we may choose any non-leaf node and swap its two children.
+
+            For example, if we choose the node "gr" and swap its two children, it produces a scrambled string "rgeat".
+
+                rgeat
+               /    \
+              rg    eat
+             / \    /  \
+            r   g  e   at
+                       / \
+                      a   t
+            We say that "rgeat" is a scrambled string of "great".
+
+            Similarly, if we continue to swap the children of nodes "eat" and "at", it produces a scrambled string "rgtae".
+
+                rgtae
+               /    \
+              rg    tae
+             / \    /  \
+            r   g  ta  e
+                   / \
+                  t   a
+            We say that "rgtae" is a scrambled string of "great".
+
+            Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.
+            */
+        public bool IsScramble(string s1, string s2)
+        {
+            // error cases
+            if (s1 == null || s2 == null || s1.Length != s2.Length)
+            {
+                return false;
+            }
+
+            // validation cases
+            s1 = s1.ToLowerInvariant();
+            s2 = s2.ToLowerInvariant();
+
+            int[] charCount = new int[26];
+            foreach (int i in charCount)
+            {
+                charCount[i] = 0;
+            }
+
+            foreach (char ch in s1)
+            {
+                charCount[ch - 'a']++;
+            }
+
+            foreach (char ch in s2)
+            {
+                charCount[ch - 'a']--;
+            }
+
+            foreach (int i in charCount)
+            {
+                if (charCount[i] != 0)
+                {
+                    return false;
+                }
+            }
+
+            // call inner recursive method
+            return isScrambleInner(s1, s2);
+        }
+
+        private bool isScrambleInner(string s1, string s2)
+        {
+            // base case
+            if (s1.Length != s2.Length)
+                return false;
+
+            if (s1.Length == 1)
+            {
+                if (s1[0] == s2[0])
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            // algo
+            int len = s1.Length;
+            for (int i = 1; i < len; i++)
+            {
+                if (isScrambleInner(s1.Substring(0, i), s2.Substring(0, i)) && isScrambleInner(s1.Substring(i), s2.Substring(i)))
+                {
+                    return true;
+                }
+
+                if (isScrambleInner(s1.Substring(0, i), s2.Substring(len - i)) && isScrambleInner(s1.Substring(i), s2.Substring(0, len - i)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /*
+            https://leetcode.com/problems/the-skyline-problem/
+            A city's skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Now suppose you are given the locations and height of all the buildings as shown on a cityscape photo (Figure A), write a program to output the skyline formed by these buildings collectively (Figure B).
+            The geometric information of each building is represented by a triplet of integers [Li, Ri, Hi], where Li and Ri are the x coordinates of the left and right edge of the ith building, respectively, and Hi is its height. It is guaranteed that 0 ≤ Li, Ri ≤ INT_MAX, 0 < Hi ≤ INT_MAX, and Ri - Li > 0. You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.
+            For instance, the dimensions of all buildings in Figure A are recorded as: [ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] .
+            The output is a list of "key points" (red dots in Figure B) in the format of [ [x1,y1], [x2, y2], [x3, y3], ... ] that uniquely defines a skyline. A key point is the left endpoint of a horizontal line segment. Note that the last key point, where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.
+            For instance, the skyline in Figure B should be represented as:[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ].
+         */
+        public IList<int[]> GetSkyline(int[,] buildings)
+        {
+            List<Building> listOfBuildings = new List<Building>();
+            List<Tuple<int, int>> listOfEdges = new List<Tuple<int, int>>();
+
+            int numBuildings = buildings.GetLength(0);
+            for (int i = 0; i < numBuildings; i++)
+            {
+                Building b = new Building(buildings[i, 0], buildings[i, 1], buildings[i, 2]);
+                listOfBuildings.Add(b);
+            }
+
+            //Sort by left value
+            listOfBuildings.Sort(BuildingCompare);
+
+            foreach (Building b in listOfBuildings)
+            {
+                List<Building> buildingsCopy = new List<Building>();
+                foreach (Building bldg in listOfBuildings)
+                {
+                    buildingsCopy.Add(bldg);
+                }
+                buildingsCopy.Remove(b);
+
+                if (isBuildingEdgeVisible(buildingsCopy, b.left, b.height))
+                {
+                    listOfEdges.Add(new Tuple<int, int>(b.left, b.height));
+                }
+                if (isBuildingEdgeVisible(buildingsCopy, b.right, b.height))
+                {
+                    listOfEdges.Add(new Tuple<int, int>(b.right, b.height));
+                }
+            }
+
+            foreach (Tuple<int, int> t in listOfEdges)
+            {
+                Console.WriteLine(t.Item1 + "  " + t.Item2);
+            }
+
+            Console.WriteLine();
+            Console.WriteLine();
+
+            List<Tuple<int, int>> skyline = new List<Tuple<int, int>>();
+            // Collapse
+            skyline.Add(listOfEdges[0]);
+            for (int i = 1; i < listOfEdges.Count(); i++)
+            {
+                Tuple<int, int> t = listOfEdges[i];
+                Tuple<int, int> prevT = listOfEdges[i - 1];
+                if (t.Item2 == prevT.Item2)
+                {
+                    continue;
+                }
+                skyline.Add(t);
+            }
+
+            foreach (Tuple<int, int> t in skyline)
+            {
+                Console.WriteLine(t.Item1 + "  " + t.Item2);
+            }
+
+            return null;
+
+        }
+
+        private int BuildingCompare(Building a, Building b)
+        {
+            return (a.left - b.left);
+        }
+
+        private bool isBuildingEdgeVisible(List<Building> listOfBuildings, int edge, int height)
+        {
+            foreach (Building b in listOfBuildings)
+            {
+
+                if (b.left > edge)
+                    break;
+
+                if (b.left <= edge && b.right >= edge && b.height >= height)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // https://leetcode.com/problems/insert-interval/
