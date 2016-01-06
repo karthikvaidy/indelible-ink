@@ -9,6 +9,8 @@ namespace MyRandomSamples
 {
     internal class Program
     {
+        #region Classes and Enums
+
         public ColorsEnum color;
 
         public enum ColorsEnum
@@ -681,6 +683,18 @@ namespace MyRandomSamples
             }
         }
 
+        public class Interval
+        {
+            public int start;
+            public int end;
+            public Interval() { start = 0; end = 0; }
+            public Interval(int s, int e) { start = s; end = e; }
+            public override string ToString()
+            {
+                return "[" + start + "," + end + "]";
+            }
+        }
+
         public class Building
         {
             public int left;
@@ -705,6 +719,8 @@ namespace MyRandomSamples
             }
 
         }
+
+#endregion
 
         private static void Main(string[] args)
         {
@@ -1147,7 +1163,6 @@ namespace MyRandomSamples
             }
         }
 
-
         /*
         https://leetcode.com/problems/sliding-window-maximum/
 
@@ -1172,12 +1187,9 @@ namespace MyRandomSamples
         Follow up:
         Could you solve it in linear time?
         */
-
         public int[] slidingWindowMax(int[] array, int w)
         {
             int[] ans = new int[array.Length - w + 1];
-            // Queue stores indices of array, and values are in decreasing order.
-            // In this way, the top element in queue is the max in window
             LinkedList<int> q = new LinkedList<int>();
 
             for (int i = 0; i < array.Length; i++)
@@ -1185,20 +1197,18 @@ namespace MyRandomSamples
                 // 1. remove element from head until first number within window
                 if (q.Count != 0 && q.ElementAt(0) + w <= i)
                 {
-                    // it's OK to change 'while' to 'if' in the line above
-                    // cuz we actually remove 1 element at most
                     q.RemoveFirst();
                 }
-                // 2. before inserting i into queue, remove from the tail of the
-                // queue indices with smaller value they array[i]
+
+                // 2. before inserting i into queue, remove from the tail of the queue indices with smaller value they array[i]
                 while (q.Count !=0 && array[q.ElementAt(q.Count - 1)] <= array[i])
                 {
                     int val = q.ElementAt(q.Count - 1);
                     q.Remove(val);
                 }
                 q.AddLast(i);
-                // 3. set the max value in the window (always the top number in
-                // queue)
+
+                // 3. set the max value in the window 
                 if (i + 1 >= w)
                 {
                     ans[i + 1 - w] = array[q.ElementAt(0)];
@@ -1427,18 +1437,6 @@ namespace MyRandomSamples
 
         This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
         */
-        public class Interval
-        {
-            public int start;
-            public int end;
-            public Interval() { start = 0; end = 0; }
-            public Interval(int s, int e) { start = s; end = e; }
-            public override string ToString()
-            {
-                return "[" + start + "," + end + "]";
-            }
-        }
-
         public IList<Interval> Insert(IList<Interval> intervals, Interval newInterval)
         {
             // error checks
@@ -1497,7 +1495,6 @@ namespace MyRandomSamples
 
             return intervals;
         }
-
 
         public bool isBinaryPalindrome(int x)
         {
@@ -1574,7 +1571,6 @@ namespace MyRandomSamples
 
             return true;
         }
-
 
         /*
             You are given two arrays of length M and N having elements in range 0-9.
