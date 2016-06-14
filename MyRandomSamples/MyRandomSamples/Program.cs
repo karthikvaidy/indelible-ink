@@ -1156,12 +1156,463 @@ namespace MyRandomSamples
 
             //Console.WriteLine(p.IsScramble("great", "rgtae"));
 
-            int[] result = p.slidingWindowMax(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3);
-            foreach (int i in result)
+            //int[] result = p.slidingWindowMax(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3);
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //List<string> combos = p.getWordCombinations("1234");
+
+            //foreach (string str in combos)
+            //{
+            //    Console.WriteLine(str);
+            //}
+
+            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
+            dictionary.Add("i", true);
+            dictionary.Add("in", true);
+            dictionary.Add("int", true);
+            dictionary.Add("this", true);
+            dictionary.Add("is", true);
+            dictionary.Add("his", true);
+            dictionary.Add("case", true);
+
+            ResultSet rs = p.parseString("inthiscase", dictionary);
+            Console.WriteLine(rs.numUnmatched + " " + rs.parsedString);
+
+            Node two = new Node(2);
+            Node eight = new Node(8);
+            eight.left = two;
+            Node six = new Node(6);
+            Node negthree = new Node(-3);
+            negthree.left = eight;
+            negthree.right = six;
+            Node one = new Node(1);
+            Node three = new Node(3);
+            three.left = one;
+            Node negOne = new Node(-1);
+            one.left = negOne;
+            Node root = new Node(2);
+            root.left = three;
+            root.right = negthree;
+
+            p.getPathsSum(root, 5);
+        }
+
+        public double getMaxRange(double[] prices)
+        {
+            if (prices == null || prices.Length < 2)
+                return 0.0;
+
+            double maxProfit = Double.MinValue;
+            double currMin = prices[0];
+            for (int i = 1; i < prices.Length; i++)
             {
-                Console.WriteLine(i);
+                double profit = prices[i] - currMin;
+
+                if (profit > maxProfit)
+                {
+                    maxProfit = profit;
+                }
+
+                if (prices[i] < currMin)
+                    currMin = prices[i];
+            }
+
+            return maxProfit;
+        }
+
+        public List<List<int>> getPathsSum(Node root, int sum)
+        {
+            List<List<int>> paths = new List<List<int>>();
+
+            getPathsSumInner(root, sum, 0, paths, new List<int>());
+
+            foreach (List<int> path in paths)
+            {
+                foreach (int i in path)
+                {
+                    Console.Write(i + " ");
+                }
+                Console.WriteLine();
+            }
+
+            return paths;
+        }
+
+        private void getPathsSumInner(Node root, int sum, int currSum, List<List<int>> paths, List<int> currPath)
+        {
+            if (root == null)
+                return;
+
+            currPath.Add(root.Value);
+            currSum += root.Value;
+
+            if (currSum == sum)
+            {
+                List<int> path = new List<int>();
+                foreach (int i in currPath)
+                    path.Add(i);
+                paths.Add(path);
+            }
+
+            List<int> path1 = new List<int>();
+            List<int> path2 = new List<int>();
+            foreach (int i in currPath)
+            {
+                path1.Add(i);
+                path2.Add(i);
+            }
+
+            getPathsSumInner(root.left, sum, currSum, paths, path1);
+            getPathsSumInner(root.right, sum, currSum, paths, path2);
+        }
+
+        public class Node
+        {
+            public int Value;
+            public Node left;
+            public Node right;
+            public Node(int x)
+            {
+                Value = x;
             }
         }
+
+        public string reverseWords(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+                return s;
+
+            char[] stringAsArray = s.ToCharArray();
+
+            for (int i = 0; i < stringAsArray.Length / 2; i++)
+            {
+                char temp = stringAsArray[i];
+                stringAsArray[i] = stringAsArray[s.Length - i - 1];
+                stringAsArray[s.Length - i - 1] = temp;
+            }
+
+            int ctr = 0;
+            int startIndex = -1;
+            int endIndex = -1;
+
+            while (ctr != stringAsArray.Length)
+            {
+                if (stringAsArray[ctr] != ' ')
+                {
+                    if (startIndex == -1)
+                    {
+                        startIndex = ctr;
+                    }
+                }
+                else
+                {
+                    endIndex = ctr - 1;
+                }
+
+                if (startIndex >= 0 && endIndex >= 0 && startIndex < endIndex)
+                {
+                    int numChar = endIndex - startIndex;
+                    for (int i = 0; i <= numChar / 2; i++)
+                    {
+                        char temp = stringAsArray[startIndex + i];
+                        stringAsArray[startIndex + i] = stringAsArray[endIndex - i];
+                        stringAsArray[endIndex - i] = temp;
+                    }
+                    startIndex = -1;
+                }
+
+                ctr++;
+            }
+
+            endIndex = ctr - 1;
+
+            if (startIndex < endIndex && startIndex >= 0)
+            {
+                endIndex = s.Length - 1;
+
+                int numChar = endIndex - startIndex;
+                for (int i = 0; i <= numChar / 2; i++)
+                {
+                    char temp = stringAsArray[startIndex + i];
+                    stringAsArray[startIndex + i] = stringAsArray[endIndex - i];
+                    stringAsArray[endIndex - i] = temp;
+                }
+            }
+
+            return new string(stringAsArray);
+        }
+
+        public ResultSet parseString(string text, Dictionary<string, bool> dictionary)
+        {
+            if (string.IsNullOrEmpty(text))
+                return null;
+
+            Dictionary<string, ResultSet> resultSetMemo = new Dictionary<string, ResultSet>();
+            ResultSet result = this.parseText(text, dictionary, resultSetMemo);
+
+            return result;
+        }
+
+        private ResultSet parseText(string text, Dictionary<string, bool> dictionary, Dictionary<string, ResultSet> resultSetMemo)
+        {
+            if (text.Length == 0)
+            {
+                return new ResultSet(0, "");
+            }
+            else if (resultSetMemo.ContainsKey(text))
+            {
+                return resultSetMemo[text];
+            }
+
+            ResultSet result = new ResultSet(text.Length, text);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < text.Length; i++)
+            {
+                sb.Append(text[i]);
+                ResultSet rs = this.parseText(text.Substring(i+1), dictionary, resultSetMemo);
+                int num = sb.ToString().Length;
+                if (dictionary.ContainsKey(sb.ToString()))
+                {
+                    num = 0;
+                }
+
+                if (num + rs.numUnmatched < result.numUnmatched)
+                {
+                    result.numUnmatched = num + rs.numUnmatched;
+                    result.parsedString = sb.ToString() +" "+ rs.parsedString;
+
+                    if (result.numUnmatched == 0)
+                        break;
+                }
+            }
+            resultSetMemo.Add(text, result);
+
+            return result;
+        }
+
+        public class ResultSet
+        {
+            public int numUnmatched;
+            public string parsedString;
+            public ResultSet(int num, string ps)
+            {
+                this.numUnmatched = num;
+                this.parsedString = ps;
+            }
+        }
+
+
+        public List<string> getWordCombinations(string number)
+        {
+            if (string.IsNullOrEmpty(number))
+                return new List<string>();
+
+            List<string> combinations = new List<string>();
+
+            if (number.Length == 1)
+            {
+
+                return new List<string>() { ((char)('a' + (int)Char.GetNumericValue(number[0]))).ToString() };
+            }
+
+            int n = number[0] - '0';
+            List<string> combinations1 = getWordCombinations(number.Substring(1));
+            List<string> combinedCombinations1 = new List<string>();
+            foreach (string s in combinations1)
+            {
+                string appendedString = ((char)('a' + n)).ToString() + s;
+                combinedCombinations1.Add(appendedString);
+            }
+
+            combinations.AddRange(combinedCombinations1);
+
+            if (number.Length > 1)
+            {
+                int m = number[1] - '0';
+                int num = n * 10 + m;
+                if (num < 26)
+                {
+                    List<string> combinations2 = getWordCombinations(number.Substring(2));
+                    List<string> combinedCombinations2 = new List<string>();
+                    foreach (string s in combinations2)
+                    {
+                        string appendedString = ((char)('a' + num)).ToString() + s;
+                        combinedCombinations2.Add(appendedString);
+                    }
+
+                    combinations.AddRange(combinedCombinations2);
+                }
+            }
+
+            return combinations;
+        }
+
+        // Solution s = new Solution();
+        //Console.WriteLine(s.MaxSumSubsequence(new int[] {3,-1,0,-4,0,-1,-4,2,4,1,1,3,1,0,-2,-3,-3}));
+        //Console.WriteLine(s.MaxSumSubsequence(new int[] {-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        // s.maxIncreasingSubsequence(new List<int>(){5,6,7,1,2,3,4,2,4});
+                                                   // 0,0,0,3,3,3,3,7,7
+        // s.maxIncreasingSubsequence(new List<int>(){5});
+        // Console.WriteLine(s.rodCut(8, new int[]{1,5,8,9,10,17,17,20}));
+
+        // cut length long rod into smaller pieces so as to optimize total price
+        public int rodCut(int length, int[] prices)
+        {
+            if (length > prices.Length)
+                return 0;
+
+            Dictionary<int, int> memoPriceForLen = new Dictionary<int, int>();
+
+            return this.rodCutInner(length, prices, memoPriceForLen);
+        }
+
+        private int rodCutInner(int length, int[] prices, Dictionary<int, int> memoPriceForLen)
+        {
+            if (memoPriceForLen.ContainsKey(length))
+                return memoPriceForLen[length];
+
+            if (length <= 0)
+                return 0;
+
+            int maxPrice = 0;
+            for (int i = 0; i < length; i++)
+            {
+                int price = prices[i] + rodCutInner(length - i - 1, prices, memoPriceForLen);
+                if (price > maxPrice)
+                {
+                    maxPrice = price;
+                }
+            }
+            memoPriceForLen.Add(length, maxPrice);
+
+            return maxPrice;
+        }
+
+        public void maxIncreasingSubsequence(List<int> nums)
+        {
+            if (nums == null || nums.Count == 0)
+                return;
+
+            if (nums.Count == 1)
+            {
+                Console.WriteLine(nums[0]);
+            }
+
+            List<int> indexes = new List<int>();
+            indexes.Add(0);
+            int maxLen = 1;
+            int endIndex = 0;
+            for (int i = 1; i < nums.Count; i++)
+            {
+                if (nums[i] > nums[i - 1])
+                {
+                    int lastNum = indexes[indexes.Count - 1];
+                    indexes.Add(lastNum);
+                    int tempLen = i - indexes[indexes.Count - 1] + 1;
+                    if (tempLen > maxLen)
+                    {
+                        maxLen = tempLen;
+                        endIndex = i;
+                    }
+                }
+                else
+                {
+                    indexes.Add(i);
+                }
+            }
+
+            for (int i = endIndex - maxLen + 1; i <= endIndex; i++)
+            {
+                Console.Write(nums[i] + " ");
+            }
+        }
+
+        public int MaxSumSubsequence(int[] array)
+        {
+            if (array == null || array.Length == 0)
+                return Int32.MinValue;
+
+            int sum = 0;
+            int maxSum = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+                if (sum > maxSum)
+                    maxSum = sum;
+                if (sum < 0)
+                    sum = 0;
+            }
+            return maxSum;
+        }
+
+        public int maxZeroSubMatrix(int[,] matrix)
+        {
+            int maxSize = 0;
+
+            if (matrix == null)
+                return maxSize;
+
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+
+            int[,] memo = new int[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        if (matrix[i, j] == 0)
+                        {
+                            memo[i, j] = 1;
+                            if (maxSize < 1)
+                                maxSize = 1;
+                        }
+                        else
+                            memo[i, j] = 0;
+                    }
+                    else
+                    {
+                        if (matrix[i, j] == 0)
+                        {
+                            int d = memo[i - 1, j - 1];
+                            int u = memo[i - 1, j];
+                            int l = memo[i, j - 1];
+
+                            int min = d;
+                            if (l < d) min = l;
+                            if (u < l) min = u;
+
+                            min++;
+
+                            memo[i, j] = min;
+                            if (min > maxSize)
+                                maxSize = min;
+                        }
+                        else
+                            memo[i, j] = 0;
+                    }
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(memo[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+            return maxSize; ;
+        }
+
 
         /*
         https://leetcode.com/problems/sliding-window-maximum/
