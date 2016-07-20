@@ -1169,35 +1169,1536 @@ namespace MyRandomSamples
             //    Console.WriteLine(str);
             //}
 
-            Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
-            dictionary.Add("i", true);
-            dictionary.Add("in", true);
-            dictionary.Add("int", true);
-            dictionary.Add("this", true);
-            dictionary.Add("is", true);
-            dictionary.Add("his", true);
-            dictionary.Add("case", true);
+            //Dictionary<string, bool> dictionary = new Dictionary<string, bool>();
+            //dictionary.Add("i", true);
+            //dictionary.Add("in", true);
+            //dictionary.Add("int", true);
+            //dictionary.Add("this", true);
+            //dictionary.Add("is", true);
+            //dictionary.Add("his", true);
+            //dictionary.Add("case", true);
 
-            ResultSet rs = p.parseString("inthiscase", dictionary);
-            Console.WriteLine(rs.numUnmatched + " " + rs.parsedString);
+            //ResultSet rs = p.parseString("inthiscase", dictionary);
+            //Console.WriteLine(rs.numUnmatched + " " + rs.parsedString);
 
-            Node two = new Node(2);
-            Node eight = new Node(8);
-            eight.left = two;
-            Node six = new Node(6);
-            Node negthree = new Node(-3);
-            negthree.left = eight;
-            negthree.right = six;
-            Node one = new Node(1);
-            Node three = new Node(3);
-            three.left = one;
-            Node negOne = new Node(-1);
-            one.left = negOne;
-            Node root = new Node(2);
-            root.left = three;
-            root.right = negthree;
+            //Node two = new Node(2);
+            //Node eight = new Node(8);
+            //eight.left = two;
+            //Node six = new Node(6);
+            //Node negthree = new Node(-3);
+            //negthree.left = eight;
+            //negthree.right = six;
+            //Node one = new Node(1);
+            //Node three = new Node(3);
+            //three.left = one;
+            //Node negOne = new Node(-1);
+            //one.left = negOne;
+            //Node root = new Node(2);
+            //root.left = three;
+            //root.right = negthree;
 
-            p.getPathsSum(root, 5);
+            //p.getPathsSum(root, 5);
+
+            //Console.WriteLine(p.longestPalidrome("bananas"));
+
+            //List<List<int>> result = p.palindromePairs(new string[] { "gab", "cat", "bag", "alpha" });
+            //List<List<int>> result = p.palindromePairs(new string[] { "a", "aa", "aaa", "aaaa" });
+
+            //foreach (List<int> list in result)
+            //{
+            //    foreach (int i in list)
+            //    {
+            //        Console.Write(i + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //char[,] board = {
+            //                {'o','a','a','n'},
+            //                {'e','t','a','e'},
+            //                {'i','h','k','r'},
+            //                {'i','f','l','v'}
+            //            };
+            //string[] words = { "oath", "pea", "eat", "rain" };
+            //List<string> result = p.FindWords(board, words);
+            //foreach (string str in result)
+            //{
+            //    Console.WriteLine(str);
+            //}
+
+            //Console.WriteLine(p.sum(new int[] { 2, 12, 12 }));
+
+            //List<List<string>> paths = p.getPath("hit", "cog", new string[] { "hot", "dot", "dog", "lot", "log" });
+
+            //if (paths != null)
+            //{
+            //    foreach (List<string> path in paths)
+            //    {
+            //        foreach (string str in path)
+            //        {
+            //            Console.Write(str + " ");
+            //        }
+            //        Console.WriteLine();
+            //    }
+            //}
+
+            //Console.WriteLine(p.isNumberPalidrome(1234));
+            //Console.WriteLine(p.isNumberPalidrome(4321234));
+            //Console.WriteLine(p.isNumberPalidrome(43211234));
+            //Console.WriteLine(p.isNumberPalidrome(0));
+            //Console.WriteLine(p.isNumberPalidrome(-1234));
+
+            //List<List<int>> collection = new List<List<int>>
+            //                         { new List<int> {},
+            //                           new List<int> {1,2},
+            //                           new List<int> {3},
+            //                           new List<int> {},
+            //                           new List<int> {4,5,6}
+            //                         };
+
+            //Flattener f = new Flattener(collection);
+
+            //Console.WriteLine(f.getNext());
+            //Console.WriteLine(f.getNext());
+            //Console.WriteLine(f.getNext());
+            //Console.WriteLine(f.getNext());
+            //Console.WriteLine(f.getNext());
+            //Console.WriteLine(f.getNext());
+
+            //int[] arr = {1, 3, 6, 1, 0, 9};
+            //Console.WriteLine(p.minJumpsPractice(arr));
+
+            //int inf = Int32.MaxValue;
+            //int[,] map = {{inf,-1,0,inf},
+            //                 {inf,inf,inf,-1},
+            //                 {inf,-1,inf,-1},
+            //                 {0,-1,inf,inf}};
+            //p.getMinGateDistance(map);
+
+            //for (int i = 0; i < map.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < map.GetLength(1); j++)
+            //    {
+            //        Console.Write(map[i, j] + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //List<List<string>> splits = p.getWordsSplit("catsanddog", new List<string> { "cat", "cats", "and", "sand", "dog" });
+
+            //foreach (List<string> list in splits)
+            //{
+            //    foreach (string s in list)
+            //    {
+            //        Console.Write(s + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //List<List<int>> factors = p.FactorCombinations(12);
+
+            //foreach (var list in factors)
+            //{
+            //    foreach (int i in list)
+            //    {
+            //        Console.Write(i + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //int[][] map = p.getLockerDistanceGrid(3, 5, new int[1] { 1 }, new int[1] { 1 });
+            //int[][] map = p.getLockerDistanceGrid(5, 7, new int[2] { 2, 4 }, new int[2] { 3, 7 });
+
+            //for (int i = 0; i < 7; i++)
+            //{
+            //    for (int j = 0; j < 5; j++)
+            //    {
+            //        Console.Write(map[i][j] + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //List<string> palindromes = p.palindromeCombinations("aaabb");
+
+            //foreach (string str in palindromes)
+            //{
+            //    Console.WriteLine(str);
+            //}
+
+            //p.getOptimumLocation(5, 5, new int[,] { { 0, 0 }, { 0, 4 }, { 4, 2 } }, null);
+            //p.getOptimumLocation(5, 5, new int[,] { { 0, 0 }, { 0, 4 }, { 4, 2 } }, new int[,] { { 0, 2 } });
+
+            //int num = p.createMaxNumber(new int[] { 3, 4, 6, 5 }, new int[] { 9, 1, 2, 5, 8, 3 }, 5);
+            //Console.WriteLine(num);
+
+            //Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+
+            Node root = p.buildSampleTree();
+            p.printTreeZigZag(root);
+        }
+
+        public void printTreeZigZag(Node root)
+        {
+            if (root == null)
+                return;
+
+            List<List<Node>> nodesList = new List<List<Node>>();
+
+            List<Node> nodes = new List<Node>();
+            nodes.Add(root);
+            
+            List<Node> children = new List<Node>();
+            int ctr = 0;
+            while (nodes.Count != 0)
+            {
+                foreach (Node n in nodes)
+                {
+                    if (n.leftNode != null)
+                        children.Add(n.leftNode);
+                    if (n.rightNode != null)
+                        children.Add(n.rightNode);
+                }
+
+                List<Node> nodesCopy = new List<Node>();
+                foreach (Node n in nodes)
+                {
+                    nodesCopy.Add(n);
+                }
+                
+                if (ctr % 2 == 1)
+                    nodesCopy.Reverse();
+                
+                nodesList.Add(nodesCopy);
+
+                nodes.Clear();
+
+                foreach (Node n in children)
+                {
+                    nodes.Add(n);
+                }
+
+                children = new List<Node>();
+                ctr++;
+            }
+
+            for (int i = 0; i < nodesList.Count; i++)
+            {
+                foreach (Node n in nodesList[i])
+                {
+                    Console.Write(n.value + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public string AlienDictionary(string[] listOfWords)
+        {
+            if (listOfWords == null || listOfWords.Length == 0)
+            {
+                return null;
+            }
+            else if (listOfWords.Length < 2)
+            {
+                return listOfWords[0];
+            }
+
+            TopologicalSortNew topologicalSort = new TopologicalSortNew();
+
+            for (int i = 0; i < listOfWords.Length - 1; i++)
+            {
+                string a = listOfWords[i];
+                string b = listOfWords[i + 1];
+                int x = 0;
+
+                while (x < a.Length && x < b.Length)
+                {
+                    if (a[x] != b[x])
+                    {
+                        topologicalSort.AddNodes(a[x], b[x]);
+                        break;
+                    }
+                    x++;
+                }
+                //What should be added when we run out of chars in one word?!
+                //if (x < a.Length - 1)
+                //{
+                //}
+                //else if (x < b.Length - 1)
+                //{
+                //}
+            }
+
+            return topologicalSort.DoTopologicalSort();
+        }
+
+        public class TopologicalSortNode
+        {
+            public char value;
+            public List<TopologicalSortNode> incomingNodes;
+            public List<TopologicalSortNode> outgoingNodes;
+
+            public TopologicalSortNode(char ch)
+            {
+                this.value = ch;
+                incomingNodes = new List<TopologicalSortNode>();
+                outgoingNodes = new List<TopologicalSortNode>();
+            }
+        }
+
+        public class TopologicalSortNew
+        {
+            Dictionary<char, TopologicalSortNode> dictionaryOfNodes;
+            List<TopologicalSortNode> listOfNodes;
+
+            public TopologicalSortNew()
+            {
+                dictionaryOfNodes = new Dictionary<char, TopologicalSortNode>();
+                listOfNodes = new List<TopologicalSortNode>();
+            }
+
+            public void AddNodes(char a, char b)
+            {
+                if (!dictionaryOfNodes.ContainsKey(a))
+                {
+                    TopologicalSortNode node = new TopologicalSortNode(a);
+                    dictionaryOfNodes.Add(a, node);
+                    listOfNodes.Add(node);
+                }
+                if (!dictionaryOfNodes.ContainsKey(b))
+                {
+                    TopologicalSortNode node = new TopologicalSortNode(b);
+                    dictionaryOfNodes.Add(b, node);
+                    listOfNodes.Add(node);
+                }
+
+                TopologicalSortNode node1 = dictionaryOfNodes[a];
+                TopologicalSortNode node2 = dictionaryOfNodes[b];
+
+                node1.outgoingNodes.Add(node2);
+                node2.incomingNodes.Add(node1);
+            }
+
+            public string DoTopologicalSort()
+            {
+                Queue<char> processingQueue = new Queue<char>();
+
+                foreach (var node in listOfNodes)
+                {
+                    if (node.incomingNodes.Count == 0)
+                    {
+                        processingQueue.Enqueue(node.value);
+                    }
+                }
+
+                StringBuilder sb = new StringBuilder();
+
+                while (processingQueue.Count > 0)
+                {
+                    char ch = processingQueue.Dequeue();
+
+                    //process node
+                    sb.Append(ch);
+
+                    TopologicalSortNode node = dictionaryOfNodes[ch];
+
+                    foreach (var n in node.outgoingNodes)
+                    {
+                        n.incomingNodes.Remove(node);
+
+                        if (n.incomingNodes.Count == 0)
+                        {
+                            processingQueue.Enqueue(n.value);
+                        }
+                    }
+
+                    dictionaryOfNodes.Remove(ch);
+                    listOfNodes.Remove(node);
+                }
+
+                if (listOfNodes.Count != 0)
+                {
+                    return string.Empty;
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        public int createMaxNumber(int[] array1, int[] array2, int k)
+        {
+            List<int> numbers = new List<int>();
+            this.createMaxNumberHelper(array1, array2, 0, 0, k, new List<int>(), numbers);
+            numbers.Sort();
+            return numbers[numbers.Count - 1];
+        }
+
+        private void createMaxNumberHelper(int[] array1, int[] array2, int i, int j, int k, List<int> currList, List<int> numbers)
+        {
+            if (currList.Count == k)
+            {
+                int num = 0;
+                int ctr = k - 1;
+                foreach (int n in currList)
+                {
+                    num += (int)(Math.Pow(10, ctr--) * n);
+                }
+
+                numbers.Add(num);
+                Console.WriteLine(numbers.Count);
+                return;
+            }
+
+            List<int> currListCopy1 = new List<int>();
+            List<int> currListCopy2 = new List<int>();
+            List<int> currListCopy3 = new List<int>();
+
+            foreach (int num in currList)
+            {
+                currListCopy1.Add(num);
+                currListCopy2.Add(num);
+                currListCopy3.Add(num);
+            }
+
+            if (i < array1.Length)
+            {
+                currListCopy1.Add(array1[i]);
+                createMaxNumberHelper(array1, array2, i + 1, j, k, currListCopy1, numbers);
+            }
+            if (j < array2.Length)
+            {
+                currListCopy2.Add(array2[j]);
+                createMaxNumberHelper(array1, array2, i, j + 1, k, currListCopy2, numbers);
+            }
+
+            createMaxNumberHelper(array1, array2, i + 1, j + 1, k, currListCopy3, numbers);
+        }
+
+        public void getOptimumLocation(int rows, int cols, int[,] startingPoints, int[,] obstacles)
+        {
+            if (rows <= 0 || cols <= 0)
+                return;
+
+            int[,] map = new int[rows, cols];
+
+            int pointsLen = startingPoints.GetLength(0);
+
+            Queue<MapNode> executionChain = new Queue<MapNode>();
+            bool[, ,] visited = new bool[rows, cols, pointsLen];
+            int[, ,] distanceMap = new int[rows, cols, pointsLen];
+
+            if (obstacles != null)
+            {
+                for (int i = 0; i < obstacles.GetLength(0); i++)
+                {
+                    for (int j = 0; j < pointsLen; j++)
+                    {
+                        visited[obstacles[i, 0], obstacles[i, 1], j] = true;
+                        distanceMap[obstacles[i, 0], obstacles[i, 1], j] = rows + cols;
+                    }
+                }
+            }
+
+            for(int i=0;i<pointsLen;i++)
+            {
+                executionChain.Enqueue(new MapNode(startingPoints[i, 0], startingPoints[i, 1], 0, i));
+                for (int j = 0; j < pointsLen; j++)
+                {
+                    distanceMap[startingPoints[i, 0], startingPoints[i, 1], j] = (rows + cols);
+                }
+            }
+
+            while (executionChain.Count != 0)
+            {
+                MapNode node = executionChain.Dequeue();
+
+                int row = node.row;
+                int col = node.col;
+                int dis = node.dis;
+                int num = node.houseNum;
+
+                if (row >= 0 && row < rows && col >= 0 && col < cols && visited[row, col, num] == false)
+                {
+                    executionChain.Enqueue(new MapNode(row - 1, col, dis + 1, num));
+                    executionChain.Enqueue(new MapNode(row + 1, col, dis + 1, num));
+                    executionChain.Enqueue(new MapNode(row, col - 1, dis + 1, num));
+                    executionChain.Enqueue(new MapNode(row, col + 1, dis + 1, num));
+
+                    distanceMap[row, col, num] = dis + 1;
+                    visited[row, col, num] = true;
+                }
+            }
+
+            int min = Int32.MaxValue;
+            int minR = 0;
+            int minC = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    int totDist = 0;
+                    for (int k = 0; k < pointsLen; k++)
+                    {
+                        totDist += distanceMap[i, j, k];
+                    }
+
+                    if (min > totDist)
+                    {
+                        min = totDist;
+                        minR = i;
+                        minC = j;
+                    }
+                }
+            }
+
+            Console.WriteLine(min + " " + minR + " " + minC);
+        }
+
+        public bool canBePalindrome(string s)
+        {
+            if (s == null)
+                return false;
+
+            int[] chars = new int[26];
+            foreach (char ch in s)
+            {
+                chars[ch - 'a']++;
+            }
+
+            bool foundOneOddChar = false;
+            for (int i = 0; i < 26; i++)
+            {
+                if (chars[i] % 2 != 0)
+                {
+                    if (foundOneOddChar == true)
+                        return false;
+                    foundOneOddChar = true;
+                }
+            }
+
+            return true;
+        }
+
+        public List<string> palindromeCombinations(string s)
+        {
+            if (!canBePalindrome(s))
+                return null;
+
+            int[] chars = new int[26];
+            foreach (char ch in s)
+            {
+                chars[ch - 'a']++;
+            }
+
+            Dictionary<string, bool> dict = new Dictionary<string, bool>();
+            palindromeCombine(chars, new char[s.Length], dict, 0, s.Length - 1);
+
+            return dict.Select(kvp => kvp.Key).ToList();
+        }
+
+        private void palindromeCombine(int[] chars, char[] currWord, Dictionary<string, bool> palindromes, int i, int j)
+        {
+            if (i > j)
+            {
+                string word = new string(currWord);
+                if (!palindromes.ContainsKey(word))
+                {
+                    palindromes.Add(word, true);
+                }
+                return;
+            }
+
+            int[] charsCopy = new int[26];
+            for (int x = 0; x < 26; x++)
+            {
+                charsCopy[x] = chars[x];
+            }
+
+            char[] currWordCopy = new char[currWord.Length];
+            for (int y = 0; y < currWord.Length; y++)
+            {
+                currWordCopy[y] = currWord[y];
+            }
+
+            for (int x = 0; x < 26; x++)
+            {
+                if (charsCopy[x] > 0 && (charsCopy[x] % 2 == 0 || charsCopy[x] > 2))
+                {
+                    char ch = (char)('a' + x);
+                    currWordCopy[i] = ch;
+                    currWordCopy[j] = ch;
+
+                    charsCopy[x] -= 2;
+
+                    palindromeCombine(charsCopy, currWordCopy, palindromes, i + 1, j - 1);
+
+                    charsCopy[x] += 2;
+                }
+                else if (charsCopy[x] == 1)
+                {
+                    currWordCopy[i] = (char)('a' + x);
+                    palindromeCombine(charsCopy, currWordCopy, palindromes, i + 1, j - 1);
+                }
+            }
+        }
+
+        private class Location
+        {
+            public int row;
+            public int col;
+            public int dist;
+            public Location(int _x, int _y, int _d)
+            {
+                row = _x; col = _y; dist = _d;
+            }
+        }
+
+        public int[][] getLockerDistanceGrid(int cityLength, int cityWidth, int[] lockerXCoordinates, int[] lockerYCoordinates) {
+            if (cityLength <= 0 || cityWidth <= 0)
+                return null;
+
+            int numRows = cityLength;
+            int numCols = cityWidth;
+        
+            int[][] distanceMap = new int[numRows][];
+            bool[][] visited = new bool[numRows][];
+
+            for (int i = 0; i < numRows; i++)
+            {
+                distanceMap[i] = new int[numCols];
+                visited[i] = new bool[numCols];
+            }
+        
+            List<Location> locations = new List<Location>();
+            if(lockerXCoordinates.Length != lockerYCoordinates.Length)
+                return distanceMap;
+        
+            Queue<Location> queue = new Queue<Location>();
+
+            for (int i = 0; i < lockerXCoordinates.Length; i++)
+            {
+                int y = lockerYCoordinates[i] - 1;
+                int x = lockerXCoordinates[i] - 1;
+                visited[y][x] = true;
+                queue.Enqueue(new Location(y - 1, x, 1));
+                queue.Enqueue(new Location(y + 1, x, 1));
+                queue.Enqueue(new Location(y, x - 1, 1));
+                queue.Enqueue(new Location(y, x + 1, 1));
+                distanceMap[y][x] = 0;
+            }
+        
+            while(queue.Count() != 0)
+            {
+                Location l = queue.Dequeue();
+                if(l.col >=0 && l.col < numCols && l.row >= 0 && l.row < numRows && visited[l.row][l.col] == false)
+                {
+                    distanceMap[l.row][l.col] = l.dist;
+                    queue.Enqueue(new Location(l.row - 1, l.col, l.dist + 1));
+                    queue.Enqueue(new Location(l.row + 1, l.col, l.dist + 1));
+                    queue.Enqueue(new Location(l.row, l.col - 1, l.dist + 1));
+                    queue.Enqueue(new Location(l.row, l.col + 1, l.dist + 1));
+                    visited[l.row][l.col] = true;
+                }
+            }
+        
+            return distanceMap;
+        }
+
+        public List<List<int>> FactorCombinations(int n)
+        {
+            List<List<int>> factors = new List<List<int>>();
+
+            factorCombinationsInner(n, factors, new List<int>());
+
+            return factors;
+        }
+
+        private void factorCombinationsInner(int n, List<List<int>> factors, List<int> currentList)
+        {
+            if (n == 1)
+            {
+                if (currentList.Count != 1)
+                {
+                    factors.Add(currentList);
+                    currentList = new List<int>();
+                }
+                return;
+            }
+
+            for (int i = 2; i <= n ; i++)
+            {
+                if (n % i == 0)
+                {
+                    List<int> currentListCopy = new List<int>();
+                    foreach (int j in currentList)
+                    {
+                        currentListCopy.Add(j);
+                    }
+
+                    currentListCopy.Add(i);
+
+                    factorCombinationsInner(n / i, factors, currentListCopy);
+                }
+            }
+
+        }
+
+        public List<List<string>> getWordsSplit(string word, List<string> dict)
+        {
+            List<List<string>> splits = new List<List<string>>();
+
+            TrieNode root = new TrieNode();
+            for (int i = 0; i < dict.Count; i++)
+            {
+                this.addWordToTrie(root, dict[i], i);
+            }
+
+            getWorldsSplitInner(word, root, root, splits, new List<string>() , 0, 0);
+
+            return splits;
+        }
+
+        private void addWordToTrie(TrieNode root, string word, int index)
+        {
+            for (int i = 0; i < word.Length; i++)
+            {
+                if (root.next[word[i] - 'a'] == null)
+                {
+                    root.next[word[i] - 'a'] = new TrieNode();
+                }
+
+                root = root.next[word[i] - 'a'];
+            }
+            root.index = index;
+        }
+
+        private void getWorldsSplitInner(string word, TrieNode root, TrieNode currNode, List<List<string>> splits, List<string> currentSplit, int beginIndex, int currIndex)
+        {
+            if (beginIndex == word.Length)
+            {
+                splits.Add(currentSplit);
+                return;
+            }
+
+            if (currIndex >= word.Length)
+            {
+                return;
+            }
+
+            char c = word[currIndex];
+            TrieNode node = currNode.next[c - 'a'];
+            if (node != null)
+            {
+                // check if one of the valid words end here
+                if (node.index != -1)
+                {
+                    List<string> currentSplitCopy = new List<string>();
+                    foreach (string s in currentSplit)
+                    {
+                        currentSplitCopy.Add(s);
+                    }
+
+                    // if match split execution to consider word and not consider word
+                    currentSplitCopy.Add(word.Substring(beginIndex, currIndex - beginIndex + 1));
+                    this.getWorldsSplitInner(word, root, root, splits, currentSplitCopy, currIndex + 1, currIndex + 1);
+                }
+                // either case continue on with next letter in the word
+                this.getWorldsSplitInner(word, root, node, splits, currentSplit, beginIndex, currIndex + 1);
+            }
+        }
+
+        private class MapNode
+        {
+            public int row;
+            public int col;
+            public int dis;
+
+            public int houseNum;
+
+            public MapNode(int r, int c, int d)
+            {
+                row = r;
+                col = c;
+                dis = d;
+            }
+
+            public MapNode(int r, int c, int d, int h)
+            {
+                row = r;
+                col = c;
+                dis = d;
+                houseNum = h;
+            }
+        }
+
+        private void getMinGateDistance(int[,] map)
+        {
+            if (map == null)
+                return;
+
+            int rows = map.GetLength(0);
+            int cols = map.GetLength(1);
+
+            Queue<MapNode> executionChain = new Queue<MapNode>();
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (map[i, j] == 0)
+                    {
+                        executionChain.Enqueue(new MapNode(i - 1, j, 1));
+                        executionChain.Enqueue(new MapNode(i + 1, j, 1));
+                        executionChain.Enqueue(new MapNode(i, j - 1, 1));
+                        executionChain.Enqueue(new MapNode(i, j + 1, 1));
+                    }
+                }
+            }
+
+            while (executionChain.Count != 0)
+            {
+                MapNode node = executionChain.Dequeue();
+
+                if (node.row >= 0 && node.row < rows && node.col >= 0 && node.col < cols && map[node.row, node.col] == Int32.MaxValue)
+                {
+                    map[node.row, node.col] = node.dis;
+                    executionChain.Enqueue(new MapNode(node.row - 1, node.col, node.dis + 1));
+                    executionChain.Enqueue(new MapNode(node.row + 1, node.col, node.dis + 1));
+                    executionChain.Enqueue(new MapNode(node.row, node.col - 1, node.dis + 1));
+                    executionChain.Enqueue(new MapNode(node.row, node.col + 1, node.dis + 1));
+                }
+            }
+        }
+
+        private int min(int x, int y) 
+        { 
+            return (x < y)? x: y; 
+        }
+ 
+        // Returns minimum number of jumps to reach arr[n-1] from arr[0]
+        public int minJumps(int[] arr)
+        {
+            int n = arr.Length;
+            int[] jumps = new int[n];  // jumps[n-1] will hold the result
+            int i, j;
+
+            if (n == 0 || arr[0] == 0)
+                return Int32.MaxValue;
+
+            jumps[0] = 0;
+
+            // Find the minimum number of jumps to reach arr[i]
+            // from arr[0], and assign this value to jumps[i]
+            for (i = 1; i < n; i++)
+            {
+                jumps[i] = Int32.MaxValue;
+                for (j = 0; j < i; j++)
+                {
+                    if (i <= j + arr[j] && jumps[j] != Int32.MaxValue)
+                    {
+                        jumps[i] = min(jumps[i], jumps[j] + 1);
+                        break;
+                    }
+                }
+            }
+
+            foreach (int q in jumps)
+            {
+                Console.Write(q + " ");
+            }
+
+            return jumps[n - 1];
+        }
+
+        public int minJumpsDP(int[] arr)
+        {
+            int n = arr.Length;
+            int[] jumps = new int[n];  // jumps[0] will hold the result
+            int min;
+
+            // Minimum number of jumps needed to reach last element
+            // from last elements itself is always 0
+            jumps[n - 1] = 0;
+
+            int i, j;
+
+            // Start from the second element, move from right to left
+            // and construct the jumps[] array where jumps[i] represents
+            // minimum number of jumps needed to reach arr[n-1] from arr[i]
+            for (i = n - 2; i >= 0; i--)
+            {
+                // If arr[i] is 0 then arr[n-1] can't be reached from here
+                if (arr[i] == 0)
+                    jumps[i] = Int32.MaxValue;
+
+                // If we can direcly reach to the end point from here then
+                // jumps[i] is 1
+                else if (arr[i] >= n - i - 1)
+                    jumps[i] = 1;
+
+                // Otherwise, to find out the minimum number of jumps needed
+                // to reach arr[n-1], check all the points reachable from here
+                // and jumps[] value for those points
+                else
+                {
+                    min = Int32.MaxValue;  // initialize min value
+
+                    // following loop checks with all reachable points and
+                    // takes the minimum
+                    for (j = i + 1; j < n && j <= arr[i] + i; j++)
+                    {
+                        if (min > jumps[j])
+                            min = jumps[j];
+                    }
+
+                    // Handle overflow 
+                    if (min != Int32.MaxValue)
+                        jumps[i] = min + 1;
+                    else
+                        jumps[i] = min; // or INT_MAX
+                }
+            }
+
+            foreach (int q in jumps)
+            {
+                Console.Write(q + " ");
+            }
+
+            return jumps[0];
+        }
+
+        public int minJumpsPractice(int[] array)
+        {
+            int n = array.Length;
+            int[] jumps = new int[n];
+            jumps[n - 1] = 0;
+
+            for (int i = n - 2; i >= 0; i--)
+            {
+                if (array[i] == 0)
+                    jumps[i] = Int32.MaxValue;
+                else if (array[i] + i + 1 >= n)
+                    jumps[i] = 1;
+                else
+                {
+                    int min = Int32.MaxValue;
+                    for (int j = 1; j <= array[i]; j++)
+                    {
+                        if (min > 1 + jumps[i + j] && jumps[i + j] != Int32.MaxValue)
+                            min = jumps[i + j] + 1;
+                    }
+                    jumps[i] = min;
+                }
+            }
+
+            foreach (int jump in jumps)
+            {
+                Console.Write(jump + " ");
+            }
+            Console.WriteLine();
+            return jumps[0];
+        }
+
+        class Flattener
+        {
+            private List<List<int>> twoDCollection = new List<List<int>>();
+            private int listNum = 0;
+            private int indexNum = 0;
+            private bool noNextElement = false;
+
+            public Flattener(List<List<int>> collection)
+            {
+                twoDCollection = collection;
+                this.advanceIterator(true);
+            }
+
+            private void advanceIterator(bool initialize)
+            {
+                while (true)
+                {
+                    if (twoDCollection.Count <= listNum)
+                    {
+                        noNextElement = true;
+                        break;
+                    }
+                    List<int> list = twoDCollection[listNum];
+                    if (initialize)
+                    {
+                        if (list.Count > 0)
+                            break;
+                        else
+                            listNum++;
+                    }
+                    else
+                    {
+                        if (list.Count > indexNum + 1)
+                        {
+                            indexNum++;
+                            break;
+                        }
+                        else
+                        {
+                            listNum++;
+                            indexNum = 0;
+                            initialize = true;
+                        }
+                    }
+                }
+            }
+
+            public int getNext()
+            {
+                if (this.noNextElement)
+                    return Int32.MinValue;
+                int num = (twoDCollection[listNum])[indexNum];
+                this.advanceIterator(false);
+                Console.WriteLine("Returning {0}, {1}, {2}", num, listNum, indexNum);
+                return num;
+            }
+        }
+
+        public bool isNumberPalidrome(int number)
+        {
+            if (number < 0)
+                return false;
+            if (number == 0)
+                return true;
+
+            int len = this.numberLength(number);
+
+            while (true)
+            {
+                if (len <= 1)
+                    break;
+                int firstDigit = (int)(number / Math.Pow(10, len - 1));
+                int lastDigit = number % 10;
+
+                if (firstDigit != lastDigit)
+                {
+                    return false;
+                }
+                number -= (int)(firstDigit * Math.Pow(10, len - 1));
+                number /= 10;
+                len -= 2;
+            }
+
+            return true;
+        }
+
+        private int numberLength(int num)
+        {
+            int len = 0;
+            while (num != 0)
+            {
+                len++;
+                num /= 10;
+            }
+
+            return len;
+        }
+
+        public List<List<string>> getPath(string start, string end, string[] dictionary)
+        {
+            Dictionary<string, bool> visited = new Dictionary<string, bool>();
+            List<string> path = new List<string>();
+            path.Add(start);
+            List<List<string>> paths = new List<List<string>>();
+
+            string[] dictionaryCopy = new string[dictionary.Length + 1];
+            for (int i = 0; i < dictionary.Length; i++)
+            {
+                dictionaryCopy[i] = dictionary[i];
+            }
+            dictionaryCopy[dictionaryCopy.Length - 1] = end;
+
+            this.getPathInner(start, end, dictionaryCopy, path, visited, paths);
+
+            return paths;
+        }
+
+        private void getPathInner(string start, string end, string[] dictionary, List<string> result, Dictionary<string, bool> visited, List<List<string>> paths)
+        {
+            List<string> options = this.getOneEditWords(start, dictionary);
+
+            if (visited.Keys.Count == dictionary.Length)
+            {
+                return;
+            }
+
+            foreach (string s in options)
+            {
+                if (s == end)
+                {
+                    List<string> resultCopy = new List<string>();
+                    foreach (string str in result)
+                    {
+                        resultCopy.Add(str);
+                    }
+                    resultCopy.Add(s);
+
+                    paths.Add(resultCopy);
+                }
+
+                if (!visited.ContainsKey(s))
+                {
+                    List<string> resultCopy = new List<string>();
+                    Dictionary<string, bool> visitedCopy = new Dictionary<string, bool>();
+                    foreach (string str in result)
+                    {
+                        resultCopy.Add(str);
+                    }
+
+                    foreach (var kvp in visited)
+                    {
+                        visitedCopy.Add(kvp.Key, kvp.Value);
+                    }
+
+                    resultCopy.Add(s);
+                    visitedCopy.Add(s, true);
+
+                    this.getPathInner(s, end, dictionary, resultCopy, visitedCopy, paths);
+                }
+            }
+        }
+
+        private List<string> getOneEditWords(string word, string[] words)
+        {
+            List<string> result = new List<string>();
+
+            foreach (string s in words)
+            {
+                if (this.oneEditAway(word, s))
+                {
+                    result.Add(s);
+                }
+            }
+
+            return result;
+        }
+
+        private bool oneEditAway(string s1, string s2)
+        {
+            int i = 0, j = 0;
+            bool foundOneDiff = false;
+            bool result = true;
+
+            while (i < s1.Length && j < s2.Length)
+            {
+                if (s1[i] != s2[j])
+                {
+                    if (foundOneDiff == true)
+                    {
+                        result = false;
+                        break;
+                    }
+                    else
+                        foundOneDiff = true;
+                }
+                i++;
+                j++;
+            }
+
+            return result;
+        }
+
+        public int sum(int[] numbers)
+        {
+            if (numbers == null || numbers.Count() == 0)
+                return Int32.MinValue; //exception?!
+
+            int length = numbers[0];
+            int sum = 0;
+
+            if (numbers.Count() != length + 1)
+                return Int32.MinValue; //exception?!
+
+            for (int i = 1; i <= length; i++)
+            {
+                sum += numbers[i];
+            }
+
+            return sum;
+        }
+
+        public List<string> FindWords(char[,] board, string[] words)
+        {
+            int boardRows = board.GetLength(0);
+            int boardCols = board.GetLength(1);
+
+            List<string> matches = new List<string>();
+
+            foreach (string word in words)
+            {
+                bool[,] visited = new bool[boardRows, boardCols];
+                if (word != null)
+                {
+                    for (int i = 0; i < boardRows; i++)
+                    {
+                        for (int j = 0; j < boardCols; j++)
+                        {
+                            if (this.isWordFound(board, word, visited, 0, boardRows, boardCols, i, j))
+                            {
+                                matches.Add(word);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return matches;
+        }
+
+        private bool isWordFound(char[,] board, string word, bool[,] visited, int index, int boardRows, int boardCols, int row, int col)
+        {
+            if (index >= word.Length)
+                return true;
+
+            char c = word[index];
+
+            if (row < 0 || row >= boardRows || col < 0 || col >= boardCols || visited[row, col] == true || board[row, col] != c)
+                return false;
+
+            visited[row, col] = true;
+
+            bool match = false;
+
+            match = this.isWordFound(board, word, visited, index + 1, boardRows, boardCols, row - 1, col);
+            if (!match)
+            {
+                match = this.isWordFound(board, word, visited, index + 1, boardRows, boardCols, row + 1, col);
+            }
+            if (!match)
+            {
+                match = this.isWordFound(board, word, visited, index + 1, boardRows, boardCols, row, col + 1);
+            }
+            if (!match)
+            {
+                match = this.isWordFound(board, word, visited, index + 1, boardRows, boardCols, row, col - 1);
+            }
+
+            visited[row, col] = false;
+
+            return match;
+        }
+
+        class TrieNode {
+            public TrieNode[] next;
+            public int index;
+            public List<int> list;
+
+            public TrieNode() {
+                next = new TrieNode[26];
+                index = -1;
+                list = new List<int>();
+            }
+        }
+
+        public List<List<int>> palindromePairs(string[] words) {
+            List<List<int>> res = new List<List<int>>();
+
+            TrieNode root = new TrieNode();
+
+            for (int i = 0; i < words.Count(); i++) {
+                addWord(root, words[i], i);
+            }
+
+            for (int i = 0; i < words.Count(); i++) {
+                search(words, i, root, res);
+            }
+
+            return res;
+        }
+
+        private void addWord(TrieNode root, string word, int index)
+        {
+            for (int i = word.Length - 1; i >= 0; i--)
+            {
+                if (root.next[word[i] - 'a'] == null)
+                {
+                    root.next[word[i] - 'a'] = new TrieNode();
+                }
+
+                if (isPalindrome(word, 0, i))
+                {
+                    root.list.Add(index);
+                }
+
+                root = root.next[word[i] - 'a'];
+            }
+
+            root.list.Add(index);
+            root.index = index;
+        }
+
+        private void search(string[] words, int i, TrieNode root, List<List<int>> list)
+        {
+            for (int j = 0; j < words[i].Length; j++)
+            {
+                if (root.index >= 0 && root.index != i && isPalindrome(words[i], j, words[i].Length - 1))
+                {
+                    list.Add(new List<int>() { i, root.index });
+                }
+
+                root = root.next[words[i][j] - 'a'];
+                if (root == null) return;
+            }
+
+            foreach (int j in root.list)
+            {
+                if (i == j) continue;
+                list.Add(new List<int>() { i, j });
+            }
+        }
+
+        private bool isPalindrome(string word, int i, int j)
+        {
+            while (i < j)
+            {
+                if (word[i++] != word[j--]) return false;
+            }
+
+            return true;
+        }
+
+        public string longestPalidrome(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            bool[,] values = new bool[s.Length, s.Length];
+
+            // main diagonal
+            for (int i = 0; i < s.Length; i++)
+            {
+                values[i, i] = true;
+            }
+
+            // one off main diagonal
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                if (s[i] == s[i + 1])
+                    values[i, i + 1] = true;
+                else
+                    values[i, i + 1] = false;
+            }
+
+            int length = s.Length;
+            int row = 0;
+            int col = 0;
+            int offset = 2;
+            int maxLen = 1;
+            int index = 0;
+
+            while (true)
+            {
+                while (row + offset < length && col + offset < length)
+                {
+                    if ((s[row] == s[col + offset]) && (values[row + 1, col + offset - 1] == true))
+                    {
+                        values[row, col + offset] = true;
+                        if (offset > maxLen)
+                        {
+                            maxLen = offset;
+                            index = col;
+                        }
+                    }
+                    row++;
+                    col++;
+                }
+
+                row = 0;
+                col = 0;
+                offset++;
+
+                if (offset == length )
+                    break;
+            }
+
+            //for (int i = 0; i < length; i++)
+            //{
+            //    for (int j = 0; j < length; j++)
+            //    {
+            //        Console.Write("{0} ", values[i, j] == true ? "T" : "F");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            return s.Substring(index , maxLen + 1);
+        }
+
+
+        public List<int> longMultiplication(List<int> num1, List<int> num2)
+        {
+            List<int> result = new List<int>();
+
+            if (num1 == null || num1.Count == 0 || num2 == null || num2.Count == 0)
+                return result;
+
+            for (int w = 0; w <= num1.Count * num2.Count; w++)
+            {
+                result.Add(0);
+            }
+
+            for (int i = 0; i < num1.Count; i++)
+            {
+                List<int> temp = new List<int>();
+                int carry = 0;
+                for (int j = 0; j < num2.Count; j++)
+                {
+                    int prod = num1[i] * num2[j];
+                    prod += carry;
+                    temp.Add(prod % 10);
+                    carry = prod / 10;
+                }
+
+                while (carry != 0)
+                {
+                    temp.Add(carry % 10);
+                    carry /= 10;
+                }
+
+                int q;
+                for (q = 0; q < temp.Count; q++)
+                {
+                    int sum = result[q + i] + temp[q] + carry;
+                    result[q + i] = sum % 10;
+                    carry = sum / 10;
+                }
+
+                while (carry != 0)
+                {
+                    int sum = result[q + i] + carry;
+                    result[q + i] = sum % 10;
+                    carry = sum / 10;
+                    q++;
+                }
+            }
+
+            while (true)
+            {
+                if (result[result.Count - 1] == 0)
+                    result.RemoveAt(result.Count - 1);
+                else
+                    break;
+            }
+
+            return result;
+        }
+
+        public List<int> getIntersection(List<int> list1, List<int> list2)
+        {
+            List<int> intersection = new List<int>();
+            if (list1 == null || list1.Count == 0 || list2 == null || list2.Count == 0)
+                return intersection;
+
+            list1.Sort();
+            list2.Sort();
+
+            int i = 0, j = 0;
+
+            while (i < list1.Count && j < list2.Count)
+            {
+                if (list1[i] == list2[j])
+                {
+                    intersection.Add(list1[i]);
+                    i++;
+                    j++;
+                }
+                else
+                {
+                    if (list1[i] > list2[j])
+                    {
+                        j++;
+                    }
+                    else if (list1[i] < list2[j])
+                    {
+                        i++;
+                    }
+                }
+            }
+
+            return intersection;
+        }
+
+        /*
+            Console.WriteLine(s.subsetSum(new List<int>{3, 34, 4, 12, 5, 2}, 9));
+            Console.WriteLine(s.subsetSum(new List<int>{3, 34, 4, 12, 5, 2}, 999));
+        
+            List<string> subStrings = s.longestCommonSubstring("ankarthiktara","aakarthikrav");
+            foreach(string str in subStrings)
+            {
+                Console.WriteLine(str);
+            }
+         */
+        public bool subsetSum(List<int> numbers, int target)
+        {
+            if (numbers == null || numbers.Count == 0 || target < 0)
+                return false;
+
+            if (target == 0)
+                return true;
+
+            List<int> modList = new List<int>();
+            foreach (int i in numbers)
+            {
+                modList.Add(i);
+            }
+            int num = modList[modList.Count - 1];
+            modList.RemoveAt(modList.Count - 1);
+
+            if (this.subsetSum(modList, target) || this.subsetSum(modList, target - num))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public List<string> longestCommonSubstring(string s1, string s2)
+        {
+            List<string> subStrings = new List<string>();
+
+            if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2))
+                return subStrings;
+
+            int max = 0;
+            int[,] values = new int[s2.Length, s1.Length];
+
+            for (int i = 0; i < s2.Length; i++)
+            {
+                for (int j = 0; j < s1.Length; j++)
+                {
+                    if (s2[i] == s1[j])
+                    {
+                        if (i == 0 || j == 0)
+                        {
+                            values[i, j] = 1;
+                        }
+                        else
+                        {
+                            values[i, j] = values[i - 1, j - 1] + 1;
+                            if (max <= values[i, j])
+                            {
+                                int temp = values[i, j];
+                                string subString = s1.Substring(j - temp + 1, temp);
+
+                                if (max == values[i, j])
+                                {
+                                    subStrings.Add(subString);
+                                }
+                                else
+                                {
+                                    max = temp;
+                                    subStrings = new List<string>();
+                                    subStrings.Add(subString);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return subStrings;
         }
 
         public double getMaxRange(double[] prices)
@@ -1223,58 +2724,58 @@ namespace MyRandomSamples
             return maxProfit;
         }
 
-        public List<List<int>> getPathsSum(Node root, int sum)
-        {
-            List<List<int>> paths = new List<List<int>>();
+        //public List<List<int>> getPathsSum(Node1 root, int sum)
+        //{
+        //    List<List<int>> paths = new List<List<int>>();
 
-            getPathsSumInner(root, sum, 0, paths, new List<int>());
+        //    getPathsSumInner(root, sum, 0, paths, new List<int>());
 
-            foreach (List<int> path in paths)
-            {
-                foreach (int i in path)
-                {
-                    Console.Write(i + " ");
-                }
-                Console.WriteLine();
-            }
+        //    foreach (List<int> path in paths)
+        //    {
+        //        foreach (int i in path)
+        //        {
+        //            Console.Write(i + " ");
+        //        }
+        //        Console.WriteLine();
+        //    }
 
-            return paths;
-        }
+        //    return paths;
+        //}
 
-        private void getPathsSumInner(Node root, int sum, int currSum, List<List<int>> paths, List<int> currPath)
-        {
-            if (root == null)
-                return;
+        //private void getPathsSumInner(Node1 root, int sum, int currSum, List<List<int>> paths, List<int> currPath)
+        //{
+        //    if (root == null)
+        //        return;
 
-            currPath.Add(root.Value);
-            currSum += root.Value;
+        //    currPath.Add(root.Value);
+        //    currSum += root.Value;
 
-            if (currSum == sum)
-            {
-                List<int> path = new List<int>();
-                foreach (int i in currPath)
-                    path.Add(i);
-                paths.Add(path);
-            }
+        //    if (currSum == sum)
+        //    {
+        //        List<int> path = new List<int>();
+        //        foreach (int i in currPath)
+        //            path.Add(i);
+        //        paths.Add(path);
+        //    }
 
-            List<int> path1 = new List<int>();
-            List<int> path2 = new List<int>();
-            foreach (int i in currPath)
-            {
-                path1.Add(i);
-                path2.Add(i);
-            }
+        //    List<int> path1 = new List<int>();
+        //    List<int> path2 = new List<int>();
+        //    foreach (int i in currPath)
+        //    {
+        //        path1.Add(i);
+        //        path2.Add(i);
+        //    }
 
-            getPathsSumInner(root.left, sum, currSum, paths, path1);
-            getPathsSumInner(root.right, sum, currSum, paths, path2);
-        }
+        //    getPathsSumInner(root.left, sum, currSum, paths, path1);
+        //    getPathsSumInner(root.right, sum, currSum, paths, path2);
+        //}
 
-        public class Node
+        public class Node1
         {
             public int Value;
             public Node left;
             public Node right;
-            public Node(int x)
+            public Node1(int x)
             {
                 Value = x;
             }
@@ -1403,7 +2904,6 @@ namespace MyRandomSamples
                 this.parsedString = ps;
             }
         }
-
 
         public List<string> getWordCombinations(string number)
         {
@@ -1558,7 +3058,6 @@ namespace MyRandomSamples
 
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
-
 
             int[,] memo = new int[rows, cols];
 
@@ -4580,7 +6079,7 @@ namespace MyRandomSamples
             return result.ToArray();
         }
 
-        public List<string> FindWords(char[,] board, string[] words)
+        public List<string> FindWordsOld(char[,] board, string[] words)
         {
             string currWord = string.Empty;
             bool[,] visited = new bool[4, 4];
