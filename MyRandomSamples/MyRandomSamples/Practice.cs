@@ -11,6 +11,7 @@ namespace MyRandomSamples
         private static void Main(string[] args)
         {
             Practice p = new Practice();
+            #region old code
             /*
             List<int> numbers = new List<int> { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
             p.MergeSort(numbers);
@@ -97,13 +98,81 @@ namespace MyRandomSamples
             //int[] nums = { 0, 1, 0, 3, 12 };
             //int[] nums = { 2, 0, 1, 0, 3, 12 };
             //int[] nums = { 0, 0, 0, 0, 0 };
-            int[] nums = { 1, 2, 3, 4, 5 };
-            p.MoveZeroes(nums);
+            //int[] nums = { 1, 2, 3, 4, 5 };
+            //p.MoveZeroes(nums);
 
-            foreach (int i in nums)
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+            #endregion
+            Console.WriteLine(p.longestPalindrome("banana"));
+        }
+
+        private string longestPalindrome(string word)
+        {
+            if (string.IsNullOrEmpty(word))
+                return word;
+
+            bool[,] memo = new bool[word.Length, word.Length];
+
+            int maxLen = 1;
+            int endIndex = 0;
+
+            // main diagonal
+            for (int i = 0; i < word.Length; i++)
             {
-                Console.WriteLine(i);
+                memo[i, i] = true;
             }
+
+            // one off main diagonal
+            for (int i = 1; i < word.Length; i++)
+            {
+                if (word[i] == word[i - 1])
+                    memo[i - 1, i] = true;
+                else
+                    memo[i - 1, i] = false;
+            }
+
+            for (int offset = 2; offset < word.Length; offset++)
+            {
+                for (int i = 0; i < word.Length - offset; i++)
+                {
+                    int row = i;
+                    int col = i + offset;
+                    if (word[row] == word[col])
+                    {
+                        if (memo[row + 1, col - 1] == true)
+                        {
+                            memo[row, col] = true;
+                            if (maxLen < col - row)
+                            {
+                                maxLen = col - row;
+                                endIndex = col;
+                            }
+                        }
+                        else
+                        {
+                            memo[row, col] = false;
+                        }
+                    }
+                    else
+                    {
+                        memo[row, col] = false;
+                    }
+                }
+            }
+
+            for (int i = 0; i < word.Length; i++)
+            {
+                for (int j = 0; j < word.Length; j++)
+                {
+                    Console.Write(memo[i,j] + "\t");
+                }
+                Console.WriteLine();
+            }
+
+            return word.Substring(endIndex - maxLen, maxLen);
 
         }
 

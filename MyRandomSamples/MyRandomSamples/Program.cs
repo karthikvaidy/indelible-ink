@@ -1079,8 +1079,6 @@ namespace MyRandomSamples
  
             */
 
-            #endregion
-
             //IsBinaryTreeBalanced
             //RotateMatrix
             //TopologicalSort
@@ -1399,13 +1397,202 @@ namespace MyRandomSamples
             //    Console.WriteLine(i);
             //}
 
-            int[,] nums = {
-                            {9,9,4},
-                            {6,6,8},
-                            {2,1,1}
-                          };
+            //int[,] nums = {
+            //                {9,9,4},
+            //                {6,6,8},
+            //                {2,1,1}
+            //              };
 
-            Console.WriteLine(p.GetLongestIncreasingPath(nums));
+            //Console.WriteLine(p.GetLongestIncreasingPath(nums));
+
+            //Console.WriteLine(p.flattenPath(@"\a\b\..\..\c\.\"));
+            //Console.WriteLine(p.flattenPath(@"..\.\a\b\..\..\c\.\"));
+
+            //Console.WriteLine(p.trapRainWater(new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
+            #endregion
+
+            Console.WriteLine(p.evaluateExpressionTest("1+2*3+4")); //11
+            Console.WriteLine(p.evaluateExpressionTest("1+2*3-4")); //3
+
+        }
+
+        public int evaluateExpressionTest(string exp)
+        {
+            if (string.IsNullOrEmpty(exp))
+                return -1; //exception!?
+
+            Stack<int> operands = new Stack<int>();
+            Stack<char> operators = new Stack<char>();
+
+            foreach (char ch in exp)
+            {
+                if (isCharNum(ch))
+                    operands.Push(ch - '0');
+                else
+                {
+                    if (operators.Count() == 0)
+                        operators.Push(ch);
+                    else
+                    {
+                        while ((operators.Count() != 0) && (getOperatorPriority(operators.Peek()) > getOperatorPriority(ch)))
+                        {
+                            if (operands.Count() < 2)
+                            {
+                                //throw exception
+                            }
+                            int num2 = operands.Pop();
+                            int num1 = operands.Pop();
+                            char op = operators.Pop();
+
+                            int val = evaluate(num1, num2, op);
+                            operands.Push(val);
+                        }
+                        operators.Push(ch);
+                    }
+                }
+            }
+
+            while (operators.Count() != 0)
+            {
+                if (operands.Count() < 2)
+                {
+                    //throw exception
+                }
+                int num2 = operands.Pop();
+                int num1 = operands.Pop();
+                char op = operators.Pop();
+
+                int val = evaluate(num1, num2, op);
+                operands.Push(val);
+            }
+
+            return operands.Pop();
+        }
+
+        private int getOperatorPriority(char op)
+        {
+            switch (op)
+            {
+                case '/': return 8; break;
+                case '*': return 6; break;
+                case '+': return 4; break;
+                case '-': return 2; break;
+                default: return -1; break; // exception!?
+            }
+        }
+
+        private bool isCharNum(char ch)
+        {
+            return ((ch - '0') >= 0 && (ch - '0') <= 9);
+        }
+
+        private int evaluate(int a, int b, char op)
+        {
+            int val = 0;
+            switch (op)
+            {
+                case '/': val = ((b == 0) ? 0 : (int)(a / b)); break;
+                case '*': val = a * b; break;
+                case '+': val = a + b; break;
+                case '-': val = a - b; break;
+                default: val = 0; break; // exception!?
+            }
+
+            return val;
+        }
+
+        public int trapRainWater(int[] array)
+        {
+            if (array == null || array.Length == 0)
+                return 0;
+
+            int[] leftMax = new int[array.Length];
+            int[] rightMax = new int[array.Length];
+            leftMax[0] = array[0];
+            rightMax[array.Length - 1] = array[array.Length - 1];
+
+            for (int i = 1; i < array.Length; i++)
+            {
+                leftMax[i] = Math.Max(leftMax[i - 1], array[i]);
+                rightMax[array.Length - i - 1] = Math.Max(rightMax[array.Length - i], array[array.Length - i - 1]);
+            }
+
+            int water = 0;
+
+            for (int i = 1; i < array.Length-1; i++)
+            {
+                water += (Math.Min(leftMax[i], rightMax[i]) - array[i]);
+            }
+
+            return water;
+        }
+
+        public string rotateString(string s, int n)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            if (n % s.Length == 0)
+                return s;
+
+            char[] chars = s.ToCharArray();
+            n = n % s.Length;
+
+            reverseChars(chars, 0, s.Length - 1);
+            reverseChars(chars, 0, n - 1);
+            reverseChars(chars, n, s.Length - 1);
+
+            return new string(chars);
+        }
+
+        private void reverseChars(char[] chars, int start, int end)
+        {
+            if (start == end)
+                return;
+
+            for (int i = start; i <= (start + end) / 2; i++)
+            {
+                char c = chars[i];
+                chars[i] = chars[end + start - i];
+                chars[end + start - i] = c;
+            }
+        }
+
+        public string flattenPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return path;
+
+            string[] tokens = path.Split('\\');
+            Stack<string> stack = new Stack<string>();
+
+            foreach (string token in tokens)
+            {
+                if (!string.IsNullOrEmpty(token))
+                {
+                    if (token == "..")
+                    {
+                        if (stack.Count > 0)
+                            stack.Pop();
+                        else
+                            stack.Push(token);
+                    }
+                    else if (token != ".")
+                        stack.Push(token);
+                }
+            }
+
+            string s = string.Empty;
+
+            while (stack.Count != 0)
+            {
+                s = stack.Pop() + @"\" + s;
+            }
+
+            if (s == string.Empty)
+                return @"\";
+
+            return s;
         }
 
         /*
