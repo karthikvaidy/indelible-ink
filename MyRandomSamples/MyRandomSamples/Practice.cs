@@ -37,10 +37,10 @@ namespace MyRandomSamples
             //Console.WriteLine(p.LongestValidParentheses("(((())))"));
             //Console.WriteLine(p.LongestValidParentheses("()()()(((()()()()"));
 
-            Console.WriteLine(p.isPatternMatch("abba", "redbluebluered"));
-            Console.WriteLine(p.isPatternMatch("aaaa", "asdasdasdasd"));
-            Console.WriteLine(p.isPatternMatch("aabb", "xyzabcxzyabc"));
-            Console.WriteLine(p.isPatternMatch("aabba", "catcatgogocat"));
+            //Console.WriteLine(p.isPatternMatch("abba", "redbluebluered"));
+            //Console.WriteLine(p.isPatternMatch("aaaa", "asdasdasdasd"));
+            //Console.WriteLine(p.isPatternMatch("aabb", "xyzabcxzyabc"));
+            //Console.WriteLine(p.isPatternMatch("aabba", "catcatgogocat"));
 
             //Console.WriteLine(p.maxProfit(new int[] { 10, 17, 5, 8, 13, 9 }));
 
@@ -55,7 +55,327 @@ namespace MyRandomSamples
             //    Console.WriteLine(i);
             //}
 
+            //Console.WriteLine(p.reverseWords("hello world"));
+            //Console.WriteLine(p.reverseWords("helloworld"));
+            //Console.WriteLine(p.reverseWords("  hello world"));
+            //Console.WriteLine(p.reverseWords("hello world  "));
+            //Console.WriteLine(p.reverseWords("hello   world"));
 
+            //int[,] matrix = { { 1, 1, 1, 1, 1 }, { 2, 2, 2, 2, 2 }, { 3, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4 }, { 5, 5, 5, 5, 5 } };
+            //int[,] matrix = { { 1, 1, 1, 1 }, { 2, 2, 2, 2 }, { 3, 3, 3, 3 }, { 4, 4, 4, 4 } };
+            //p.RotateMatrix(matrix);
+            //for (int i = 0; i < matrix.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < matrix.GetLength(1); j++)
+            //    {
+            //        Console.Write(matrix[i, j] + "\t");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //int[,] matrix = {
+            //                {0, 1, 0, 1, 0}, 
+            //                {2, 0, 0, 0, 2}, 
+            //                {0, 0, 0, 0, 0}, 
+            //                {4, 0, 0, 0, 4}, 
+            //                {5, 5, 0, 5, 5}
+            //                };
+
+            //p.maxZeroSubMatrix(matrix);
+
+            //int[] result = p.longMultiplication(new int[] { 1, 2, 3, 4 }, new int[] { 9, 1 });
+            //foreach (int i in result)
+            //{
+            //    Console.Write(i);
+            //}
+
+            //p.getParanCombination(3);
+
+            //int[] arr = { 1, 3, 6, 1, 0, 9 };
+            //Console.WriteLine(p.minJumps(arr));
+
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //int[] nums = { 0, 0, 0, 0, 0 };
+            int[] nums = { 1, 2, 3, 4, 5 };
+            p.MoveZeroes(nums);
+
+            foreach (int i in nums)
+            {
+                Console.WriteLine(i);
+            }
+
+        }
+
+        public void moveZeroes(int[] array)
+        {
+            if (array == null || array.Length < 2)
+                return;
+
+            int offset = 0;
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == 0)
+                    offset++;
+                else
+                {
+                    if (offset != 0)
+                    {
+                        array[i - offset] = array[i];
+                    }
+                }
+            }
+
+            for (int i = array.Length - offset; i < array.Length; i++)
+            {
+                array[i] = 0;
+            }
+        }
+
+        public int minJumps(int[] steps)
+        {
+            if (steps == null || steps.Length == 0)
+                return -1;
+
+            int[] jumps = new int[steps.Length];
+            jumps[jumps.Length - 1] = 0;
+
+            for (int i = jumps.Length - 2; i >= 0; i--)
+            {
+                if (steps[i] == 0)
+                    jumps[i] = Int32.MaxValue;
+                else if (i + steps[i] >= steps.Length - 1)
+                    jumps[i] = 1;
+                else
+                {
+                    int min = Int32.MaxValue;
+                    for (int j = 1; j <= steps[i]; j++)
+                    {
+                        min = (jumps[i + j] < min) ? jumps[i + j] : min;
+                    }
+                    jumps[i] = (min == Int32.MaxValue) ? Int32.MaxValue : min + 1;
+                }
+            }
+
+            foreach (int q in jumps)
+            {
+                Console.Write(q + " ");
+            }
+
+            return jumps[0];
+        }
+
+        public void getParanCombination(int n)
+        {
+            if (n <= 0)
+                return;
+
+            List<string> combinations = new List<string>();
+
+            getParanCombinationsInner(n, n, new StringBuilder(), combinations);
+
+            foreach (string s in combinations)
+            {
+                Console.WriteLine(s);
+            }
+        }
+
+        private void getParanCombinationsInner(int numOpen, int numClose, StringBuilder currState, List<string> combinations)
+        {
+            if (numOpen == 0 && numClose == 0)
+            {
+                combinations.Add(currState.ToString());
+                return;
+            }
+
+            if (numOpen > 0)
+            {
+                StringBuilder sb = new StringBuilder(currState.ToString());
+                sb.Append("(");
+                getParanCombinationsInner(numOpen - 1, numClose, sb, combinations);
+            }
+            if (numClose > numOpen)
+            {
+                StringBuilder sb = new StringBuilder(currState.ToString());
+                sb.Append(")");
+                getParanCombinationsInner(numOpen, numClose - 1, sb, combinations);
+            }
+
+        }
+
+        public int[] longMultiplication(int[] x, int[] y)
+        {
+            if (x == null || y == null)
+                return null;
+
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < y.Length; i++)
+            {
+                int carry = 0;
+                int pos = 0;
+                for (int j = 0; j < x.Length; j++)
+                {
+                    int prod = (x[j] * y[i]) + carry;
+
+                    pos = j + i;
+                    while (result.Count <= pos)
+                    {
+                        result.Add(0);
+                    }
+
+                    int sum = result[pos] + prod;
+                    carry = sum / 10;
+                    sum = sum % 10;
+
+                    result[pos] = sum;
+                }
+                pos++;
+                while (carry != 0)
+                {
+                    while (result.Count <= pos)
+                    {
+                        result.Add(0);
+                    }
+                    int sum = result[pos] + carry;
+                    result[pos] = sum % 10;
+                    carry = sum / 10;
+                    pos++;
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        public int maxZeroSubMatrix(int[,] matrix)
+        {
+            if (matrix == null)
+                return 0;
+
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            int max = 0;
+            int[,] memo = new int[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        if (matrix[i, j] == 0)
+                            memo[i, j] = 1;
+                        max = (max > 0) ? max : 1;
+                    }
+                    else
+                    {
+                        if (matrix[i, j] == 0)
+                        {
+                            int l = memo[i, j - 1];
+                            int u = memo[i - 1, j];
+                            int d = memo[i - 1, j - 1];
+
+                            int min = l;
+                            min = (min < u) ? min : u;
+                            min = (min < d) ? min : d;
+
+                            min++;
+
+                            memo[i, j] = min;
+
+                            max = (max < min) ? min : max;
+                        }
+                        else
+                        {
+                            memo[i, j] = 0;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(memo[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+            return max;
+        }
+
+        public void RotateMatrix(int[,] matrix)
+        {
+            if (matrix == null)
+                return;
+
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            if (rows != cols)
+                return;
+
+            for (int i = 0; i < rows / 2; i++)
+            {
+                for (int j = i; j < cols - i - 1; j++)
+                {
+                    int temp = matrix[i, j];
+                    matrix[i, j] = matrix[j, cols - i - 1];
+                    matrix[j, cols - i - 1] = matrix[rows - i - 1, cols - j - 1];
+                    matrix[rows - i - 1, cols - j - 1] = matrix[rows - j - 1, i];
+                    matrix[rows - j - 1, i] = temp;
+                }
+            }
+        }
+
+        public string reverseWords(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            char[] revChars = s.Reverse().ToArray();
+
+            int start = 0;
+            int end = 0;
+
+            while (end < s.Length)
+            {
+                if (revChars[end] == ' ')
+                {
+                    if (start != end)
+                    {
+                        reverseSubstring(revChars, start, end - 1);
+                    }
+                    end++; 
+                    start = end;                    
+                }
+                else
+                {
+                    end++;
+                }
+            }
+
+            if (start != end)
+            {
+                reverseSubstring(revChars, start, s.Length - 1);
+            }
+
+            return new string(revChars);
+        }
+
+        private void reverseSubstring(char[] chars, int start, int end)
+        {
+            int mid = (start + end)/2;
+
+            for (int i = start; i <= mid; i++)
+            {
+                char c = chars[i];
+                chars[i] = chars[end - i + start];
+                chars[end - i + start] = c;
+            }
         }
 
         public void MergeSort(List<int> numbers)
@@ -713,6 +1033,91 @@ namespace MyRandomSamples
                 text = text + node.key + "  " + node.value + "\n";
             }
             return text;
+        }
+    }
+
+    public class TSNode
+    {
+        public int value;
+        public List<TSNode> incomingNodes;
+        public List<TSNode> outgoingNodes;
+
+        public TSNode(int v)
+        {
+            this.value = v;
+            incomingNodes = new List<TSNode>();
+            outgoingNodes = new List<TSNode>();
+        }
+    }
+
+    public class TopologicalSort
+    {
+        private Dictionary<int, TSNode> nodesMap;
+        private LinkedList<TSNode> nodesList;
+
+        public TopologicalSort()
+        {
+            nodesMap = new Dictionary<int, TSNode>();
+            nodesList = new LinkedList<TSNode>();
+        }
+
+        public void AddPair(int x, int y)
+        {
+            if (!nodesMap.ContainsKey(x))
+            {
+                TSNode node = new TSNode(x);
+                nodesMap.Add(x, node);
+                nodesList.AddFirst(node);
+            }
+            if (!nodesMap.ContainsKey(y))
+            {
+                TSNode node = new TSNode(y);
+                nodesMap.Add(y, node);
+                nodesList.AddFirst(node);
+            }
+
+            TSNode nodeX = nodesMap[x];
+            TSNode nodeY = nodesMap[y];
+
+            nodeX.outgoingNodes.Add(nodeY);
+            nodeY.incomingNodes.Add(nodeX);
+        }
+
+        public void DoTopologicalSort()
+        {
+            Queue<int> processingQueue = new Queue<int>();
+
+            foreach (TSNode node in nodesList)
+            {
+                if (node.incomingNodes.Count == 0)
+                {
+                    processingQueue.Enqueue(node.value);
+                }
+            }
+
+            while (processingQueue.Count != 0)
+            {
+                int val = processingQueue.Dequeue();
+                TSNode node = nodesMap[val]; // possible exception - key not found?!
+
+                //process node
+                Console.WriteLine(node.value);
+
+                foreach (TSNode n in node.outgoingNodes)
+                {
+                    n.incomingNodes.Remove(node);
+                    if (n.incomingNodes.Count == 0)
+                    {
+                        processingQueue.Enqueue(n.value);
+                    }
+                }
+
+                nodesMap.Remove(val);
+                nodesList.Remove(node);
+            }
+
+            if (nodesMap.Keys.Count != 0)
+                Console.WriteLine("Error condition");
         }
     }
 }

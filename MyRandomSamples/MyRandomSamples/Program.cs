@@ -1333,8 +1333,760 @@ namespace MyRandomSamples
 
             //Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
 
-            Node root = p.buildSampleTree();
-            p.printTreeZigZag(root);
+            //Node root = p.buildSampleTree();
+            //p.printTreeZigZag(root);
+
+            //List<string> justifiedString = p.justifyText(new List<string> { "This", "is", "an", "example", "of", "text", "justification." }, 16);
+            //foreach (string s in justifiedString)
+            //{
+            //    Console.WriteLine(s + "-" + s.Length);
+            //}
+
+            //Console.WriteLine(p.maxCoins(new int[] { 3, 1, 5, 8 }));
+
+            //int[] result = p.slidingWindowMax(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3);
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //Console.WriteLine(p.reverseString("this is a test"));
+
+            //List<List<string>> lists = p.groupShiftedStrings(new List<string> { "abc", "bcd", "acef", "xyz", "az", "ba", "a", "z" });
+            //foreach (var list in lists)
+            //{
+            //    foreach (string s in list)
+            //    {
+            //        Console.Write(s + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //Console.WriteLine(p.longestPalindromeSubstring("banana"));
+            //int[] nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            //Console.WriteLine(p.binSearch(nums, 0));
+            //Console.WriteLine(p.binSearch(nums, 1));
+            //Console.WriteLine(p.binSearch(nums, 10));
+            //Console.WriteLine(p.binSearch(nums, 12));
+
+            //Console.WriteLine(p.isPatternMatchNew("abba", "redbluebluered"));
+            //Console.WriteLine(p.isPatternMatchNew("aaaa", "asdasdasdasd"));
+            //Console.WriteLine(p.isPatternMatchNew("aabb", "xyzabcxzyabc"));
+            //Console.WriteLine(p.isPatternMatchNew("aabba", "catcatgogocat"));
+
+            //int[,] matrix = new int[,] { 
+            //                            {1, 2, 3, 4},
+            //                            {5, 6, 7, 8},
+            //                            {9, 10, 11, 12},
+            //                            {13, 14, 15, 16}
+            //                           };
+            //p.rotateMatrix(matrix);
+
+            //Console.WriteLine(p.substringMatchNew("abcdefghijlkmnop", "defg"));
+            //Console.WriteLine(p.substringMatchNew("abcdefghijlkmnop", ""));
+            //Console.WriteLine(p.substringMatchNew("", "defg"));
+            //Console.WriteLine(p.substringMatchNew("abcdefghijlkmnop", "defga"));
+            //Console.WriteLine(p.substringMatchNew("abcdefdefgghijlkmnop", "defg"));
+            //Console.WriteLine(p.substringMatchNew("abcdefhdefgghijlkmnop", "defg"));
+
+            //Console.WriteLine(p.longestCommonSubstringNew("abcdabcdabcd", "ebcdabcdf"));
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //p.moveZeroes(nums);
+
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            int[,] nums = {
+                            {9,9,4},
+                            {6,6,8},
+                            {2,1,1}
+                          };
+
+            Console.WriteLine(p.GetLongestIncreasingPath(nums));
+        }
+
+        /*
+         * https://leetcode.com/problems/integer-break/
+         * 
+         * Given a positive integer n, break it into the sum of at least two positive integers and maximize the product of those integers. Return the maximum product you can get.
+         *  For example, given n = 2, return 1 (2 = 1 + 1); given n = 10, return 36 (10 = 3 + 3 + 4).
+         *  Note: you may assume that n is not less than 2.
+         */
+        public int IntegerBreak(int n)
+        {
+            return integerBreakInner(n, new Dictionary<int, int>());
+        }
+        private int integerBreakInner(int n, Dictionary<int, int> memoizedBreaks)
+        {
+            if (n == 1) return 1;
+
+            if (memoizedBreaks.ContainsKey(n))
+            {
+                return memoizedBreaks[n];
+            }
+
+            for (int i = 1; i < n; i++)
+            {
+                int innerBreak = integerBreakInner(n - i, memoizedBreaks);
+                if (memoizedBreaks.ContainsKey(n))
+                {
+                    if (i * innerBreak > memoizedBreaks[n])
+                    {
+                        memoizedBreaks[n] = i * innerBreak;
+                    }
+                }
+                else
+                {
+                    memoizedBreaks.Add(n, i * innerBreak);
+                }
+            }
+
+            return memoizedBreaks[n];
+        }
+
+        /*
+         * https://leetcode.com/problems/longest-increasing-path-in-a-matrix/
+         * Given an integer matrix, find the length of the longest increasing path.
+            From each cell, you can either move to four directions: left, right, up or down. You may NOT move diagonally or move outside of the boundary (i.e. wrap-around is not allowed).
+            Example 1:
+            nums = [
+              [9,9,4],
+              [6,6,8],
+              [2,1,1]
+            ]
+            Return 4
+            The longest increasing path is [1, 2, 6, 9].
+         */
+
+        public int GetLongestIncreasingPath(int[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            int maxLen = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    int candidate = getLongestIncreasingPathInner(matrix, i, j, rows, cols, new List<int>());
+                    Console.WriteLine("Best Path at ({0},{1}):{2}", i, j, candidate);
+                    if (candidate > maxLen)
+                    {
+                        maxLen = candidate;
+                    }
+                }
+            }
+
+            return maxLen;
+        }
+
+        private int getLongestIncreasingPathInner(int[,] matrix, int row, int col, int rows, int cols, List<int> path)
+        {
+            int maxLen = 0;
+            //Console.WriteLine("======================================");
+            //Console.WriteLine("Entering with {0}, {1}", row, col);
+            if ((row >= 0 && row < rows && col >= 0 && col < cols) && (path.Count == 0 || path[path.Count - 1] < matrix[row, col]))
+            {
+
+                for (int i = row - 1; i <= row + 1; i++)
+                {
+                    for (int j = col - 1; j <= col + 1; j++)
+                    {
+                        if ((i >= 0 && i < rows && j >= 0 && j < cols) && (path.Count == 0 || path[path.Count - 1] < matrix[i, j]))
+                        {
+                            List<int> pathCopy = new List<int>();
+
+                            foreach (var p in path)
+                            {
+                                pathCopy.Add(p);
+                            }
+
+                            pathCopy.Add(matrix[row, col]);
+
+                            int updatedPath = getLongestIncreasingPathInner(matrix, i, j, rows, cols, pathCopy);
+                            if (maxLen < updatedPath)
+                                maxLen = updatedPath;
+                        }
+                    }
+                }
+            }
+            //Console.WriteLine("Returning {0} + {1}", maxLen, path.Count);
+            //Console.WriteLine("======================================");
+            return maxLen + path.Count;
+        }
+
+        #region ConvertNumToString
+        Dictionary<char, List<char>> numCharMap = new Dictionary<char, List<char>>();
+
+        public void createDict()
+        {
+            numCharMap.Add('0', new List<char>() { ' ' });
+            numCharMap.Add('1', new List<char>() { ' ' });
+            numCharMap.Add('2', new List<char>() { 'a', 'b', 'c' });
+            numCharMap.Add('3', new List<char>() { 'd', 'e', 'f' });
+            numCharMap.Add('4', new List<char>() { 'g', 'h', 'i' });
+            numCharMap.Add('5', new List<char>() { 'j', 'k', 'l' });
+            numCharMap.Add('6', new List<char>() { 'm', 'n', 'o' });
+            numCharMap.Add('7', new List<char>() { 'p', 'q', 'r', 's' });
+            numCharMap.Add('8', new List<char>() { 't', 'u', 'v' });
+            numCharMap.Add('9', new List<char>() { 'w', 'x', 'y', 'z' });
+        }
+
+
+        // Convert numbers into words
+        public void ConvertNumToWords(string num)
+        {
+            if (string.IsNullOrWhiteSpace(num))
+                return;
+            convertNumToWordsInner(num, 0, new StringBuilder());
+        }
+
+        private void convertNumToWordsInner(string num, int index, StringBuilder sb)
+        {
+            if (index == num.Length)
+            {
+                Console.WriteLine(sb.ToString());
+                return;
+            }
+            char c = num[index];
+            if (numCharMap.ContainsKey(c))
+            {
+                foreach (char ch in numCharMap[c])
+                {
+                    StringBuilder sbCopy = new StringBuilder(sb.ToString());
+                    sbCopy.Append(ch);
+                    this.convertNumToWordsInner(num, index + 1, sbCopy);
+                }
+            }
+        }
+        #endregion
+
+
+
+        public void moveZeroes(int[] array)
+        {
+            if (array == null || array.Length == 0)
+                return;
+
+            int runner = 0;
+            int end = 0;
+
+            while (runner < array.Length)
+            {
+                if (array[runner] != 0 && end != runner)
+                    array[end++] = array[runner];
+                runner++;
+            }
+
+            while (end < array.Length)
+            {
+                array[end++] = 0;
+            }
+        }
+
+        public string longestCommonSubstringNew(string s, string t)
+        {
+            if (s == null || t == null)
+                return string.Empty;
+
+            int[,] memo = new int[s.Length + 1, t.Length + 1];
+            int maxLen = 0;
+            int endIndex = 0;
+
+            for (int i = 0; i < s.Length + 1; i++)
+            {
+                for (int j = 0; j < t.Length + 1; j++)
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        memo[i, j] = 0;
+                    }
+                    else
+                    {
+                        int val = 0;
+                        if (s[i - 1] == t[j - 1])
+                        {
+                            val = memo[i - 1, j - 1] + 1;
+                        }
+                        memo[i, j] = val;
+
+                        if (val > maxLen)
+                        {
+                            maxLen = val;
+                            endIndex = i;
+                        }
+                    }
+                }
+            }
+
+            if (maxLen != 0)
+                return s.Substring(endIndex - maxLen, maxLen);
+            return string.Empty;
+        }
+
+        public bool substringMatchNew(string text, string s)
+        {
+            if (text == null || s == null || s.Length > text.Length)
+                return false;
+
+            if (s == string.Empty && text == string.Empty)
+                return true;
+
+            int sHash = basicHashing(s);
+            int textHash = basicHashing(text.Substring(0, s.Length));
+            int i = s.Length;
+            int j = 0;
+
+            while (i < text.Length)
+            {
+                //Console.WriteLine(text.Substring(j, s.Length));
+                if (textHash == sHash)
+                {
+                    if (text.Substring(j, s.Length) == s)
+                        return true;
+                }
+
+                //textHash -= (int)(Math.Pow(128, s.Length - 1) * text[j++]);
+                //textHash = textHash * 128 + text[i++];
+                textHash = textHash - text[j++] + text[i++];
+            }
+
+            return false;
+        }
+
+        private int basicHashing(string s)
+        {
+            int hash = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                //hash += (int)(Math.Pow(128, i) * s[i]);
+                hash += s[i];
+            }
+
+            return hash;
+        }
+
+        public void rotateMatrix(int[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            if (rows != cols)
+                return;
+
+            for (int layer = 0; layer <= (rows / 2); layer++)
+            {
+                for (int i = layer; i < rows - layer -1 ; i++)
+                {
+                    int temp = matrix[layer, i];
+                    matrix[layer, i] = matrix[i, cols - layer - 1];
+                    matrix[i, cols - layer - 1] = matrix[rows - layer - 1, rows - i - 1];
+                    matrix[rows - layer - 1, rows - i - 1] = matrix[rows - layer - i - 1, layer];
+                    matrix[rows - layer - i - 1, layer] = temp;
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < rows; j++)
+                {
+                    Console.Write(matrix[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+        }
+
+        public bool isPatternMatchNew(string pattern, string str)
+        {
+            if (string.IsNullOrEmpty(pattern) && string.IsNullOrEmpty(str))
+                return true;
+            if (string.IsNullOrEmpty(pattern) || string.IsNullOrEmpty(str))
+                return false;
+
+            if (str[0] == 'b')
+                str = this.swapChars(str);
+
+            int nA = this.countChar(pattern, 'a');
+            int nB = this.countChar(pattern, 'b');
+
+            if (nB == 0)
+            {
+                if (this.evaluatePattern(str, pattern, str.Length / nA, 0))
+                    return true;
+                return false;
+            }
+
+            int maxA = str.Length / nA;
+            for (int i = 0; i <= maxA; i++)
+            {
+                int totLenB = (str.Length - (nA * i));
+                if (totLenB % nB == 0)
+                {
+                    int lenB = totLenB / nB;
+                    if (this.evaluatePattern(str, pattern, i, lenB))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool evaluatePattern(string str, string pattern, int lenA, int lenB)
+        {
+            StringBuilder sb = new StringBuilder();
+            int i = 0;
+            string a = null;
+            string b = null;
+            foreach (char ch in pattern)
+            {
+                if (ch == 'a')
+                {
+                    if (a == null)
+                        a = str.Substring(i, lenA);
+                    sb.Append(a);
+                    i += lenA;
+                }
+                else
+                {
+                    if (b == null)
+                        b = str.Substring(i, lenB);
+                    sb.Append(b);
+                    i += lenB;
+                }
+            }
+            if (str == sb.ToString())
+                return true;
+            return false;
+        }
+
+        private string swapChars(string s)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char ch in s)
+            {
+                if (ch == 'a')
+                    sb.Append('b');
+                else
+                    sb.Append('a');
+            }
+            return sb.ToString();
+        }
+
+        private int countChar(string s, char c)
+        {
+            int cnt = 0;
+            foreach (char ch in s)
+            {
+                if (ch == c)
+                    cnt++;
+            }
+            return cnt;
+        }
+
+        public bool binSearch(int[] nums, int target)
+        {
+            if (nums == null || nums.Length == 0)
+                return false;
+
+            return binSearchInner(nums, 0, nums.Length-1, target);
+        }
+
+        private bool binSearchInner(int[] nums, int start, int end, int target)
+        {
+            if (start > end)
+                return false;
+
+            if (start == end)
+            {
+                if (nums[start] == target)
+                    return true;
+                return false;
+            }
+
+            int mid = (start + end)/2;
+            if (nums[mid] == target)
+                return true;
+            else if (nums[mid] < target)
+                return binSearchInner(nums, mid + 1, end, target);
+            else
+                return binSearchInner(nums, start, mid - 1, target);
+        }
+
+        public string longestPalindromeSubstring(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            bool[,] memo = new bool[s.Length, s.Length];
+            int maxLen = -1;
+            string palin = string.Empty;
+
+            for (int offset = 0; offset < s.Length; offset++)
+            {
+                for (int i = offset; i < s.Length - offset; i++)
+                {
+                    int row = i - offset;
+                    int col = i + offset;
+                    if(offset == 0)
+                    {
+                        memo[row, col] = true;
+                    }
+                    else if (offset == 1)
+                    {
+                        if (s[row] == s[col])
+                            memo[row, col] = true;
+                        else
+                            memo[row, col] = false;
+                    }
+                    else
+                    {
+                        memo[row, col] = false;
+                        if (s[row] == s[col] && memo[row + 1, col - 1])
+                        {
+                            memo[row, col] = true;
+                            int len = Math.Abs(row - col);
+                            if (len > maxLen)
+                            {
+                                maxLen = len;
+                                palin = s.Substring(row, maxLen + 1);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return palin;
+        }
+
+        /*
+         * Given a string, we can “shift” each of its letter to its successive letter, for example: “abc” -> “bcd”. We can keep “shifting” which forms the sequence:
+         * "abc" -> "bcd" -> ... -> "xyz" Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.
+         * For example,
+         * given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"], 
+         * Return:
+         * [ ["abc","bcd","xyz"], ["az","ba"], ["acef"], ["a","z"] ]
+         */
+
+        public List<List<string>> groupShiftedStrings(List<string> strings)
+        {
+            List<List<string>> result = new List<List<string>>();
+
+            Dictionary<string, List<string>> shiftHashedCollection = new Dictionary<string, List<string>>();
+
+            foreach(string str in strings)
+            {
+                string s = getHashedString(str);
+                if (!shiftHashedCollection.ContainsKey(s))
+                {
+                    shiftHashedCollection.Add(s, new List<string>());
+                }
+                shiftHashedCollection[s].Add(str);
+            }
+
+            foreach (var kvp in shiftHashedCollection)
+            {
+                result.Add(kvp.Value);
+            }
+
+            return result;
+        }
+
+        private string getHashedString(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            StringBuilder sb = new StringBuilder();
+            int offset = s[0] - 'a';
+            sb.Append('a');
+            for (int i = 1; i < s.Length; i++)
+            {
+                sb.Append('a' + (s[i] - offset + 26) % 26);
+            }
+
+            return sb.ToString();
+        }
+
+        public string reverseString(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            char[] chars = s.Reverse().ToArray<char>();
+
+            int startIndex = 0;
+            int endIndex = 0;
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (chars[i] == ' ')
+                {
+                    reverseSubString(ref chars, startIndex, endIndex);
+                    startIndex = i + 1;
+                    endIndex = i + 1;
+                }
+                else
+                {
+                    endIndex = i;
+                }
+            }
+
+            reverseSubString(ref chars, startIndex, endIndex);
+
+            return new string (chars);
+        }
+
+        private void reverseSubString(ref char[] chars, int start, int end)
+        {
+            if (end - start >= 1)
+            {
+                for (int i = 0; i <= (end - start) / 2; i++)
+                {
+                    char c = chars[start + i];
+                    chars[start + i] = chars[end - i];
+                    chars[end - i] = c;
+                }
+            }
+        }
+
+        /*
+         * https://leetcode.com/problems/burst-balloons/
+         * 
+         * Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get nums[left] * nums[i] * nums[right] coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
+         * Find the maximum coins you can collect by bursting the balloons wisely.
+         * 
+         * Note: 
+         * (1) You may imagine nums[-1] = nums[n] = 1. They are not real therefore you can not burst them.
+         * (2) 0 ≤ n ≤ 500, 0 ≤ nums[i] ≤ 100
+         * 
+         * Example:
+            Given [3, 1, 5, 8]
+            Return 167
+                nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
+               coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+         */
+        public int maxCoins(int[] nums)
+        {
+            if (nums.Count() == 0) 
+                return 0;
+
+            int[] new_nums = new int[nums.Count() + 2];
+            int n = 1;
+            for (int i = 0; i < nums.Count(); i++)
+            {
+                if (nums[i] != 0)
+                {
+                    new_nums[n++] = nums[i];
+                }
+            }
+            new_nums[0] = 1; new_nums[n] = 1;
+            int[,] dp = new int[n + 1, n + 1];
+
+            for (int k = 2; k <= n; k++)
+            {
+                for (int left = 0; left <= n - k; left++)
+                {
+                    int right = left + k;
+                    for (int i = left + 1; i < right; i++)
+                    {
+                        Console.WriteLine("k = {0}, left = {1}, right = {2}, i = {3}", k, left, right, i);
+                        Console.WriteLine("dp[left, right] = Math.Max({0}, {6} [{1} * {2} * {3} + {4} + {5}]);", dp[left, right], new_nums[left], new_nums[i], new_nums[right], dp[left, i], dp[i, right], new_nums[left] * new_nums[i] * new_nums[right] + dp[left, i] + dp[i, right]);
+
+                        dp[left, right] = Math.Max(dp[left, right], new_nums[left] * new_nums[i] * new_nums[right] + dp[left, i] + dp[i, right]);
+
+                        for (int q = 0; q < n + 1; q++)
+                        {
+                            for (int j = 0; j < n + 1; j++)
+                            {
+                                Console.Write(dp[q, j] + " ");
+                            }
+                            Console.WriteLine();
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            }
+            return dp[0, n];
+        }
+
+        public List<string> justifyText(List<string> words, int len)
+        {
+            if (words == null || words.Count == 0 || len == 0)
+                return null;
+            
+            List<string> justifiedText = new List<string>();
+
+            int currLength = 0;
+            int numWordsInLine = 0;
+            List<string> currLine = new List<string>();
+            for (int i = 0; i < words.Count; i++)
+            {
+                string s = words[i];
+                if (currLength + s.Length + numWordsInLine < len)
+                {
+                    currLine.Add(s);
+                    numWordsInLine++;
+                    currLength += s.Length;
+                }
+                else
+                {
+                    string line = getLine(currLine, currLength, len);
+                    justifiedText.Add(line);
+
+                    currLine = new List<string>();
+                    numWordsInLine = 0;
+                    currLength = 0;
+                    i--;
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in currLine)
+            {
+                sb.Append(s);
+                sb.Append(" ");
+            }
+
+            justifiedText.Add(sb.ToString());
+
+            return justifiedText;
+        }
+
+        private string getLine(List<string> line, int currLength, int len)
+        {
+            int numSpaces = len - currLength;
+            int evenSpaces = numSpaces / (line.Count - 1);
+            int oddSpaces = numSpaces % (line.Count - 1);
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < line.Count; i++)
+            {
+                string s = line[i];
+                sb.Append(s);
+
+                // dont add spaces after last word
+                if (i != line.Count - 1)
+                {
+                    for (int j = 0; j < evenSpaces; j++)
+                    {
+                        sb.Append(" ");
+                    }
+                    if (oddSpaces > 0)
+                    {
+                        sb.Append(" ");
+                        oddSpaces--;
+                    }
+                }
+            }
+
+            return sb.ToString();
         }
 
         public void printTreeZigZag(Node root)
@@ -4866,6 +5618,22 @@ namespace MyRandomSamples
                 return (isValidBSTRange(root.leftNode, min, root.value) &&
                         isValidBSTRange(root.rightNode, root.value, max));
             }
+            return false;
+        }
+
+        public bool isValidBSTNew(Node root)
+        {
+            return this.isValidBSTInner(root, Int32.MinValue, Int32.MaxValue);
+        }
+
+        private bool isValidBSTInner(Node root, int min, int max)
+        {
+            if (root == null)
+                return true;
+
+            if (root.value >= min && root.value <= max)
+                return (isValidBSTInner(root.leftNode, min, root.value) && isValidBSTInner(root.rightNode, root.value, max));
+
             return false;
         }
 
