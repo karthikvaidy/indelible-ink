@@ -105,8 +105,372 @@ namespace MyRandomSamples
             //{
             //    Console.WriteLine(i);
             //}
+            
+            //Console.WriteLine(p.longestPalindrome("banana"));
+            //Console.WriteLine(p.longestCommonSubstring("abcdabcdabcd", "ebcdabcdf"));
+            //Console.WriteLine(p.reverseStringNew("abcd hello sir"));
+            //Console.WriteLine(p.reverseStringNew("abcd hello sir    "));
+            //Console.WriteLine(p.reverseStringNew("    abcd hello sir"));
+
+            //int[] arr = { 1, 3, 6, 1, 0, 9 };
+            //Console.WriteLine(p.minJumpsTest(arr));
+
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //int[] nums = { 0, 0, 0, 0, 0 };
+            //int[] nums = { 1, 2, 3, 4, 5 };
+            //p.MoveZeroes(nums);
+
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+            //Console.WriteLine(p.isInterleave("aabcc", "dbbca", "aadbbcbcac"));
+            //Console.WriteLine(p.isInterleave("aabcc", "dbbca", "aadbbbaccc"));
             #endregion
-            Console.WriteLine(p.longestPalindrome("banana"));
+
+            //Console.WriteLine(p.LengthOfLongestSubstring("abcabcbb"));
+            //Console.WriteLine(p.LengthOfLongestSubstring("bbbbb"));
+            //Console.WriteLine(p.LengthOfLongestSubstring("pwwkew"));
+
+            //KnapSack ks1 = new KnapSack(1, 1);
+            //KnapSack ks2 = new KnapSack(3, 4);
+            //KnapSack ks3 = new KnapSack(4, 5);
+            //KnapSack ks4 = new KnapSack(5, 7);
+
+            //List<KnapSack> list = new List<KnapSack> {ks1, ks2, ks3, ks4};
+
+            //Console.WriteLine(p.knapSackProblem(list, 7));
+
+            Console.WriteLine(p.subsetSum(new int[] { 2, 3, 7, 8, 10 }, 11));
+            Console.WriteLine(p.subsetSum(new int[] { 2, 3 }, 10));
+        }
+
+        public bool subsetSum(int[] nums, int target)
+        {
+            if (nums == null || nums.Length == 0)
+                return false;
+
+            bool[,] memo = new bool[nums.Length, target + 1];
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 0; j < target + 1; j++)
+                {
+                    if (j == 0)
+                        memo[i, j] = true;
+                    else
+                    {
+                        if (j < nums[i])
+                        {
+                            if (i == 0)
+                                memo[i, j] = false;
+                            else
+                                memo[i, j] = memo[i - 1, j];
+                        }
+                        else
+                        {
+                            if (i == 0)
+                                memo[i, j] = (nums[i] == j);
+                            else
+                                memo[i, j] = (memo[i - 1, j] || memo[i - 1, j - nums[i]]);
+                        }
+
+                    }
+                }
+            }
+
+            return memo[nums.Length - 1, target];
+        }
+
+
+        public class KnapSack
+        {
+            public int weight;
+            public int value;
+            public KnapSack(int w, int v)
+            {
+                weight = w;
+                value = v;
+            }
+        }
+
+        public int knapSackProblem(List<KnapSack> knapsacks, int weightLimit)
+        {
+            if (knapsacks == null || knapsacks.Count() < 1)
+                return 0;
+
+            int[,] memo = new int[knapsacks.Count(), weightLimit + 1];
+
+            for (int i = 0; i < knapsacks.Count(); i++)
+            {
+                for (int j = 0; j < weightLimit + 1; j++)
+                {
+                    if (j == 0)
+                        memo[i, j] = 0;
+                    else
+                    {
+                        if (knapsacks[i].weight <= j)
+                        {
+                            if(i == 0)
+                                memo[i, j] = knapsacks[i].value;
+                            else
+                                memo[i, j] = Math.Max(knapsacks[i].value + memo[i - 1, j - knapsacks[i].weight], memo[i - 1, j]);
+                        }
+                        else
+                        {
+                            if (i == 0)
+                                memo[i, j] = 0;
+                            else
+                                memo[i, j] = memo[i - 1, j];
+                        }
+                    }
+                }
+            }
+
+            return memo[knapsacks.Count() - 1, weightLimit];
+
+        }
+
+
+        public int LengthOfLongestSubstring(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return 0;
+
+            int num = 0;
+            int start = 0;
+            int maxLen = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char c = s[i];
+                int mask = 1 << (int) (c - 'a');
+                bool isRep = ((num & mask) == 1) ? true : false;
+                if (isRep)
+                {
+                    int len = i - start;
+                    maxLen = len > maxLen ? len : maxLen;
+                    start = i;
+                    num = 0;
+                }
+                else
+                {
+                    num = num | (1 << (c - 'a'));
+                }
+
+            }
+
+            return maxLen;
+        }
+
+
+        public bool isInterleave(string s, string t, string w)
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t) || string.IsNullOrEmpty(w) || (s.Length + t.Length != w.Length))
+                return false;
+
+            bool[,] memo = new bool[s.Length + 1, t.Length + 1];
+
+            for (int i = 0; i < s.Length + 1; i++)
+            {
+                for (int j = 0; j < t.Length + 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                        memo[i, j] = true;
+                    else if (i == 0)
+                    {
+                        if (w[j - 1] == t[j - 1] && memo[i, j - 1] == true)
+                            memo[i, j] = true;
+                        else
+                            memo[i, j] = false;
+                    }
+                    else if (j == 0)
+                    {
+                        if (w[i - 1] == s[i - 1] && memo[i - 1, j] == true)
+                            memo[i, j] = true;
+                        else
+                            memo[i, j] = false;
+                    }
+                    else
+                    {
+                        if ((w[i + j - 1] == t[j - 1] && memo[i, j - 1] == true) || (w[i + j - 1] == s[i - 1] && memo[i - 1, j] == true))
+                            memo[i, j] = true;
+                        else
+                            memo[i, j] = false;
+                    }
+
+                }
+            }
+
+            //for (int i = 0; i < s.Length + 1; i++)
+            //{
+            //    for (int j = 0; j < t.Length + 1; j++)
+            //    {
+            //        Console.Write(memo[i, j] + "\t");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            return memo[s.Length, t.Length];
+        }
+
+
+        public void moveZeroesTest(int[] array)
+        {
+            if (array == null || array.Length < 2)
+                return;
+
+            int offset = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == 0)
+                {
+                    offset++;
+                }
+                else
+                {
+                    if (offset != 0)
+                    {
+                        array[i - offset] = array[i];
+                    }
+                }
+            }
+
+            for (int i = array.Length - offset; i < array.Length; i++)
+            {
+                array[i] = 0;
+            }
+
+        }
+
+        public int minJumpsTest(int[] array)
+        {
+            if (array == null || array.Length < 2)
+                return 0;
+
+            int[] jumps = new int[array.Length];
+            jumps[jumps.Length - 1] = 0;
+
+            for (int i = array.Length - 2; i >= 0; i--)
+            {
+                if (array[i] <= 0)
+                    jumps[i] = Int32.MaxValue;
+                else if (i + array[i] >= array.Length)
+                    jumps[i] = 1;
+                else
+                {
+                    int min = Int32.MaxValue;
+                    for (int j = 1; j <= array[i]; j++)
+                    {
+                        if (jumps[i + j] < min)
+                            min = jumps[i + j];
+                    }
+                    if (min != Int32.MaxValue)
+                        jumps[i] = min + 1;
+                    else
+                        jumps[i] = Int32.MaxValue;
+                }
+            }
+
+            foreach (int n in jumps)
+            {
+                Console.Write(n+ " ");
+            }
+
+            return jumps[0];
+        }
+
+        public string reverseStringNew(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            int start = 0;
+            int end = 0;
+
+            char[] chars = s.Reverse().ToArray();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (chars[i] == ' ')
+                {
+                    if (start != end)
+                    {
+                        reverseChars(chars, start, i - 1);
+                        start = i + 1;
+                        end = i + 1;
+                    }
+                }
+                else
+                {
+                    end++;
+                }
+            }
+
+            if (start != end)
+                reverseChars(chars, start, end - 1);
+
+            return new string(chars);
+        }
+
+        private void reverseChars(char[] chars, int start, int end)
+        {
+            if (start < end)
+            {
+                for (int i = start; i <= (start + end) / 2; i++)
+                {
+                    char c = chars[i];
+                    chars[i] = chars[end - i + start];
+                    chars[end - i + start] = c;
+                }
+            }
+        }
+
+        public string longestCommonSubstring(string s, string t)
+        {
+            if (s == null || t == null)
+                return string.Empty;
+
+            int[,] memo = new int[s.Length + 1, t.Length + 1];
+            int maxLen = 0;
+            int endIndex = 0;
+            for (int i = 0; i < s.Length + 1; i++)
+            {
+                for (int j = 0; j < t.Length + 1; j++)
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        memo[i, j] = 0;
+                    }
+                    else
+                    {
+                        int val = 0;
+                        if (s[i - 1] == t[j - 1])
+                        {
+                            val = memo[i - 1, j - 1] + 1;
+                        }
+                        memo[i, j] = val;
+                        if (val > maxLen)
+                        {
+                            maxLen = val;
+                            endIndex = i;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < s.Length + 1; i++)
+            {
+                for (int j = 0; j < t.Length + 1; j++)
+                {
+                    Console.Write(memo[i,j] + " ");
+                }
+                Console.WriteLine();
+            }
+
+            if (maxLen == 0)
+                return string.Empty;
+            return s.Substring(endIndex - maxLen + 1 , maxLen - 1);
         }
 
         private string longestPalindrome(string word)
@@ -1029,6 +1393,100 @@ namespace MyRandomSamples
 
         }
     }
+
+    public class LRUCache
+    {
+        public int capacity;
+        private int numNodes;
+        private LinkedList<LRUCacheNode> nodeList;
+        private Dictionary<int, LRUCacheNode> nodeMap;
+
+        public LRUCache(int cap)
+        {
+            this.capacity = cap;
+            numNodes = 0;
+            nodeList = new LinkedList<LRUCacheNode>();
+            nodeMap = new Dictionary<int, LRUCacheNode>();
+        }
+
+        public LRUCacheNode GetLRUItem()
+        {
+            LRUCacheNode node = null;
+            if (numNodes > 0)
+                node = nodeList.First.Value;
+
+            return node;
+        }
+
+        public int Get(int key)
+        {
+            if (nodeMap.ContainsKey(key))
+            {
+                LRUCacheNode node = nodeMap[key];
+                nodeList.Remove(node);
+                nodeList.AddFirst(node);
+
+                return node.value;
+            }
+            else
+                return -1; //exception!?
+        }
+
+        public void Set(int key, int value)
+        {
+            this.Set(new LRUCacheNode(key, value));
+        }
+
+        public void Set(LRUCacheNode node)
+        {
+            if (nodeMap.ContainsKey(node.key))
+            {
+                LRUCacheNode node1 = nodeMap[node.key];
+                node1.value = node.value;
+                nodeList.Remove(node1);
+                nodeList.AddFirst(node1);
+            }
+            else
+            {
+                if (numNodes >= this.capacity)
+                {
+                    LRUCacheNode lastNode = nodeList.Last.Value;
+                    nodeList.Remove(lastNode);
+                    nodeMap.Remove(lastNode.key);
+                    numNodes--;
+                }
+                nodeList.AddFirst(node);
+                nodeMap.Add(node.key, node);
+                numNodes++;
+            }
+        }
+
+        public void Remove(int key)
+        {
+            if (nodeMap.ContainsKey(key))
+            {
+                LRUCacheNode node = nodeMap[key];
+                nodeList.Remove(node);
+                nodeMap.Remove(key);
+                numNodes--;
+            }
+        }
+
+    }
+
+    public class LRUCacheNode
+    {
+        public int key;
+        public int value;
+
+        public LRUCacheNode(int k, int v)
+        {
+            this.key = k;
+            this.value = v;
+        }
+    }
+
+
 
     public class LRUCacheV2
     {
