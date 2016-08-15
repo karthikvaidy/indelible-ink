@@ -142,8 +142,107 @@ namespace MyRandomSamples
 
             //Console.WriteLine(p.knapSackProblem(list, 7));
 
-            Console.WriteLine(p.subsetSum(new int[] { 2, 3, 7, 8, 10 }, 11));
-            Console.WriteLine(p.subsetSum(new int[] { 2, 3 }, 10));
+            //Console.WriteLine(p.subsetSum(new int[] { 2, 3, 7, 8, 10 }, 11));
+            //Console.WriteLine(p.subsetSum(new int[] { 2, 3 }, 10));
+
+            Console.WriteLine(p.isPatternMatchNew("abba", "redbluebluered"));
+            Console.WriteLine(p.isPatternMatchNew("aaaa", "asdasdasdasd"));
+            Console.WriteLine(p.isPatternMatchNew("aabb", "xyzabcxzyabc"));
+            Console.WriteLine(p.isPatternMatchNew("aabba", "catcatgogocat"));
+
+        }
+
+        public bool isPatternMatchNew(string pattern, string text)
+        {
+            if (string.IsNullOrEmpty(pattern) || string.IsNullOrEmpty(text) || pattern.Length == 0 || text.Length == 0)
+                return false;
+
+            int nA, nB;
+            if (pattern[0] == 'b')
+                pattern = swapChars(pattern);
+
+            nA = countChars(pattern, 'a');
+            nB = pattern.Length - nA;
+
+            if (nB == 0)
+            {
+                if (text.Length % nA == 0)
+                {
+                    int lenA = text.Length / nA;
+                    return evaluatePattern(pattern, text, lenA, 0);
+                }
+            }
+
+            int maxA = text.Length / nA;
+
+            for (int i = 0; i <= maxA; i++)
+            {
+                if ((text.Length - (nA * i)) % nB == 0)
+                {
+                    int lenB = (text.Length - (nA * i)) / nB;
+                    if (evaluatePattern(pattern, text, i, lenB))
+                        return true;
+                }
+
+            }
+
+            return false;
+        }
+
+        private string swapChars(string s)
+        {
+            char[] swappedText = s.ToCharArray();
+            for (int i = 0; i < swappedText.Length; i++)
+            {
+                if (swappedText[i] == 'a')
+                    swappedText[i] = 'b';
+                else
+                    swappedText[i] = 'a';
+            }
+
+            return new string(swappedText);
+        }
+
+        private int countChars(string s, char c)
+        {
+            int count = 0;
+            foreach (char ch in s)
+            {
+                if (ch == c)
+                    count++;
+            }
+            return count;
+        }
+
+        private bool evaluatePattern(string pattern, string text, int lenA, int lenB)
+        {
+            string a = string.Empty;
+            string b = string.Empty;
+
+            int ctr = 0;
+            foreach (char c in pattern)
+            {
+                if (c == 'a')
+                {
+                    string cand = text.Substring(ctr, lenA);
+                    if (a == string.Empty)
+                        a = cand;
+                    else if (cand != a)
+                        return false;
+                    ctr += a.Length;
+                }
+                else
+                {
+                    string cand = text.Substring(ctr, lenB);
+                    if (b == string.Empty)
+                        b = cand;
+                    else if (cand != b)
+                        return false;
+                    ctr += b.Length;
+                }
+            }
+
+            return true;
         }
 
         public bool subsetSum(int[] nums, int target)
