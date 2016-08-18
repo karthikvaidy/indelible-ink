@@ -127,7 +127,6 @@ namespace MyRandomSamples
             //}
             //Console.WriteLine(p.isInterleave("aabcc", "dbbca", "aadbbcbcac"));
             //Console.WriteLine(p.isInterleave("aabcc", "dbbca", "aadbbbaccc"));
-            #endregion
 
             //Console.WriteLine(p.LengthOfLongestSubstring("abcabcbb"));
             //Console.WriteLine(p.LengthOfLongestSubstring("bbbbb"));
@@ -145,12 +144,285 @@ namespace MyRandomSamples
             //Console.WriteLine(p.subsetSum(new int[] { 2, 3, 7, 8, 10 }, 11));
             //Console.WriteLine(p.subsetSum(new int[] { 2, 3 }, 10));
 
-            Console.WriteLine(p.isPatternMatchNew("abba", "redbluebluered"));
-            Console.WriteLine(p.isPatternMatchNew("aaaa", "asdasdasdasd"));
-            Console.WriteLine(p.isPatternMatchNew("aabb", "xyzabcxzyabc"));
-            Console.WriteLine(p.isPatternMatchNew("aabba", "catcatgogocat"));
+            //Console.WriteLine(p.isPatternMatchNew("abba", "redbluebluered"));
+            //Console.WriteLine(p.isPatternMatchNew("aaaa", "asdasdasdasd"));
+            //Console.WriteLine(p.isPatternMatchNew("aabb", "xyzabcxzyabc"));
+            //Console.WriteLine(p.isPatternMatchNew("aabba", "catcatgogocat"));
+
+            //int[,] board =
+            //{
+            //    {1, 2, 3, 4, 5, 6, 7, 8, 9},
+            //    {4, 5, 6, 7, 8, 9, 1, 2, 3},
+            //    {7, 8, 9, 1, 2, 3, 4, 5, 6},
+            //    {2, 3, 4, 5, 6, 7, 8, 9, 1},
+            //    {5, 6, 7, 8, 9, 1, 2, 3, 4},
+            //    {8, 9, 1, 2, 3, 4, 5, 6, 7},
+            //    {3, 4, 5, 6, 7, 8, 9, 1, 2},
+            //    {6, 7, 8, 9, 1, 2, 3, 4, 5},
+            //    {9, 1, 2, 3, 4, 5, 6, 7, 8}
+            //};
+
+            //Console.WriteLine(p.isSudokuValid(board));
+
+            //List<List<string>> lists = p.groupShiftedStrings(new List<string> { "abc", "bcd", "acef", "xyz", "az", "ba", "a", "z" });
+            //foreach (var list in lists)
+            //{
+            //    foreach (string s in list)
+            //    {
+            //        Console.Write(s + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //List<string> combos = p.getPhoneToStringCombinations(new int[] { 1, 2, 3, 4 });
+            //foreach (string combo in combos)
+            //{
+            //    Console.WriteLine(combo);
+            //}
+            #endregion
+
+            List<string> combos = p.getCombinations("abcd");
+            foreach (var combo in combos)
+            {
+                Console.WriteLine(combo);
+            }
+        }
+
+        public List<string> getCombinations(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return null;
+
+            List<string> combos = new List<string>();
+            getCombinationsInner(s.ToCharArray(), 0, combos);
+            return combos;
+        }
+
+        private void getCombinationsInner(char[] chars, int index, List<string> combinations)
+        {
+            if (index >= chars.Count())
+                return;
+
+            char ch = chars[index];
+
+            List<string> newCombos = new List<string>();
+            newCombos.Add(ch.ToString());
+
+            foreach (string s in combinations)
+            {
+                newCombos.Add(s + ch);
+            }
+
+            combinations.AddRange(newCombos);
+
+            getCombinationsInner(chars, index + 1, combinations);
 
         }
+
+        public void moveZeroesAgain(int[] nums)
+        {
+            if (nums == null || nums.Length < 2)
+                return;
+
+            int offset = 0;
+
+            for (int j = 0; j < nums.Length; j++)
+            {
+                if (nums[j] == 0)
+                    offset++;
+                else if (offset != 0)
+                    nums[j - offset] = nums[j];
+            }
+
+            for (int j = nums.Length - offset; j < nums.Length; j++)
+            {
+                nums[j] = 0;
+            }
+
+        }
+
+        public List<string> getPhoneToStringCombinations(int[] number)
+        {
+            List<string> strings = new List<string>();
+            this.getCombinations(number, strings, 0, string.Empty);
+
+            return strings;
+        }
+
+        private void getCombinations(int[] numbers, List<string> strings, int index, string currString)
+        {
+            if (index >= numbers.Length)
+            {
+                strings.Add(currString);
+                return;
+            }
+
+            char[] chars = getCharsForDigit(numbers[index]);
+
+            if (chars != null && chars.Length != 0)
+            {
+                foreach (char ch in chars)
+                {
+                    getCombinations(numbers, strings, index + 1, currString + ch);
+                }
+            }
+            else
+            {
+                getCombinations(numbers, strings, index + 1, currString);
+            }
+
+        }
+
+        private char[] getCharsForDigit(int digit)
+        {
+            switch (digit)
+            {
+                case 1: return new char[] { }; break;
+                case 2: return new char[] { 'a', 'b', 'c' }; break;
+                case 3: return new char[] { 'd', 'e', 'f' }; break;
+                case 4: return new char[] { 'g', 'h', 'i' }; break;
+                case 5: return new char[] { 'j', 'k', 'l' }; break;
+                case 6: return new char[] { 'm', 'n', 'o' }; break;
+                case 7: return new char[] { 'p', 'q', 'r', 's' }; break;
+                case 8: return new char[] { 't', 'u', 'v' }; break;
+                case 9: return new char[] { 'w', 'x', 'y', 'z' }; break;
+                default: break;
+            }
+            return new char[] { };
+        }
+
+         /*
+         * Given a string, we can “shift” each of its letter to its successive letter, for example: “abc” -> “bcd”. We can keep “shifting” which forms the sequence:
+         * "abc" -> "bcd" -> ... -> "xyz" Given a list of strings which contains only lowercase alphabets, group all strings that belong to the same shifting sequence.
+         * For example,
+         * given: ["abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"], 
+         * Return:
+         * [ ["abc","bcd","xyz"], ["az","ba"], ["acef"], ["a","z"] ]
+         */
+
+
+        public List<List<string>> groupShiftedStrings(List<string> strings)
+        {
+            if (strings == null || strings.Count() == 0)
+                return null;
+
+            Dictionary<string, List<string>> hashStringMap = new Dictionary<string, List<string>>();
+
+            foreach (string s in strings)
+            {
+                string hash = stringHash(s);
+                //string hash = getHashedString(s);
+                if (!hashStringMap.ContainsKey(hash))
+                    hashStringMap.Add(hash, new List<string>());
+
+                hashStringMap[hash].Add(s);
+            }
+
+            List<List<string>> matchingStrings = new List<List<string>>();
+
+            foreach (var kvp in hashStringMap)
+            {
+                matchingStrings.Add(kvp.Value);
+            }
+
+            return matchingStrings;
+        }
+
+        private string stringHash(string s)
+        {
+            int offset = s[0] - 'a';
+            char[] hashedString = new char[s.Length];
+
+            int i = 0;
+            foreach (char ch in s)
+            {
+                int x = ch - offset;
+                if (x < 'a')
+                {
+                    x = 'z' - (x - 'a' + 1);
+                }
+                hashedString[i++] = (char)(x);
+            }
+
+            return new string(hashedString);
+        }
+
+        private string getHashedString(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            StringBuilder sb = new StringBuilder();
+            int offset = s[0] - 'a';
+            sb.Append('a');
+            for (int i = 1; i < s.Length; i++)
+            {
+                sb.Append((char)('a' + (s[i] - offset + 26) % 26));
+            }
+
+            return sb.ToString();
+        }
+
+        public bool isSudokuValid(int[,] board)
+        {
+            if (board == null)
+                return false;
+
+            int rows = board.GetLength(0);
+            int cols = board.GetLength(1);
+
+            int target = getFactorial(rows);
+            if (target == -1)
+                return false;
+
+            int[] rowsCheck = new int[rows];
+            int[] colsCheck = new int[cols];
+            int[] minBoxCheck = new int[rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                rowsCheck[i] = 1;
+                colsCheck[i] = 1;
+                minBoxCheck[i] = 1;
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (board[i, j] < 0 || board[i, j] > rows)
+                        return false;
+                    rowsCheck[i] *= board[i, j];
+                    colsCheck[j] *= board[i, j];
+
+                    int val = (((int) (i/3))*3) + (j/3);
+                    minBoxCheck[val] *= board[i, j];
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                if (rowsCheck[i] != target || colsCheck[i] != target || minBoxCheck[i] != target)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private int getFactorial(int n)
+        {
+            if (n < 0 || n > 9)
+                return -1;
+
+            int prod = 1;
+            for (int i = 2; i <= n; i++)
+            {
+                prod *= i;
+            }
+
+            return prod;
+        }
+
 
         public bool isPatternMatchNew(string pattern, string text)
         {
