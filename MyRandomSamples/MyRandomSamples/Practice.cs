@@ -11,7 +11,9 @@ namespace MyRandomSamples
         private static void Main(string[] args)
         {
             Practice p = new Practice();
+
             #region old code
+
             /*
             List<int> numbers = new List<int> { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
             p.MergeSort(numbers);
@@ -105,7 +107,7 @@ namespace MyRandomSamples
             //{
             //    Console.WriteLine(i);
             //}
-            
+
             //Console.WriteLine(p.longestPalindrome("banana"));
             //Console.WriteLine(p.longestCommonSubstring("abcdabcdabcd", "ebcdabcdf"));
             //Console.WriteLine(p.reverseStringNew("abcd hello sir"));
@@ -179,13 +181,570 @@ namespace MyRandomSamples
             //{
             //    Console.WriteLine(combo);
             //}
+
+            //List<string> combos = p.getCombinations("abcd");
+            //foreach (var combo in combos)
+            //{
+            //    Console.WriteLine(combo);
+            //}
+
+            //Console.WriteLine(p.isSubstringMatch("abc","abbacabc"));
+            //Console.WriteLine(p.longestPalindromeTest("banana"));
+
+            //Console.WriteLine(p.isInterleaveTest("aabcc", "dbbca", "aadbbcbcac"));
+            //Console.WriteLine(p.isInterleaveTest("aabcc", "dbbca", "aadbbbaccc"));
+
+            //int[,] matrix = p.spiralMatrix(4);
+
+            //for (int i = 0; i < matrix.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < matrix.GetLength(1); j++)
+            //    {
+            //        Console.Write(matrix[i,j]+ "\t");
+            //    }    
+            //    Console.WriteLine();
+            //}
+
+            //int[] result = p.prodArrayExceptSelf(new int[] {1, 2, 3, 4});
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //int[] arr = { 1, 3, 6, 1, 0, 9 };
+            //int[] arr = {5, 4, 1, 1, 1, 1, 1};
+            //int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            //Console.WriteLine(p.numJumps(arr));
+            //Console.WriteLine(p.minJumps(arr));
+
             #endregion
 
-            List<string> combos = p.getCombinations("abcd");
-            foreach (var combo in combos)
+            //Knapsack ks1 = new Knapsack(1, 1);
+            //Knapsack ks2 = new Knapsack(3, 4);
+            //Knapsack ks3 = new Knapsack(4, 5);
+            //Knapsack ks4 = new Knapsack(5, 7);
+
+            //List<Knapsack> list = new List<Knapsack> { ks1, ks2, ks3, ks4 };
+
+            //Console.WriteLine(p.knapsack(list, 7));
+
+            //Console.WriteLine(p.IsPerfectSquare(16));
+            //Console.WriteLine(p.IsPerfectSquare(25));
+            //Console.WriteLine(p.IsPerfectSquare(33));
+            //Console.WriteLine(p.IsPerfectSquare(59));
+
+            //List<List<int>> factors = p.factorCombinations(12);
+            //foreach (List<int> list in factors)
+            //{
+            //    foreach (int i in list)
+            //    {
+            //        Console.Write(i +"  ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //Console.WriteLine(p.isListEqualSplit(new int[] {1, 2, 3, 4, 5}));
+            //Console.WriteLine(p.isListEqualSplit(new int[] {1, 2, 3, 4, 6}));
+
+            List<string> sols = p.substringPermutationMatch("abc", "alabcsdnalscbadnlasnbacdas");
+            foreach (string s in sols)
             {
-                Console.WriteLine(combo);
+                Console.WriteLine(s);
             }
+        }
+
+        public bool isListEqualSplit(int[] nums)
+        {
+            if (nums == null || nums.Count() < 2)
+                return false;
+
+            int sum = 0;
+            foreach (int n in nums)
+                sum += n;
+
+            int target = ((sum + 1) / 2);
+
+            bool[,] memo = new bool[nums.Count(), target + 1];
+
+            for (int i = 0; i < nums.Count(); i++)
+            {
+                for (int j = 0; j < target + 1; j++)
+                {
+                    if (i == 0)
+                    {
+                        if (j == nums[i])
+                            memo[i, j] = true;
+                    }
+                    else
+                    {
+                        if (j < nums[i])
+                            memo[i, j] = memo[i - 1, j];
+                        else if (j == nums[i])
+                            memo[i, j] = true;
+                        else
+                            memo[i, j] = (memo[i - 1, j] || memo[i - 1, j - nums[i]]);
+                    }
+
+                }
+            }
+
+            return memo[nums.Count() - 1, target] || memo[nums.Count() - 1, target - 1];
+
+        }
+
+        public List<string> substringPermutationMatch(string s, string text)
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(text) || s.Length > text.Length)
+                return null;
+
+            List<string> solutions = new List<string>();
+
+            int sHash = createHashString(s);
+            int tHash = createHashString(text.Substring(0, s.Length));
+            if (sHash == tHash)
+                solutions.Add(text.Substring(0, s.Length));
+
+            for (int i = 1; i <= text.Length - s.Length; i++)
+            {
+                tHash = adjustHash(tHash, text[i - 1], text[s.Length + i - 1]);
+                if (sHash == tHash)
+                    solutions.Add(text.Substring(i, s.Length));
+
+            }
+            return solutions;
+        }
+
+        private int[] primes = new int[26] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101 };
+
+        private int createHashString(string s)
+        {
+            int hash = 1;
+            foreach (char ch in s)
+            {
+                hash *= primes[ch - 'a'];
+            }
+            return hash;
+        }
+
+        private int adjustHash(int hash, char remove, char add)
+        {
+            return (int)(hash * primes[add - 'a'] / primes[remove - 'a']);
+        }
+
+
+        public class RandomizedSet
+        {
+            private List<int> list;
+            private Dictionary<int, int> map;
+            private int count;
+
+            public RandomizedSet()
+            {
+                list = new List<int>();
+                map = new Dictionary<int, int>();
+                count = 0;
+            }
+
+            public bool Add(int n)
+            {
+                if (map.ContainsKey(n))
+                    return false;
+                if (count < list.Count())
+                {
+                    list[count] = n;
+                    map.Add(n, count);
+                }
+                else
+                {
+                    list.Add(n);
+                    map.Add(n, list.Count() - 1);
+                }
+
+                count++;
+                return true;
+            }
+
+            public bool Remove(int n)
+            {
+                if (!map.ContainsKey(n) || count == 0)
+                    return false;
+
+                int index = map[n];
+                if (index != list.Count() - 1)
+                {
+                    int lastElem = list[list.Count() - 1];
+                    list[index] = lastElem;
+                    map[lastElem] = index;
+                }
+                list[list.Count() - 1] = Int32.MinValue;
+                map.Remove(n);
+                count--;
+
+                return true;
+            }
+
+            public int Random()
+            {
+                if (count < 1)
+                    return Int32.MinValue;
+                Random rand = new Random();
+                int randIndex = rand.Next(count);
+                return list[randIndex];
+            }
+
+        }
+
+        public List<List<int>> factorCombinations(int n)
+        {
+            if (n < 2)
+                return null;
+
+            List<List<int>> factors = new List<List<int>>();
+            factorize(n, factors, new List<int>());
+
+            return (new HashSet<List<int>> (factors)).ToList();
+        }
+
+        private void factorize(int n, List<List<int>> factors, List<int> currList)
+        {
+            if (n <= 3)
+            {
+                currList.Add(n);
+                currList = currList.OrderBy(num => num).ToList();
+                factors.Add(currList);
+                return;
+            }
+
+            for (int i = 2; i <= n / 2; i++)
+            {
+                if (n % i == 0)
+                {
+                    List<int> currListCopy = new List<int>(currList);
+                    currListCopy.Add(i);
+                    factorize(n / i, factors, currListCopy);
+                }
+            }
+
+        }
+
+        public class Flatten2DLists
+        {
+            private List<List<int>> lists;
+            private List<int> indexes;
+            private int index;
+
+            public Flatten2DLists(List<List<int>> l)
+            {
+                if (l.Count() < 0)
+                    return;
+                lists = l;
+                indexes = new List<int>();
+                index = 0;
+            }
+
+            public int getNext()
+            {
+                int val = Int32.MinValue;
+                int ctr = 0;
+                while (true)
+                {
+                    List<int> list = lists[index];
+                    if (indexes[index] >= list.Count())
+                    {
+                        index = (index == lists.Count() - 1) ? 0 : index + 1;
+                        ctr++;
+                    }
+                    else
+                    {
+                        val = list[indexes[index]];
+                        indexes[index]++;
+                        index = (index == lists.Count() - 1) ? 0 : index + 1;
+                        break;
+                    }
+                    if (ctr == lists.Count())
+                    {
+                        break;
+                    }
+                }
+                return val;
+            }
+
+        }
+
+        public class Node
+        {
+            public int value;
+            public Node leftNode;
+            public Node rightNode;
+
+            public Node(int v, Node l, Node r)
+            {
+                this.value = v;
+                this.leftNode = l;
+                this.rightNode = r;
+            }
+        }
+
+        public Node buildSampleTree()
+        {
+            Node node4 = new Node(4, null, null);
+            Node node5 = new Node(5, null, null);
+            Node node6 = new Node(6, null, null);
+            Node node7 = new Node(7, null, null);
+
+            Node node2 = new Node(2, node4, node5);
+            Node node3 = new Node(3, node6, node7);
+
+            Node node1 = new Node(1, node2, node3);
+
+            return node1;
+        }
+
+        public bool IsPerfectSquare(int num)
+        {
+            if (num < 0)
+                return false;
+
+            int min = 0;
+            int max = num;
+
+            while (true)
+            {
+                if (min > max)
+                    return false;
+
+                int mid = (int)((min + max) / 2);
+                if (mid * mid == num)
+                    return true;
+                else if (mid * mid < num)
+                    min = mid + 1;
+                else
+                    max = mid - 1;
+            }
+
+            return false;
+        }
+
+        public class Knapsack
+        {
+            public int Weight;
+            public int Value;
+
+            public Knapsack(int w, int v)
+            {
+                this.Weight = w;
+                this.Value = v;
+            }
+
+        }
+
+        public int knapsack(List<Knapsack> knapsacks, int maxWeight)
+        {
+            if (knapsacks == null || knapsacks.Count() == 0 || maxWeight < 1)
+                return 0;
+
+            int[,] memo = new int[knapsacks.Count(), maxWeight+1];
+
+            for (int i = 0; i < knapsacks.Count(); i++)
+            {
+                for (int j = 0; j <= maxWeight; j++)
+                {
+                    if (j == 0)
+                        memo[i, j] = 0;
+                    else
+                    {
+                        if (i == 0)
+                        {
+                            if (j < knapsacks[i].Weight)
+                                memo[i, j] = 0;
+                            else
+                                memo[i, j] = knapsacks[i].Value;
+                        }
+                        else
+                        {
+                            if (j < knapsacks[i].Weight)
+                                memo[i, j] = memo[i - 1, j];
+                            else
+                                memo[i, j] = Math.Max(memo[i - 1, j],knapsacks[i].Value + memo[i - 1, j - knapsacks[i].Weight]);
+                        }
+                    }
+                }
+            }
+            return memo[knapsacks.Count() - 1, maxWeight];
+        }
+
+        public int[] prodArrayExceptSelf(int[] array)
+        {
+            if (array == null || array.Count() < 1)
+                return null;
+
+            int[] prod1 = new int[array.Count()];
+            int[] prod2 = new int[array.Count()];
+            int[] prod = new int[array.Count()];
+
+            prod1[0] = 1;
+            prod2[prod2.Count() - 1] = 1;
+            for (int i = 1; i < array.Count(); i++)
+            {
+                prod1[i] = prod1[i - 1] * array[i - 1];
+                prod2[array.Count() - i - 1] = prod2[array.Count() - i] * array[array.Count() - i];
+            }
+
+            for (int i = 0; i < array.Count(); i++)
+            {
+                prod[i] = prod1[i] * prod2[i];
+            }
+
+            return prod;
+
+        }
+
+        public int[,] spiralMatrix(int n)
+        {
+            if (n < 1)
+                return null;
+
+            int[,] matrix = new int[n, n];
+            int num = 1;
+
+            for (int layer = 0; layer < (n / 2); layer++)
+            {
+                int temp = num;
+                for (int i = layer; i < n - layer - 1; i++)
+                {
+                    matrix[layer, i] = temp;
+                    matrix[i, n - layer - 1] = temp + (n - layer - 1);
+                    matrix[n - 1 - layer, n - i - 1] = temp + 2 * (n - layer - 1);
+                    matrix[n - i - 1, layer] = temp + 3 * (n - layer - 1);
+                    temp++;
+                }
+                num += 4*(n - layer - 1);
+            }
+
+            if (n % 2 == 1)
+            {
+                matrix[n / 2, n / 2] = num;
+            }
+
+            return matrix;
+        }
+
+        public bool isInterleaveTest(string s1, string s2, string t)
+        {
+            if (string.IsNullOrEmpty(s1) || string.IsNullOrEmpty(s2) || string.IsNullOrEmpty(t) ||
+                s1.Length + s2.Length != t.Length)
+                return false;
+
+            bool[,] memo = new bool[s1.Length + 1, s2.Length + 1];
+
+            for (int i = 0; i < s1.Length + 1; i++)
+            {
+                for (int j = 0; j < s2.Length + 1; j++)
+                {
+                    if (i == 0 && j == 0)
+                    {
+                        memo[i, j] = true;
+                    }
+                    else if (i == 0)
+                    {
+                        memo[i, j] = (memo[i, j - 1] && t[j - 1] == s2[j - 1]);
+                    }
+                    else if (j == 0)
+                    {
+                        memo[i, j] = (memo[i - 1, j] && t[i - 1] == s1[i - 1]);
+                    }
+                    else
+                    {
+                        memo[i, j] = ((memo[i - 1, j] && t[i + j - 1] == s1[i - 1]) ||
+                                      (memo[i, j - 1] && t[i + j - 1] == s2[j - 1]));
+                    }
+                }
+            }
+            return memo[s1.Length, s2.Length];
+        }
+
+        public string longestPalindromeTest(string s)
+        {
+            if (string.IsNullOrEmpty(s) || s.Length < 1)
+                return string.Empty;
+
+            bool[,] memo = new bool[s.Length, s.Length];
+            int endIndex = 1;
+            int maxLen = 1;
+
+            // main diagonal
+            for (int i = 0; i < s.Length; i++)
+            {
+                memo[i, i] = true;
+            }
+
+            // one off diagonal
+            for (int i = 0; i < s.Length - 1; i++)
+            {
+                memo[i, i + 1] = (s[i] == s[i + 1]) ? true : false;
+            }
+
+            // rest of matrix
+            for (int offset = 2; offset < s.Length; offset++)
+            {
+                for (int i = 0; i < s.Length - offset; i++)
+                {
+                    int row = i;
+                    int col = i + offset;
+
+                    memo[row, col] = false;
+
+                    if ((s[row] == s[col]) && (memo[row, col - 2] == true))
+                    {
+                        memo[row, col] = true;
+                        if (col - row > maxLen)
+                        {
+                            maxLen = col - row;
+                            endIndex = col;
+                        }
+                    }
+                }
+            }
+            return s.Substring(endIndex - maxLen, maxLen + 1);
+        }
+
+        public bool isSubstringMatch(string s, string text)
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(text) || s.Length > text.Length)
+                return false;
+
+            int sHash = hashString(s);
+            int textHash = hashString(text.Substring(0, s.Length));
+
+            if (textHash == sHash && s == text.Substring(0, s.Length))
+                return true;
+
+            for (int i = s.Length; i < text.Length; i++)
+            {
+                textHash = modifyHash(textHash, text[i - s.Length], text[i], s.Length);
+
+                if (textHash == sHash && s == text.Substring(i - s.Length + 1, s.Length))
+                    return true;
+
+            }
+
+            return false;
+        }
+
+        private int hashString(string s)
+        {
+            int hash = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                hash += (int)(Math.Pow(128, i) * s[i]);
+            }
+
+            return hash;
+        }
+
+        private int modifyHash(int hash, int charToRemove, int charToAdd, int strLen)
+        {
+            return (int)(((hash - charToRemove) / 128) + (Math.Pow(128, strLen - 1) * charToAdd));
         }
 
         public List<string> getCombinations(string s)
@@ -714,6 +1273,30 @@ namespace MyRandomSamples
 
         }
 
+        public int numJumps(int[] A)
+        {
+            int max = 0;
+            int numJumpsMade = -1;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (max >= A.Length - 1)
+                {
+                    return numJumpsMade + 1;
+                }
+                if (i > max)
+                {
+                    return -1;
+                }
+                if (A[i] + i > max)
+                {
+                    numJumpsMade++;
+                    max = A[i] + i;
+                }
+                Console.WriteLine("{0} {1} {2}", i, max, numJumpsMade);
+            }
+            return numJumpsMade;
+        }
+
         public int minJumpsTest(int[] array)
         {
             if (array == null || array.Length < 2)
@@ -962,10 +1545,10 @@ namespace MyRandomSamples
                 }
             }
 
-            foreach (int q in jumps)
-            {
-                Console.Write(q + " ");
-            }
+            //foreach (int q in jumps)
+            //{
+            //    Console.Write(q + " ");
+            //}
 
             return jumps[0];
         }
