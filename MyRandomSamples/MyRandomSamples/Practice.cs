@@ -217,8 +217,6 @@ namespace MyRandomSamples
             //Console.WriteLine(p.numJumps(arr));
             //Console.WriteLine(p.minJumps(arr));
 
-            #endregion
-
             //Knapsack ks1 = new Knapsack(1, 1);
             //Knapsack ks2 = new Knapsack(3, 4);
             //Knapsack ks3 = new Knapsack(4, 5);
@@ -245,6 +243,134 @@ namespace MyRandomSamples
 
             //Console.WriteLine(p.isListEqualSplit(new int[] {1, 2, 3, 4, 5}));
             //Console.WriteLine(p.isListEqualSplit(new int[] {1, 2, 3, 4, 6}));
+
+            //Console.WriteLine(p.isPatternMatchNew("abba", "redbluebluered"));
+            //Console.WriteLine(p.isPatternMatchNew("aaaa", "asdasdasdasd"));
+            //Console.WriteLine(p.isPatternMatchNew("aabb", "xyzabcxzyabc"));
+            //Console.WriteLine(p.isPatternMatchNew("aabba", "catcatgogocat"));
+
+            //Console.WriteLine(p.evaluateExpresion("1+2*3+4")); //11
+            //Console.WriteLine(p.evaluateExpresion("1+2*3-4")); //3
+
+            //List<string> permutations = p.permuteString("abcd");
+            //foreach (string s in permutations)
+            //{
+            //    Console.WriteLine(s);
+            //}
+
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //int[] nums = { 0, 0, 0, 0, 0 };
+            //int[] nums = { 1, 2, 3, 4, 5 };
+            //p.moveZeroesAgain(nums);
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //int[,] matrix = p.getSpiralMatrix(4);
+
+            //for (int i = 0; i < matrix.GetLength(0); i++)
+            //{
+            //    for (int j = 0; j < matrix.GetLength(1); j++)
+            //    {
+            //        Console.Write(matrix[i, j] + "  ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //int[] colors = new int[] { 0, 1, 2, 0, 1, 2, 0, 1, 2 };
+            //p.moveColors(colors);
+
+            //foreach (int i in colors)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //p.getSmallestPairSums(new int[] { 1, 7, 11 }, new int[] { 2, 4, 6 }, 6);
+
+            //int[] array = new int[] { 0, 0, 0, 1, 1, 2, 2, 2, 2, 3, 4, 5 };
+            //p.removeDups(ref array);
+
+            //foreach (int i in array)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //int[] result = p.getIntersection(new int[] { 1, 2, 3, 4, 5, 6 }, new int[] { 10, 8, 6, 4, 2 });
+            //foreach (int i in result)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //List<int[]> result = p.getKthProduct(new int[] { 1, 7, 11 }, new int[] { 2, 4, 6 }, 6);
+            //foreach (int[] array in result)
+            //{
+            //    Console.WriteLine(array[0] + "  " + array[1] + "  " + array[0] * array[1]);
+            //}
+
+            //int[,] dungeon = new int[,] {{-2, 	-3,	3},
+            //{-5,	-10,	1},
+            //    {10,	30,	-5}};
+
+            //Console.WriteLine(p.calculateMinimumHP(dungeon));
+
+            //DateTime now = DateTime.Now;
+            //List<List<int[]>> boards = p.nQueens(8);
+            //int ms = (DateTime.Now - now).Milliseconds;
+
+            //Console.WriteLine("Found {0} solutions in {1}ms", boards.Count, ms);
+
+            //foreach (int[] positions in boards[0])
+            //{
+            //    Console.WriteLine(positions[0] + " " + positions[1]);
+            //}
+
+            //Console.WriteLine(p.convertIntToRoman(1000));
+            //Console.WriteLine(p.convertIntToRoman(3999));
+            //Console.WriteLine(p.convertIntToRoman(1234));
+
+            //Console.WriteLine(p.isPowerOfFour(4));
+            //Console.WriteLine(p.isPowerOfFour(16));
+            //Console.WriteLine(p.isPowerOfFour(64));
+            //Console.WriteLine(p.isPowerOfFour(14));
+            //Console.WriteLine(p.isPowerOfFour(40));
+            //Console.WriteLine(p.isPowerOfFour(96));
+            //Console.WriteLine(p.isPowerOfFour(40));
+
+            //int[,] nums = new int[,] { {9,9,4},
+            //                           {6,6,8},
+            //                           {2,1,1} };
+            //Console.WriteLine(p.longestIncreasingPathInMatrix(nums));
+
+            //SinglyLinkedListNode head = p.CreateSampleLinkedList();
+            //p.PrintSinglyLinkedList(head);
+            //p.OddEvenList(head);
+            //p.PrintSinglyLinkedList(head);
+            //Console.WriteLine(p.MaxProduct(new string[] { "abcw", "baz", "foo", "bar", "xtfn", "abcdef" }));
+            //Console.WriteLine(p.MaxProduct(new string[] { "a", "ab", "abc", "d", "cd", "bcd", "abcd" }));
+            //Console.WriteLine(p.MaxProduct(new string[] { "a", "aa", "aaa", "aaaa" }));
+
+            //int[,] matrix = new int[,] {
+            //    {0,1,0,0,},
+            //    {0,1,1,1,},
+            //    {1,1,1,0,},
+            //    {0,1,1,1,},
+            //    {0,1,0,0,}
+            //};
+            //Console.WriteLine(p.numIslands(matrix));
+
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //int[] nums = { 0, 0, 0, 0, 0 };
+            //int[] nums = { 1, 2, 3, 4, 5 };
+            //p.moveZeroesYetAgain(nums);
+
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+            #endregion
 
             List<string> sols = p.substringPermutationMatch("abc", "alabcsdnalscbadnlasnbacdas");
             foreach (string s in sols)
@@ -848,6 +974,815 @@ namespace MyRandomSamples
                 default: break;
             }
             return new char[] { };
+        }
+
+        public void moveZeroesYetAgain(int[] array)
+        {
+            if (array == null || array.Count() == 0)
+                return;
+
+            int offset = 0;
+            for (int i = 0; i < array.Count(); i++)
+            {
+                if (array[i] == 0)
+                    offset++;
+                else if (offset != 0)
+                    array[i - offset] = array[i];
+            }
+            for (int i = array.Count() - offset; i < array.Count(); i++)
+            {
+                array[i] = 0;
+            }
+        }
+
+
+        public enum LocationTypes
+        {
+            Land, Water, Visited
+        }
+
+        private class Pair
+        {
+            public int row;
+            public int col;
+
+            public Pair(int r, int c)
+            {
+                row = r;
+                col = c;
+            }
+        }
+
+        public int numIslands(int[,] matrix)
+        {
+            if (matrix == null)
+                return 0;
+
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            int numIslands = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (matrix[i, j] == (int)LocationTypes.Land)
+                    {
+                        floodFill(matrix, i, j, rows, cols);
+                        numIslands++;
+                    }
+                }
+            }
+
+            return numIslands;
+        }
+
+        private void floodFill(int[,] matrix, int row, int col, int rows, int cols)
+        {
+            Queue<Pair> processingQueue = new Queue<Pair>();
+            processingQueue.Enqueue(new Pair(row, col));
+
+            while (processingQueue.Count() != 0)
+            {
+                Pair p = processingQueue.Dequeue();
+                matrix[p.row, p.col] = (int)LocationTypes.Visited;
+
+                if (p.row > 0 && matrix[p.row - 1, p.col] == (int)LocationTypes.Land)
+                    processingQueue.Enqueue(new Pair(p.row - 1, p.col));
+
+                if (p.row < rows - 1 && matrix[p.row + 1, p.col] == (int)LocationTypes.Land)
+                    processingQueue.Enqueue(new Pair(p.row + 1, p.col));
+
+                if (p.col > 0 && matrix[p.row, p.col - 1] == (int)LocationTypes.Land)
+                    processingQueue.Enqueue(new Pair(p.row, p.col - 1));
+
+                if (p.col < cols - 1 && matrix[p.row, p.col + 1] == (int)LocationTypes.Land)
+                    processingQueue.Enqueue(new Pair(p.row, p.col + 1));
+            }
+
+        }
+
+
+        public int MaxProduct(string[] words)
+        {
+            if (words == null || words.Count() < 1)
+                return 0;
+
+            Dictionary<string, int> map = new Dictionary<string, int>();
+            foreach (string word in words)
+            {
+                int mask = 0;
+                foreach (char ch in word)
+                {
+                    mask = mask | (1 << (ch - 'a'));
+                }
+                map.Add(word, mask);
+            }
+
+            int prod = 0;
+            for (int i = 0; i < words.Count(); i++)
+            {
+                for (int j = i; j < words.Count(); j++)
+                {
+                    if ((map[words[i]] & map[words[j]]) == 0)
+                    {
+                        prod = Math.Max(prod, (words[i].Length * words[j].Length));
+                    }
+                }
+            }
+
+            return prod;
+        }
+
+        public class SinglyLinkedListNode
+        {
+            public int value;
+            public SinglyLinkedListNode next;
+
+            public SinglyLinkedListNode(int val)
+            {
+                this.value = val;
+                next = null;
+            }
+        }
+
+        public SinglyLinkedListNode CreateSampleLinkedList()
+        {
+            SinglyLinkedListNode head = new SinglyLinkedListNode(0);
+            SinglyLinkedListNode node = head;
+            for (int i = 1; i <= 10; i++)
+            {
+                SinglyLinkedListNode node1 = new SinglyLinkedListNode(i);
+                node.next = node1;
+                node = node1;
+            }
+
+            return head;
+        }
+
+        public void OddEvenList(SinglyLinkedListNode head)
+        {
+            if (head == null || head.next == null || head.next.next == null)
+                return;
+
+            SinglyLinkedListNode oddHead = head;
+            SinglyLinkedListNode oddTail = head;
+            SinglyLinkedListNode evenHead = head.next;
+            SinglyLinkedListNode evenTail = head.next;
+
+            while (evenTail != null)
+            {
+                SinglyLinkedListNode oddNext = evenTail.next;
+                SinglyLinkedListNode oddNextNext = oddNext.next;
+                evenTail.next = oddNextNext;
+                evenTail = evenTail.next;
+                oddNext.next = oddTail.next;
+                oddTail.next = oddNext;
+                oddTail = oddNext;
+            }
+        }
+
+        public void PrintSinglyLinkedList(SinglyLinkedListNode head)
+        {
+            SinglyLinkedListNode node = head;
+            while (node != null)
+            {
+                Console.Write(node.value);
+                if (node.next != null)
+                    Console.Write("-->");
+                node = node.next;
+            }
+            Console.WriteLine();
+        }
+
+        public int longestIncreasingPathInMatrix(int[,] matrix)
+        {
+            if (matrix == null || matrix.GetLength(0) == 0 || matrix.GetLength(1) == 0)
+                return -1;
+
+            int[,] paths = new int[matrix.GetLength(0), matrix.GetLength(1)];
+            int max = 0;
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    List<int> cand = new List<int>();
+                    int len = longestPathInner(matrix, paths, i, j);
+                    max = (len > max) ? len : max;
+                }
+            }
+            return max;
+        }
+
+        private int longestPathInner(int[,] matrix, int[,] paths, int row, int col)
+        {
+            if (paths[row, col] != 0)
+                return paths[row, col];
+
+            int max = 1;
+
+            if (row > 0 && matrix[row - 1, col] > matrix[row, col])
+                max = Math.Max(max, 1 + longestPathInner(matrix, paths, row - 1, col));
+
+            if (row < matrix.GetLength(0) - 1 && matrix[row + 1, col] > matrix[row, col])
+                max = Math.Max(max, 1 + longestPathInner(matrix, paths, row + 1, col));
+
+            if (col > 0 && matrix[row, col - 1] > matrix[row, col])
+                max = Math.Max(max, 1 + longestPathInner(matrix, paths, row, col - 1));
+
+            if (col < matrix.GetLength(1) - 1 && matrix[row, col + 1] > matrix[row, col])
+                max = Math.Max(max, 1 + longestPathInner(matrix, paths, row, col + 1));
+
+            paths[row, col] = max;
+            return max;
+        }
+
+        public bool isPowerOfFour(int n)
+        {
+            n = (n < 0) ? -n : n;
+            double x = Math.Log(n) / Math.Log(4);
+            return (x - (int)(x) == 0);
+        }
+
+        public static readonly string[] OnesInRoman = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+        public static readonly string[] TensInRoman = { "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" };
+        public static readonly string[] HundInRoman = { "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" };
+        public static readonly string[] ThouInRoman = { "M", "MM", "MMM" };
+
+        public string convertIntToRoman(int n)
+        {
+            if (n < 0 || n >= 4000)
+                return null;
+
+            if (n == 0)
+                return string.Empty;
+
+            StringBuilder sb = new StringBuilder();
+
+            int thou = n / 1000;
+            if (thou > 0)
+                sb.Append(ThouInRoman[thou - 1]);
+
+            n %= 1000;
+
+            int hund = n / 100;
+            if (hund > 0)
+                sb.Append(HundInRoman[hund - 1]);
+
+            n %= 100;
+
+            int tens = n / 10;
+            if (tens > 0)
+                sb.Append(TensInRoman[tens - 1]);
+
+            n %= 10;
+
+            if (n > 0)
+                sb.Append(OnesInRoman[n - 1]);
+
+            return sb.ToString();
+        }
+
+
+        public List<List<int[]>> nQueens(int n)
+        {
+            if (n < 4)
+                return null;
+
+            List<List<int[]>> boards = new List<List<int[]>>();
+            nQueensInner(boards, new List<int[]>(), 0, n);
+
+            return boards;
+        }
+
+        private void nQueensInner(List<List<int[]>> boards, List<int[]> board, int currIndex, int boardSize)
+        {
+            if (currIndex == boardSize)
+            {
+                boards.Add(board);
+                return;
+            }
+
+            for (int i = 0; i < boardSize; i++)
+            {
+                int[] pos = new int[] { currIndex, i };
+                if (isPositionLegal(board, pos))
+                {
+                    List<int[]> boardCopy = new List<int[]>(board);
+                    boardCopy.Add(pos);
+                    nQueensInner(boards, boardCopy, currIndex + 1, boardSize);
+                }
+            }
+
+        }
+
+        private bool isPositionLegal(List<int[]> board, int[] pos)
+        {
+            int posSum = pos[0] + pos[1];
+            int posDiff = pos[0] - pos[1];
+            foreach (int[] array in board)
+            {
+                int sum = array[0] + array[1];
+                int diff = array[0] - array[1];
+
+                if (array[0] == pos[0] || array[1] == pos[1] || posSum == sum || posDiff == diff)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public int calculateMinimumHP(int[,] dungeon)
+        {
+            int m = dungeon.GetLength(0);
+            int n = dungeon.GetLength(1);
+
+            //init dp table
+            int[,] h = new int[m, n];
+
+            h[m - 1, n - 1] = Math.Max(1 - dungeon[m - 1, n - 1], 1);
+
+            //init last row
+            for (int i = m - 2; i >= 0; i--)
+            {
+                h[i, n - 1] = Math.Max(h[i + 1, n - 1] - dungeon[i, n - 1], 1);
+            }
+
+            //init last column
+            for (int j = n - 2; j >= 0; j--)
+            {
+                h[m - 1, j] = Math.Max(h[m - 1, j + 1] - dungeon[m - 1, j], 1);
+            }
+
+            //calculate dp table
+            for (int i = m - 2; i >= 0; i--)
+            {
+                for (int j = n - 2; j >= 0; j--)
+                {
+                    int down = Math.Max(h[i + 1, j] - dungeon[i, j], 1);
+                    int right = Math.Max(h[i, j + 1] - dungeon[i, j], 1);
+                    h[i, j] = Math.Min(right, down);
+                }
+            }
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    Console.Write(h[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+
+            return h[0, 0];
+        }
+
+        public List<int[]> getKthProduct(int[] array1, int[] array2, int k)
+        {
+            if (array1 == null || array1.Count() == 0 || array2 == null || array2.Count() == 0)
+                return null;
+
+            List<int[]> result = new List<int[]>();
+            int[] smaller = array2;
+            int[] larger = array1;
+            if (array1.Count() < array2.Count())
+            {
+                smaller = array1;
+                larger = array2;
+            }
+
+            int[] indices = new int[smaller.Count()];
+            int ctr = 0;
+
+            while (ctr < k)
+            {
+                int smallestIndex = 0;
+                int smallestProd = Int32.MaxValue;
+
+                for (int i = 0; i < indices.Count(); i++)
+                {
+                    if (indices[i] >= larger.Count())
+                        continue;
+
+                    int temp = smaller[i] * larger[indices[i]];
+                    if (temp < smallestProd)
+                    {
+                        smallestProd = temp;
+                        smallestIndex = i;
+                    }
+                }
+
+                if (smallestProd == Int32.MaxValue)
+                {
+                    throw new Exception("Bad data");
+                }
+                int[] array = new int[2] { smaller[smallestIndex], larger[indices[smallestIndex]] };
+                result.Add(array);
+                indices[smallestIndex]++;
+                ctr++;
+
+            }
+            return result;
+        }
+
+        public class NodeWithParent
+        {
+            public int value; //generic
+
+            public NodeWithParent left;
+            public NodeWithParent right;
+            public NodeWithParent parent;
+        }
+
+        class NodeIterator
+        {
+            NodeWithParent node;
+
+            //Constructor
+            public NodeIterator(NodeWithParent root)
+            {
+                node = root;
+
+                // initialize to first element in in-order traversal.
+                // Go into the left subtree until left node
+                while (node.left != null)
+                {
+                    node = node.left;
+                }
+            }
+
+            public object current()
+            {
+                return node;
+            }
+
+            public bool moveNext()
+            {
+                if (node == null)
+                    return false;
+
+                //if node has right child, return left most child or right subtree - if right child has no left children, return right child
+                if (node.right != null)
+                {
+                    node = node.right;
+                    while (node.left != null)
+                    {
+                        node = node.left;
+                    }
+                    return true;
+                }
+
+                //if node has no right child, we go up the tree with parent pointer
+                // let p = parent ptr
+                else
+                {
+                    NodeWithParent parent = node.parent;
+                    while (parent != null)
+                    {
+                        if (parent.left == node)
+                        {
+                            node = parent;
+                            return true;
+                        }
+
+                        NodeWithParent grandparent = parent.parent;
+
+                        if (grandparent == null)
+                        {
+                            return false;
+                        }
+
+                        // keep traversing to p.parent, until p.parent's left child is p || parent is null
+                        if (grandparent.left == parent)
+                        {
+                            node = grandparent;
+                            return true;
+                        }
+                        else
+                        {
+                            parent = grandparent;
+                        }
+                    }
+                }
+
+                // if null return false;
+                return false;
+            }
+        }
+
+        public int[] getIntersection(int[] array1, int[] array2)
+        {
+            if (array1 == null || array2 == null || array1.Count() == 0 || array2.Count() == 0)
+                return null;
+
+            Array.Sort(array1);
+            Array.Sort(array2);
+
+            int i = 0;
+            int j = 0;
+            List<int> result = new List<int>();
+
+            while (i < array1.Count() && j < array2.Count())
+            {
+                if (array1[i] == array2[j])
+                {
+                    int val = array1[i];
+                    result.Add(val);
+                    while (i < array1.Count() && array1[i] == val)
+                    {
+                        i++;
+                    }
+                    while (j < array2.Count() && array2[j] == val)
+                    {
+                        j++;
+                    }
+                }
+                else
+                {
+                    if (array1[i] < array2[j])
+                    {
+                        i++;
+                    }
+                    else
+                    {
+                        j++;
+                    }
+                }
+            }
+
+            return result.ToArray();
+        }
+
+
+        public void removeDups(ref int[] array)
+        {
+            if (array == null || array.Count() < 2)
+                return;
+
+            int index = 0;
+            for (int i = 0; i < array.Count(); i++)
+            {
+                if (array[index] != array[i])
+                {
+                    if (++index != i)
+                        array[index] = array[i];
+                }
+            }
+            ++index;
+
+            Array.Resize(ref array, index);
+        }
+
+        public void getSmallestPairSums(int[] nums1, int[] nums2, int k)
+        {
+            if (nums1 == null || nums1.Count() < 1 || nums2 == null || nums2.Count() < 1 || k < 1 || k > (nums1.Count() * nums2.Count()))
+                return;
+
+            int i = 0;
+            int j = 0;
+            int ctr = 0;
+
+            while (ctr < k)
+            {
+                int[] result = new int[2];
+                int cand1 = Int32.MaxValue;
+                int cand2 = Int32.MaxValue;
+                if (i + 1 < nums1.Count())
+                {
+                    cand1 = Math.Min(cand1, (nums1[i + 1] * nums2[j]));
+                }
+                if (j + 1 < nums2.Count())
+                {
+                    cand2 = Math.Min(cand2, (nums1[i] * nums2[j + 1]));
+                }
+
+                if (cand1 < cand2)
+                {
+                    result[0] = nums1[i++];
+                    result[1] = nums2[j];
+                }
+                else
+                {
+                    result[0] = nums1[i];
+                    result[1] = nums2[j++];
+                }
+                ctr++;
+
+                //Print result
+                Console.WriteLine("[{0},{1}]", result[0], result[1]);
+            }
+
+        }
+
+
+        public void moveColors(int[] colors)
+        {
+            if (colors == null || colors.Count() < 2)
+                return;
+
+            int zeroIndex = 0;
+            int twoIndex = colors.Count() - 1;
+
+            int ptr1 = 0;
+
+            while (ptr1 < twoIndex)
+            {
+                if (colors[ptr1] == 0)
+                {
+                    colors[zeroIndex++] = 0;
+                }
+                else if (colors[ptr1] == 2)
+                {
+                    colors[twoIndex--] = 2;
+                }
+                ptr1++;
+            }
+
+            for (int i = zeroIndex; i < twoIndex; i++)
+            {
+                colors[i] = 1;
+            }
+
+        }
+
+        public int[,] getSpiralMatrix(int n)
+        {
+            if (n < 1)
+                return null;
+
+            int[,] matrix = new int[n, n];
+            int currNum = 1;
+
+            for (int layer = 0; layer <= n / 2; layer++)
+            {
+
+                if (layer == n / 2 && n % 2 == 1)
+                {
+                    matrix[layer, layer] = currNum++;
+                }
+                else
+                {
+                    int maxElem = n - (layer * 2) - 1;
+                    for (int j = layer; j < maxElem; j++)
+                    {
+                        matrix[layer, j] = currNum++;
+                    }
+                    for (int j = layer; j < maxElem; j++)
+                    {
+                        matrix[j, n - layer - 1] = currNum++;
+                    }
+                    for (int j = layer; j < maxElem; j++)
+                    {
+                        matrix[n - layer - 1, n - j - 1] = currNum++;
+                    }
+                    for (int j = layer; j < maxElem; j++)
+                    {
+                        matrix[n - j - 1, layer] = currNum++;
+                    }
+
+                }
+
+            }
+
+            return matrix;
+
+        }
+
+        public void moveZeroesAgainOnceMore(int[] array)
+        {
+            if (array == null || array.Count() < 2)
+                return;
+
+            int offset = 0;
+
+            for (int i = 0; i < array.Count(); i++)
+            {
+                if (array[i] == 0)
+                {
+                    offset++;
+                }
+                else
+                {
+                    if (offset != 0)
+                    {
+                        array[i - offset] = array[i];
+                    }
+                }
+            }
+
+            for (int i = array.Count() - offset; i < array.Count(); i++)
+            {
+                array[i] = 0;
+            }
+
+        }
+
+        public List<string> permuteString(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return null;
+
+            List<string> permutations = new List<string>();
+            permuteStringInner(new List<char>(s.ToCharArray()), permutations, string.Empty);
+            return permutations;
+        }
+
+        private void permuteStringInner(List<char> chars, List<string> permutations, string currString)
+        {
+            if (chars.Count() == 0)
+            {
+                permutations.Add(currString);
+                return;
+            }
+
+            for (int i = 0; i < chars.Count(); i++)
+            {
+                List<char> charsCopy = new List<char>(chars);
+                charsCopy.RemoveAt(i);
+                char ch = chars[i];
+
+                permuteStringInner(charsCopy, permutations, currString + ch);
+            }
+
+        }
+
+        public int evaluateExpresion(string exp)
+        {
+            if (string.IsNullOrEmpty(exp))
+                return -1; //exception!?
+
+            Stack<int> operands = new Stack<int>();
+            Stack<char> operators = new Stack<char>();
+
+            foreach (char ch in exp)
+            {
+                if (isDigit(ch))
+                {
+                    operands.Push(ch - '0');
+                }
+                else
+                {
+                    while ((operators.Count() > 0) && (getOperatorPrecedence(operators.Peek()) > getOperatorPrecedence(ch)))
+                    {
+                        int b = operands.Pop();
+                        int a = operands.Pop();
+                        char op = operators.Pop();
+                        int val = evaluate(a, b, op);
+                        operands.Push(val);
+                    }
+                    operators.Push(ch);
+
+                }
+
+            }
+
+            while (operators.Count() != 0)
+            {
+                int b = operands.Pop();
+                int a = operands.Pop();
+                char op = operators.Pop();
+                int val = evaluate(a, b, op);
+                operands.Push(val);
+            }
+
+            return operands.Pop();
+
+        }
+
+        private bool isDigit(char ch)
+        {
+            return (((ch - '0') >= 0) && ((ch - '0') <= 9));
+        }
+
+        private int getOperatorPrecedence(char op)
+        {
+            switch (op)
+            {
+                case '/': return 8;
+                case '*': return 6;
+                case '+': return 4;
+                case '-': return 2;
+                default: break;
+            }
+
+            return -1;
+        }
+
+        private int evaluate(int a, int b, char op)
+        {
+            switch (op)
+            {
+                case '/': return (int)(a / b);
+                case '*': return a * b;
+                case '+': return a + b;
+                case '-': return a - b;
+                default: break;
+            }
+
+            return -1; // exception!?
         }
 
          /*
