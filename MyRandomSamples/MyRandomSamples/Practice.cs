@@ -372,12 +372,125 @@ namespace MyRandomSamples
             //}
             #endregion
 
-            List<string> sols = p.substringPermutationMatch("abc", "alabcsdnalscbadnlasnbacdas");
-            foreach (string s in sols)
+            //List<string> sols = p.substringPermutationMatch("abc", "alabcsdnalscbadnlasnbacdas");
+            //foreach (string s in sols)
+            //{
+            //    Console.WriteLine(s);
+            //}
+
+            //int[] nums = { 0, 1, 0, 3, 12 };
+            //int[] nums = { 2, 0, 1, 0, 3, 12 };
+            //int[] nums = { 0, 0, 0, 0, 0 };
+            //int[] nums = { 1, 2, 3, 4, 5 };
+            //p.moveEmAgain(nums);
+
+            //foreach (int i in nums)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            char[] chars = "this is a freakin test".ToCharArray();
+            p.reverse(chars);
+            Console.WriteLine(new string(chars));
+
+        }
+
+        public int minFrogJump(char[] rocks, int vel)
+        {
+            if (rocks == null || rocks.Count() < 1 || vel < 0)
+                return -1;
+
+            List<List<int>> memo = new List<List<int>>(rocks.Count() + 2);
+
+            memo[memo.Count - 1] = new List<int>();
+            int lastIndex = - 1;
+
+            for (int i = rocks.Count() - 1; i >= 0; i--)
             {
-                Console.WriteLine(s);
+                if (rocks[i] == 'R')
+                {
+                    if (lastIndex == -1)
+                    {
+                        memo[i] = new List<int>() {rocks.Count() - i - 1};
+                    }
+                    else
+                    {
+                        int diff = lastIndex - i;
+                        List<int> velocities = new List<int>() {diff - 1};
+                        List<int> preVel = memo[lastIndex + 1];
+                        foreach (int v in preVel)
+                        {
+                            velocities.Add(v + diff);
+                        }
+                        memo[i] = velocities;
+                    }
+                    lastIndex = i;
+                }
+                else
+                {
+                    memo[i] = null;
+                }
+            }
+            return 0;
+        }
+
+        public void moveEmAgain(int[] array)
+        {
+            if (array == null || array.Count() < 2)
+                return;
+
+            int offset = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == 0)
+                    offset++;
+                else if (offset != 0)
+                    array[i - offset] = array[i];
+            }
+
+            for (int i = array.Count() - offset; i < array.Count(); i++)
+            {
+                array[i] = 0;
             }
         }
+
+        public void reverse(char[] array)
+        {
+            if (array == null || array.Count() == 0)
+                return;
+
+            reverseCharsAgain(array, 0, array.Count() - 1);
+
+            int start = 0;
+            int i = 0;
+
+            while (i < array.Count())
+            {
+                if (array[i] == ' ')
+                {
+                    reverseCharsAgain(array, start, i - 1);
+                    start = i + 1;
+                }
+                i++;
+            }
+
+            reverseCharsAgain(array, start, i - 1);
+        }
+
+        private void reverseCharsAgain(char[] array, int start, int end)
+        {
+            if (start == end)
+                return;
+
+            for (int i = start; i <= start + ((end - start) / 2); i++)
+            {
+                char temp = array[i];
+                array[i] = array[end + start - i];
+                array[end + start - i] = temp;
+            }
+
+        }
+
 
         public bool isListEqualSplit(int[] nums)
         {
