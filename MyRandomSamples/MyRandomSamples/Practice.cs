@@ -370,7 +370,6 @@ namespace MyRandomSamples
             //{
             //    Console.WriteLine(i);
             //}
-            #endregion
 
             //List<string> sols = p.substringPermutationMatch("abc", "alabcsdnalscbadnlasnbacdas");
             //foreach (string s in sols)
@@ -389,10 +388,505 @@ namespace MyRandomSamples
             //    Console.WriteLine(i);
             //}
 
-            char[] chars = "this is a freakin test".ToCharArray();
-            p.reverse(chars);
-            Console.WriteLine(new string(chars));
+            //char[] chars = "this is a freakin test".ToCharArray();
+            //p.reverse(chars);
+            //Console.WriteLine(new string(chars));
+            //Console.WriteLine(p.getShortestSpan("this is a this collection of word", new List<string>() { "this", "word" }));
 
+            //Console.WriteLine(p.isWeaveString("abc", "efg", "aebfch"));
+
+            //List<string> strings = new List<string>() { "abc", "ab", "", "a", "abc", "ab", "", "a", "abc", "ab", "", "a", "abc", "ab", "", "a" };
+            //p.oddEvenListSplit(strings);
+            //foreach (string s in strings)
+            //{
+            //    Console.WriteLine(s);
+            //}
+
+            //EquationSolver s = new EquationSolver();
+            //s.AddNode("a", "b", 2.0);
+            //s.AddNode("b", "c", 3.0);
+            //Console.WriteLine(s.getDivision("a", "c"));
+            //Console.WriteLine(s.getDivision("b", "a"));
+            //Console.WriteLine(s.getDivision("a", "e"));
+            //Console.WriteLine(s.getDivision("a", "a"));
+            //Console.WriteLine(s.getDivision("x", "x"));
+            #endregion
+
+            //Console.WriteLine(p.maxProfitNew(new int[] { 10, 17, 5, 8, 19, 9 }));
+
+            //int[] arr = { 1, 3, 6, 1, 0, 9 };
+            //Console.WriteLine(p.minJumps1(arr));
+            //Console.WriteLine(p.minJumpsTest(arr));
+            //Console.WriteLine(p.minJumps(arr));
+
+            Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+        }
+
+        public string AlienDictionary(string[] words)
+        {
+            if (words == null || words.Count() == 0)
+                return string.Empty;
+
+            TSort sort = new TSort();
+
+            for (int i = 1; i < words.Count(); i++)
+            {
+                string a = words[i - 1];
+                string b = words[i];
+                int x = 0;
+                int y = 0;
+
+                while (x < a.Length && y < b.Length)
+                {
+                    if (a[x] != b[y])
+                    {
+                        sort.AddPair(a[x], b[y]);
+                        break;
+                    }
+                    x++;
+                    y++;
+                }
+
+            }
+            return sort.DoTopSort();
+        }
+
+        public class TNode
+        {
+            public char data;
+            public List<TNode> incoming;
+            public List<TNode> outgoing;
+            public TNode(char c)
+            {
+                data = c;
+                incoming = new List<TNode>();
+                outgoing = new List<TNode>();
+            }
+        }
+
+        public class TSort
+        {
+            LinkedList<TNode> list;
+            Dictionary<char, TNode> map;
+
+            public TSort()
+            {
+                list = new LinkedList<TNode>();
+                map = new Dictionary<char, TNode>();
+            }
+
+            public void AddPair(char a, char b)
+            {
+                if (!map.ContainsKey(a))
+                {
+                    TNode node = new TNode(a);
+                    list.AddLast(node);
+                    map.Add(a, node);
+                }
+                if (!map.ContainsKey(b))
+                {
+                    TNode node = new TNode(b);
+                    list.AddLast(node);
+                    map.Add(b, node);
+                }
+                TNode aNode = map[a];
+                TNode bNode = map[b];
+                aNode.outgoing.Add(bNode);
+                bNode.incoming.Add(aNode);
+            }
+
+            public string DoTopSort()
+            {
+                Queue<TNode> queue = new Queue<TNode>();
+                foreach (TNode node in list)
+                {
+                    if (node.incoming.Count() == 0)
+                    {
+                        queue.Enqueue(node);
+                    }
+                }
+                StringBuilder sb = new StringBuilder();
+                while (queue.Count() != 0)
+                {
+                    TNode node = queue.Dequeue();
+                    sb.Append(node.data + "-->");
+
+                    foreach (TNode n in node.outgoing)
+                    {
+                        n.incoming.Remove(node);
+                        if (n.incoming.Count() == 0)
+                        {
+                            queue.Enqueue(n);
+                        }
+                    }
+
+                    map.Remove(node.data);
+                    list.Remove(node);
+                }
+
+                return sb.ToString();
+            }
+
+        }
+
+        public int maxProfitNew(int[] prices)
+        {
+            if (prices == null || prices.Count() < 2)
+                return 0;
+
+            int maxProfit = Int32.MinValue;
+            int min = prices[0];
+            for (int i = 1; i < prices.Count(); i++)
+            {
+                maxProfit = Math.Max(maxProfit, prices[i] - min);
+                min = Math.Min(prices[i], min);
+            }
+
+            return maxProfit;
+        }
+
+        public class EquationNode
+        {
+            public string val;
+            public Dictionary<string, double> links;
+
+            public EquationNode(string v)
+            {
+                val = v;
+                links = new Dictionary<string, double>();
+            }
+        }
+
+        public class EquationSolver
+        {
+            public Dictionary<string, EquationNode> nodeMap;
+
+            public EquationSolver()
+            {
+                nodeMap = new Dictionary<string, EquationNode>();
+            }
+
+            public void AddNode(string t1, string t2, double d)
+            {
+                if (!nodeMap.ContainsKey(t1))
+                {
+                    EquationNode n = new EquationNode(t1);
+                    nodeMap.Add(t1, n);
+                }
+                if (!nodeMap.ContainsKey(t2))
+                {
+                    EquationNode n = new EquationNode(t2);
+                    nodeMap.Add(t2, n);
+                }
+
+                EquationNode n1 = nodeMap[t1];
+                EquationNode n2 = nodeMap[t2];
+                n1.links.Add(t2, d);
+                n2.links.Add(t1, (1/d));
+            }
+
+            public double getDivision(string s, string d)
+            {
+                if (s == d)
+                    return 1;
+                if (!nodeMap.ContainsKey(s) || !nodeMap.ContainsKey(d))
+                    return -1;
+
+                double div = findDiv(s, d, 1.0, new Dictionary<string, bool> ());
+                return div;
+            }
+
+            private double findDiv(string s, string d, double val, Dictionary<string, bool> visited)
+            {
+                if (s == d)
+                    return val;
+
+                int ctr = 0;
+                int value = 0;
+                foreach (KeyValuePair<string, double> kvp in nodeMap[s].links)
+                {
+                    if (!visited.ContainsKey(kvp.Key))
+                    {
+                        Dictionary<string, bool> visitedCopy = new Dictionary<string, bool>(visited);
+                        visitedCopy.Add(kvp.Key, true);
+                        double v = findDiv(kvp.Key, d, val*kvp.Value, visitedCopy);
+                        if (v != 0)
+                            return v;
+                        ctr ++;
+                    }
+                }
+
+                if (ctr == 0)
+                    return 0;
+
+                return value;
+            }
+
+        }
+
+        public class TopSortNode
+        {
+            public string data;
+            public Dictionary<string, bool> incomingNodes;
+            public Dictionary<string, bool> outgoingNodes;
+            public TopSortNode(string d)
+            {
+                data = d;
+                incomingNodes = new Dictionary<string, bool>();
+                outgoingNodes = new Dictionary<string, bool>();
+            }
+        }
+
+        public class TopSort
+        {
+            Dictionary<string, TopSortNode> map;
+            LinkedList<TopSortNode> list;
+
+            public TopSort()
+            {
+                map = new Dictionary<string, TopSortNode>();
+                list = new LinkedList<TopSortNode>();
+            }
+
+            public void addPair(string source, string dest)
+            {
+                if (!map.ContainsKey(source))
+                {
+                    TopSortNode node = new TopSortNode(source);
+                    map.Add(source, node);
+                    list.AddLast(node);
+                }
+                if (!map.ContainsKey(dest))
+                {
+                    TopSortNode node = new TopSortNode(dest);
+                    map.Add(dest, node);
+                    list.AddLast(node);
+                }
+                TopSortNode s = map[source];
+                TopSortNode d = map[dest];
+                s.outgoingNodes.Add(dest, true);
+                d.incomingNodes.Add(source, true);
+            }
+
+            public string doTopologicalSort()
+            {
+                Queue<string> queue = new Queue<string>();
+
+                foreach (TopSortNode node in list)
+                {
+                    if (node.incomingNodes.Count() == 0)
+                    {
+                        queue.Enqueue(node.data);
+                    }
+                }
+
+                StringBuilder result = new StringBuilder();
+
+                while (queue.Count() != 0)
+                {
+                    TopSortNode node = map[queue.Dequeue()]; // exception?!
+
+                    result.Append(node.data + " -> ");
+
+                    foreach (string s in node.outgoingNodes.Keys)
+                    {
+                        TopSortNode n = map[s];
+                        n.incomingNodes.Remove(node.data);
+                        if (n.incomingNodes.Count() == 0)
+                            queue.Enqueue(n.data);
+                    }
+                }
+
+                return result.ToString();
+            }
+
+        }
+
+        public class Stacks
+        {
+            private int capacityPerStack;
+            private Stack<Stack<int>> stacks;
+
+            public Stacks(int cap)
+            {
+                // if(cap <=0) throw exception
+                this.capacityPerStack = cap;
+                stacks = new Stack<Stack<int>>();
+                Stack<int> stack = new Stack<int>(capacityPerStack);
+                stacks.Push(stack);
+            }
+
+            public void Push(int n)
+            {
+                Stack<int> top = stacks.Pop();
+                if (top.Count() < this.capacityPerStack - 1)
+                {
+                    top.Push(n);
+                    stacks.Push(top);
+                }
+                else
+                {
+                    stacks.Push(top);
+                    Stack<int> stack = new Stack<int>(capacityPerStack);
+                    stack.Push(n);
+                    stacks.Push(stack);
+                }
+            }
+
+            public int Pop()
+            {
+                int val;
+                Stack<int> top = stacks.Pop();
+                if (top.Count() == 0)
+                {
+                    if (stacks.Count() == 0)
+                        return -1; // exception!?
+                    top = stacks.Pop();
+                    val = top.Pop();
+                    stacks.Push(top);
+                }
+                else
+                {
+                    val = top.Pop();
+                    stacks.Push(top);
+                }
+                return val;
+            }
+
+        }
+
+        public void oddEvenListSplit(List<string> strings)
+        {
+            if (strings == null || strings.Count() < 2)
+                return;
+
+            int evenIndex = 0;
+            int oddIndex = strings.Count() - 1;
+
+            while (evenIndex < oddIndex)
+            {
+                while (evenIndex < strings.Count() && (strings[evenIndex].Length % 2 == 0))
+                {
+                    evenIndex++;
+                }
+
+                while (oddIndex >= 0 && (strings[oddIndex].Length % 2 == 1))
+                {
+                    oddIndex--;
+                }
+
+                if (evenIndex < oddIndex)
+                {
+                    string temp = strings[evenIndex];
+                    strings[evenIndex] = strings[oddIndex];
+                    strings[oddIndex] = temp;
+                }
+            }
+        }
+
+        public bool isWeaveString(string s, string t, string w)
+        {
+            if (string.IsNullOrEmpty(w) && string.IsNullOrEmpty(s) && string.IsNullOrEmpty(t))
+                return true;
+
+            if (string.IsNullOrEmpty(w) || string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t) || (s.Length + t.Length != w.Length))
+                return false;
+
+            bool[,] memo = new bool[s.Length + 1, t.Length + 1];
+
+            for (int i = 0; i <= s.Length; i++)
+            {
+                for (int j = 0; j <= t.Length; j++)
+                {
+                    if (i == 0 && j == 0)
+                        memo[i, j] = true;
+                    else if (i == 0)
+                    {
+                        memo[i, j] = (memo[i, j - 1] && (t[j - 1] == w[j - 1]));
+                    }
+                    else if (j == 0)
+                    {
+                        memo[i, j] = (memo[i - 1, j] && (s[i - 1] == w[i - 1]));
+                    }
+                    else
+                    {
+                        memo[i, j] = ((memo[i, j - 1] && (t[j - 1] == w[i + j - 1])) || (memo[i - 1, j] && (s[i - 1] == w[i + j - 1])));
+                    }
+
+                }
+            }
+
+            return memo[s.Length, t.Length];
+        }
+
+        public string getShortestSpan(string text, List<string> words)
+        {
+            if (string.IsNullOrEmpty(text) || words == null || words.Count() == 0)
+                return null;
+
+            Dictionary<string, List<int>> map = new Dictionary<string, List<int>>();
+            foreach (string s in words)
+            {
+                map.Add(s, new List<int>());
+            }
+
+            string[] splits = text.Split(' ');
+            for (int i = 0; i < splits.Count(); i++)
+            {
+                if (map.ContainsKey(splits[i]))
+                    map[splits[i]].Add(i);
+            }
+
+            int startIndex = 0;
+            int len = Int32.MaxValue;
+            bool shouldBreak = false;
+            while (!shouldBreak)
+            {
+                int sInd = Int32.MaxValue;
+                int lInd = Int32.MinValue;
+                string sWord = string.Empty;
+                string lWord = string.Empty;
+                foreach (string w in words)
+                {
+                    if (map[w].Count() == 0)
+                    {
+                        shouldBreak = true;
+                        break;
+                    }
+                    if ((map[w])[0] < sInd)
+                    {
+                        sWord = w;
+                        sInd = (map[w])[0];
+                    }
+                    if ((map[w])[0] > lInd)
+                    {
+                        lWord = w;
+                        lInd = (map[w])[0];
+                    }
+                }
+                if (!shouldBreak)
+                {
+                    if (lInd - sInd < len)
+                    {
+                        len = lInd - sInd;
+                        startIndex = sInd;
+                    }
+                    if (map.ContainsKey(sWord))
+                        map[sWord].RemoveAt(0);
+                }
+            }
+
+            string ret = string.Empty;
+            if (len != Int32.MaxValue)
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i <= len; i++)
+                {
+                    sb.Append(splits[startIndex + i] + " ");
+                }
+                ret = sb.ToString();
+            }
+            return ret;
         }
 
         public int minFrogJump(char[] rocks, int vel)
@@ -2343,6 +2837,35 @@ namespace MyRandomSamples
                 Console.WriteLine("{0} {1} {2}", i, max, numJumpsMade);
             }
             return numJumpsMade;
+        }
+
+        public int minJumps1(int[] jumps)
+        {
+            if (jumps == null || jumps.Length < 1)
+                return Int32.MaxValue;
+
+            int[] memo = new int[jumps.Length];
+            memo[memo.Count() - 1] = 0;
+
+            for (int i = jumps.Length - 2; i >= 0; i--)
+            {
+                if (jumps[i] <= 0)
+                    memo[i] = Int32.MaxValue;
+                else if (jumps[i] + i >= jumps.Length - 1)
+                    memo[i] = 1;
+                else
+                {
+                    int min = Int32.MaxValue;
+                    for (int j = 1; j <= jumps[i]; j++)
+                    {
+                        min = Math.Min(min, memo[i + j]);
+                    }
+
+                    memo[i] = (min == Int32.MaxValue) ? Int32.MaxValue : min + 1;
+                }
+            }
+
+            return memo[0];
         }
 
         public int minJumpsTest(int[] array)
