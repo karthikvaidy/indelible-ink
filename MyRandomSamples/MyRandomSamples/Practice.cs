@@ -410,7 +410,14 @@ namespace MyRandomSamples
             //Console.WriteLine(s.getDivision("a", "e"));
             //Console.WriteLine(s.getDivision("a", "a"));
             //Console.WriteLine(s.getDivision("x", "x"));
-            #endregion
+
+            //int[] array = new int[] { 7, 8, 9, 1, 2, 3, 4, 5, 6 };
+            //Console.WriteLine(p.findInRotatedArray(array, 2));
+            //Console.WriteLine(p.findInRotatedArray(array, 5));
+            //Console.WriteLine(p.findInRotatedArray(array, 9));
+            //Console.WriteLine(p.findInRotatedArray(array, 1));
+            //Console.WriteLine(p.findInRotatedArray(array, 10));
+            //Console.WriteLine(p.findInRotatedArray(array, 0));
 
             //Console.WriteLine(p.maxProfitNew(new int[] { 10, 17, 5, 8, 19, 9 }));
 
@@ -418,8 +425,403 @@ namespace MyRandomSamples
             //Console.WriteLine(p.minJumps1(arr));
             //Console.WriteLine(p.minJumpsTest(arr));
             //Console.WriteLine(p.minJumps(arr));
+            #endregion
 
             Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+        }
+
+        public int findInRotatedArray(int[] array, int n)
+        {
+            if (array == null || array.Count() < 1)
+                return -1;
+
+            int low = 0;
+            int high = array.Count() - 1;
+            int index = -1;
+            while (low <= high)
+            {
+                if (high - low == 1)
+                {
+                    if (array[high] == n) { index = high; break; }
+                    else if (array[low] == n) { index = low; break; }
+                    break;
+                }
+                int mid = (low + high) / 2;
+                if (array[mid] == n)
+                {
+                    index = mid;
+                    break;
+                }
+                if (array[mid] > array[low]) // left has no break
+                {
+                    if (n < array[mid] && n >= array[low])
+                        high = mid - 1;
+                    else
+                        low = mid + 1;
+                }
+                else // right has no break
+                {
+                    if (n > array[mid] && n <= array[high])
+                        low = mid + 1;
+                    else
+                        high = mid - 1;
+                }
+            }
+            return index;
+        }
+
+        public int numIslands2(int[,] map)
+        {
+            if (map == null || map.GetLength(0) == 0 || map.GetLength(1) == 0)
+                return 0;
+
+            int rows = map.GetLength(0);
+            int cols = map.GetLength(1);
+
+            int numIslands = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (map[i, j] == 0)
+                    {
+                        floodFillMap(map, i, j, rows, cols);
+                        numIslands++;
+                    }
+                }
+            }
+            return numIslands;
+        }
+
+        private void floodFillMap(int[,] map, int r, int c, int rows, int cols)
+        {
+            map[r, c] = 2;
+
+            if (r > 0 && map[r - 1, c] == 0)
+                floodFillMap(map, r - 1, c, rows, cols);
+
+            if (r < rows - 1 && map[r + 1, c] == 0)
+                floodFillMap(map, r + 1, c, rows, cols);
+
+            if (c > 0 && map[r, c - 1] == 0)
+                floodFillMap(map, r, c - 1, rows, cols);
+
+            if (c < cols - 1 && map[r, c + 1] == 0)
+                floodFillMap(map, r, c + 1, rows, cols);
+        }
+
+        public class Interval
+        {
+            public int start;
+            public int end;
+            public Interval(int s, int e)
+            {
+                this.start = s;
+                this.end = e;
+            }
+        }
+
+        public List<Interval> insertInterval(List<Interval> list, Interval i)
+        {
+            if (list == null || i == null)
+                return null;
+
+            if (list.Count() == 0)
+                return new List<Interval>() { i };
+
+            List<Interval> result = new List<Interval>();
+            int index = 0;
+
+            while (index < list.Count())
+            {
+                if ((list[index].end < i.start) || (list[index].start <= i.start && list[index].end >= i.end) || (list[index].start > i.end))
+                {
+                    result.Add(list[index++]);
+                }
+                else if (list[index].start <= i.start)
+                {
+                    int start = list[index].start;
+                    int end;
+                    while (index < list.Count() && !((list[index].start > i.end) || (list[index].end > i.end)))
+                    {
+                        index++;
+                    }
+                    if ((index == list.Count()) || (list[index].start > i.end))
+                    {
+                        end = i.end;
+                    }
+                    else
+                    {
+                        end = list[index].end;
+                    }
+                    result.Add(new Interval(start, end));
+                    index++;
+                }
+            }
+            return result;
+        }
+
+        public bool isPattMatch(string pattern, string text)
+        {
+            if (string.IsNullOrEmpty(pattern) || string.IsNullOrEmpty(text))
+                return false;
+
+            if (pattern[0] == 'b')
+                pattern = switchChars(pattern);
+
+            int na = countChars2(pattern, 'a');
+            int nb = pattern.Length - na;
+
+            int maxA = text.Length / na;
+
+            for (int i = 0; i <= maxA; i++)
+            {
+                if (nb == 0 || ((text.Length - (na * i)) % nb == 0))
+                {
+                    if (isMatch(pattern, text, i, (nb == 0) ? 0 : ((text.Length - (na * i)) / nb)))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        private string switchChars(string s)
+        {
+            char[] chars = new char[s.Length];
+            int ctr = 0;
+            foreach (char c in s)
+            {
+                if (c == 'a') chars[ctr] = 'b';
+                if (c == 'b') chars[ctr] = 'a';
+                ctr++;
+            }
+            return new string(chars);
+        }
+
+        private int countChars2(string s, char ch)
+        {
+            int ctr = 0;
+            foreach (char c in s)
+            {
+                if (c == ch) ctr++;
+            }
+            return ctr;
+        }
+
+        private bool isMatch(string pattern, string text, int lenA, int lenB)
+        {
+            string a = string.Empty;
+            string b = string.Empty;
+            int index = 0;
+            foreach (char p in pattern)
+            {
+                if (p == 'a')
+                {
+                    if (a == string.Empty)
+                    {
+                        a = text.Substring(index, lenA);
+                    }
+                    else
+                    {
+                        string s = text.Substring(index, lenA);
+                        if (s != a)
+                            return false;
+                    }
+                    index += lenA;
+                }
+                else
+                {
+                    if (b == string.Empty)
+                    {
+                        b = text.Substring(index, lenB);
+                    }
+                    else
+                    {
+                        string s = text.Substring(index, lenB);
+                        if (s != b)
+                            return false;
+                    }
+                    index += lenB;
+                }
+            }
+            return true;
+        }
+
+        public string longestPalinSubStr(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            bool[,] memo = new bool[s.Length, s.Length];
+            int len = 1;
+            int index = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                memo[i, i] = true;
+            }
+
+            for (int i = 1; i < s.Length; i++)
+            {
+                if (s[i - 1] == s[i])
+                {
+                    memo[i - 1, i] = true;
+                    if (len == 1)
+                    {
+                        len = 2;
+                        index = i - 1;
+                    }
+                }
+
+            }
+
+            for (int offset = 2; offset < s.Length; offset++)
+            {
+                for (int j = 0; j < s.Length - offset; j++)
+                {
+                    int row = j;
+                    int col = j + offset;
+
+                    if ((s[row] == s[col]) && memo[row, col - 2])
+                    {
+                        memo[row, col] = true;
+                        if (col - row + 1 > len)
+                        {
+                            len = col - row + 1;
+                            index = row;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                for (int j = 0; j < s.Length; j++)
+                {
+                    Console.Write(memo[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+
+            return s.Substring(index, len);
+        }
+
+
+        public int getTrianglePathSum(List<List<int>> triangle)
+        {
+            if (triangle == null || triangle.Count() == 0)
+                return -1;
+
+            int[] memo = new int[triangle[triangle.Count() - 1].Count()];
+
+            for (int i = 0; i < memo.Count(); i++)
+            {
+                memo[i] = (triangle[triangle.Count() - 1])[i];
+            }
+
+            for (int i = triangle.Count() - 2; i >= 0; i--)
+            {
+                for (int j = 0; j < (triangle[i]).Count(); j++)
+                {
+                    memo[j] = (triangle[i])[j] + Math.Min(memo[j], memo[j + 1]);
+                }
+            }
+
+            return memo[0];
+        }
+
+
+        public enum Suit
+        {
+            Spade,
+            Diamond,
+            Clubs,
+            Heart
+        };
+
+        public class Card
+        {
+            public Suit suit;
+            public char num;
+
+            public Card(Suit s, char c)
+            {
+                this.suit = s;
+                this.num = c;
+            }
+        }
+
+        public Card[] createCardsPack()
+        {
+            Card[] cards = new Card[52];
+            int ctr = 0;
+            for (int i = 0; i < 13; i++)
+            {
+                char ch = (i < 8) ? (char)('0' + i + 2) : (i == 8) ? '0' : (i == 9) ? 'J' : (i == 10) ? 'Q' : (i == 11) ? 'K' : 'A';
+                Card c = new Card(Suit.Spade, ch);
+                cards[ctr++] = c;
+                c = new Card(Suit.Diamond, ch);
+                cards[ctr++] = c;
+                c = new Card(Suit.Clubs, ch);
+                cards[ctr++] = c;
+                c = new Card(Suit.Heart, ch);
+                cards[ctr++] = c;
+            }
+            return cards;
+        }
+
+        public void shuffleCards(Card[] cards)
+        {
+            if (cards == null || cards.Count() == 0)
+                return;
+
+            int end = cards.Count();
+            Random rand = new Random(DateTime.Now.Millisecond);
+            for (int i = 0; i < cards.Count(); i++)
+            {
+                int index = rand.Next(end);
+
+                Card temp = cards[index];
+                cards[index] = cards[end - 1];
+                cards[end - 1] = temp;
+
+                end--;
+            }
+        }
+
+        public int SearchInsert(int[] nums, int target)
+        {
+            if (nums == null || nums.Count() < 1)
+                return -1;
+
+            if (nums[0] > target)
+                return 0;
+
+            if (nums[nums.Count() - 1] < target)
+                return nums.Count();
+
+            int low = 0;
+            int high = nums.Count() - 1;
+
+            while (true)
+            {
+                if (low == high)
+                {
+                    int val = (nums[low] < target) ? low + 1 : low;
+                    return val;
+                }
+
+                int mid = (high + low) / 2;
+
+                if (nums[mid] == target)
+                    return mid;
+                else if (nums[mid] > target)
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            }
+
         }
 
         public string AlienDictionary(string[] words)
