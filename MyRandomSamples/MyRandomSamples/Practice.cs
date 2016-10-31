@@ -425,11 +425,229 @@ namespace MyRandomSamples
             //Console.WriteLine(p.minJumps1(arr));
             //Console.WriteLine(p.minJumpsTest(arr));
             //Console.WriteLine(p.minJumps(arr));
+
+            //Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+            //int[,] matrix = new int[,] {
+            //    {0,1,0,0,},
+            //    {0,1,1,1,},
+            //    {1,1,1,0,},
+            //    {0,1,1,1,},
+            //    {0,1,0,0,}
+            //};
+            //Console.WriteLine(p.numIslands2(matrix));
+
+
+            //Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+
+            //List<int> result = p.longMultiplication(new List<int> {1, 2, 3, 4}, new List<int> {2,9});
+            //foreach (int i in result)
+            //{
+            //    Console.Write(i + " ");
+            //}
+
+            //Console.WriteLine(p.meltTimes(new int[] { 5, 4, 3, 6, 0, 1 }));
+            //Console.WriteLine(p.meltTimes(new int[] { 0, 1, 1, 1, 1, 0 }));
+
+            //Console.WriteLine(p.isPangram("The quick brown fox jumps over the lazy dog"));
+            //Console.WriteLine(p.isPangram("We promptly judged antique ivory buckles for the next prize"));
+            //Console.WriteLine(p.isPangram("We promptly judged antique ivory buckles for the prize"));
+
+            //Console.WriteLine(p.isFunny("acxz"));
+            //Console.WriteLine(p.isFunny("bcxz"));
             #endregion
 
-            Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+            Console.WriteLine(p.isArraySumSplit(new int[] { 1, 2, 3 }));
+            Console.WriteLine(p.isArraySumSplit(new int[] { 1, 2, 3, 3 }));
         }
 
+        public bool isArraySumSplit(int[] array)
+        {
+            if (array == null || array.Count() == 0)
+                return false;
+
+            int len = array.Count();
+            int[] lSum = new int[len];
+            int[] rSum = new int[len];
+            lSum[0] = 0;
+            rSum[len - 1] = 0;
+
+            for (int i = 1; i < len; i++)
+            {
+                lSum[i] = lSum[i - 1] + array[i - 1];
+                rSum[len - i - 1] = rSum[len - i] + array[len - i];
+            }
+
+            for (int i = 0; i < len; i++)
+            {
+                if (lSum[i] == rSum[i])
+                    return true;
+            }
+
+            return false;
+        }
+
+        public bool isFunny(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return false;
+
+            for (int i = 0; i <= s.Length / 2; i++)
+            {
+                if (Math.Abs(s[i + 1] - s[i]) != Math.Abs(s[s.Length - i - 1] - s[s.Length - i - 2]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public bool isPangram(string line)
+        {
+            if (string.IsNullOrEmpty(line) || line.Length < 26)
+                return false;
+
+            int hash = 0;
+
+            foreach (char ch in line)
+            {
+                if (ch >= 'A' && ch <= 'Z')
+                {
+                    hash = hash | (1 << (ch - 'A'));
+                }
+                else if (ch >= 'a' && ch <= 'z')
+                {
+                    hash = hash | (1 << (ch - 'a'));
+                }
+            }
+
+            return (hash == (int)(Math.Pow(2, 26) - 1));
+        }
+
+        public int meltTimes(int[] histo)
+        {
+            if (histo == null || histo.Length == 0)
+                return 0;
+
+            int[] memo = new int[histo.Length];
+            memo[0] = 1;
+            memo[memo.Length - 1] = 1;
+
+            int minTime = Int32.MinValue;
+
+            for (int i = 1; i < memo.Length - 2; i++)
+            {
+                memo[i] = Math.Min(histo[i], memo[i - 1] + 1);
+            }
+
+            for (int i = memo.Length - 2; i > 0; i--)
+            {
+                int min = Math.Min(histo[i], memo[i + 1] + 1);
+                memo[i] = Math.Min(min, memo[i]);
+                minTime = Math.Max(minTime, memo[i]);
+            }
+            return minTime;
+        }
+
+        public class MedalTally
+        {
+            private class Medals
+            {
+                public int Gold;
+                public int Silver;
+                public int Bronze;
+            }
+            private Dictionary<string, Medals> map = new Dictionary<string, Medals>();
+
+            private void testAndAddCountry(string c)
+            {
+                if (!map.ContainsKey(c))
+                    map.Add(c, new Medals());
+            }
+
+            public void AddGold(string c)
+            {
+                testAndAddCountry(c);
+                map[c].Gold++;
+            }
+
+            public void AddSilver(string c)
+            {
+                testAndAddCountry(c);
+                map[c].Silver++;
+            }
+
+            public void AddBronze(string c)
+            {
+                testAndAddCountry(c);
+                map[c].Bronze++;
+            }
+
+        }
+
+        public string[] getMedalTally(string[] medals)
+        {
+            if (medals == null || medals.Count() == 0)
+                return null;
+
+            MedalTally tally = new MedalTally();
+
+            foreach (string medal in medals)
+            {
+                string[] splits = medal.Split(' ');
+                tally.AddGold(splits[0]);
+                tally.AddSilver(splits[1]);
+                tally.AddBronze(splits[2]);
+            }
+
+            return null;
+        }
+
+        public List<int> longMultiplication(List<int> num1, List<int> num2)
+        {
+            if (num1 == null || num1.Count() == 0 || num2 == null || num2.Count() == 0)
+                return null;
+
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < num1.Count() + num2.Count(); i++)
+            {
+                result.Add(0);
+            }
+
+            for (int i = 0; i < num1.Count(); i++)
+            {
+                int a = num1[i];
+                int carry = 0;
+                int j = 0;
+                for (j = 0; j < num2.Count(); j++)
+                {
+                    int b = num2[j];
+
+                    int prod = result[i + j] + (a * b) + carry;
+                    carry = prod / 10;
+
+                    result[i + j] = prod % 10;
+                }
+
+                while (carry != 0)
+                {
+                    int t = result[i + j] + carry;
+                    result[i + j] = t % 10;
+                    carry = t / 10;
+                    j++;
+                }
+            }
+
+            while (true)
+            {
+                if (result[result.Count() - 1] == 0)
+                    result.RemoveAt(result.Count() - 1);
+                else
+                    break;
+            }
+
+            return result;
+        }
         public int findInRotatedArray(int[] array, int n)
         {
             if (array == null || array.Count() < 1)
