@@ -456,9 +456,48 @@ namespace MyRandomSamples
             //Console.WriteLine(p.isFunny("bcxz"));
             #endregion
 
-            Console.WriteLine(p.isArraySumSplit(new int[] { 1, 2, 3 }));
-            Console.WriteLine(p.isArraySumSplit(new int[] { 1, 2, 3, 3 }));
+            //Console.WriteLine(p.isArraySumSplit(new int[] { 1, 2, 3 }));
+            //Console.WriteLine(p.isArraySumSplit(new int[] { 1, 2, 3, 3 }));
+
+            int[] res = p.slidingWindowMaximum(new int[] {1, 3, -1, -3, 5, 3, 6, 7}, 3);
+
+            foreach (int i in res)
+            {
+                Console.WriteLine(i);
+            }
         }
+
+        public int[] slidingWindowMaximum(int[] array, int w)
+        {
+            if (array == null || array.Count() == 0 || w == 0 || w > array.Count())
+                return null;
+
+            int len = array.Count();
+            int[] result = new int[len - w + 1];
+            LinkedList<int> list = new LinkedList<int>();
+
+            for (int i = 0; i < len; i++)
+            {
+                int item = array[i];
+                while (list.Count > 0 && array[list.Last.Value] < item)
+                {
+                    list.RemoveLast();
+                }
+                while (list.Count > 0 && list.First.Value + w < i)
+                {
+                    list.RemoveFirst();
+                }
+                list.AddLast(i);
+                if (i >= w-1)
+                {
+                    result[i - w + 1] = array[list.First.Value];
+                }
+
+            }
+
+            return result;
+        }
+
 
         public bool isArraySumSplit(int[] array)
         {
