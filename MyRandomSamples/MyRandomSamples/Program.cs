@@ -1409,10 +1409,12 @@ namespace MyRandomSamples
             //Console.WriteLine(p.flattenPath(@"..\.\a\b\..\..\c\.\"));
 
             //Console.WriteLine(p.trapRainWater(new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
+            //Console.WriteLine(p.evaluateExpressionTest("1+2*3+4")); //11
+            //Console.WriteLine(p.evaluateExpressionTest("1+2*3-4")); //3
             #endregion
 
-            Console.WriteLine(p.evaluateExpressionTest("1+2*3+4")); //11
-            Console.WriteLine(p.evaluateExpressionTest("1+2*3-4")); //3
+
+            Console.WriteLine(p.trapRainWater(new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
 
         }
 

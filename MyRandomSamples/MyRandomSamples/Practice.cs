@@ -425,9 +425,1426 @@ namespace MyRandomSamples
             //Console.WriteLine(p.minJumps1(arr));
             //Console.WriteLine(p.minJumpsTest(arr));
             //Console.WriteLine(p.minJumps(arr));
+
+            //Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+
+            //KnapSack ks1 = new KnapSack(1, 1);
+            //KnapSack ks2 = new KnapSack(3, 4);
+            //KnapSack ks3 = new KnapSack(4, 5);
+            //KnapSack ks4 = new KnapSack(5, 7);
+
+            //List<KnapSack> list = new List<KnapSack> { ks1, ks2, ks3, ks4 };
+
+            //Console.WriteLine(p.knapSackProblem(list, 7));
+            //Console.WriteLine(p.knapSackProblem1(list, 7));
+
+            //Console.WriteLine(p.trapRainWater(new int[] {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1}));
+
+            //int[,] matrix = new int[,] {
+            //    {0,1,0,0,},
+            //    {0,1,1,1,},
+            //    {1,1,1,0,},
+            //    {0,1,1,1,},
+            //    {0,1,0,0,}
+            //};
+            //Console.WriteLine(p.numIslands3(matrix));
+
+            //List<List<int>> triangle = new List<List<int>>(){new List<int> (){2},
+            //    new List<int> (){3,4},
+            //    new List<int> (){6,5,7},
+            //    new List<int> (){4,1,8,3}};
+
+            //Console.WriteLine(p.minTrianglePathSum(triangle));
+
+            //List<string> perm = p.permuteString1("abcde");
+            //foreach (string s in perm)
+            //{
+            //    Console.WriteLine(s);
+            //}
+
+            //List<List<string>> splits = p.getWordsSplit("catsanddog", new List<string> { "cat", "cats", "and", "sand", "dog" });
+            //foreach (List<string> list in splits)
+            //{
+            //    foreach (string s in list)
+            //    {
+            //        Console.Write(s + " ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //int[] arr = { 1, 3, 6, 1, 0, 9 };
+            //Console.WriteLine(p.minJumps2(arr));
+
+            //Console.WriteLine(p.maxNonContinuousSum(new int[] { 1, -2, 3, -1, 5, 10, 3 }));
+
+            //Console.WriteLine(p.getLastNode(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 3));
+
+            //p.BitTest();
+
+            //int[,] matrix = {
+            //                {0, 0, 0, 0, 0}, 
+            //                {0, 0, 0, 0, 0}, 
+            //                {0, 0, 0, 0, 0}, 
+            //                {0, 0, 0, 0, 0}, 
+            //                {0, 0, 0, 0, 0}
+            //                };
+
+            //int[,] matrix = {
+            //                {0, 0, 1, 0, 0}, 
+            //                {0, 0, 1, 0, 0}, 
+            //                {0, 0, 1, 0, 0}, 
+            //                {0, 0, 1, 0, 0}, 
+            //                {0, 0, 0, 0, 0}
+            //                };
+
+            //int[,] matrix = {
+            //                {0, 1, 0, 1, 0}, 
+            //                {2, 0, 0, 0, 2}, 
+            //                {0, 0, 0, 0, 0}, 
+            //                {4, 0, 0, 0, 4}, 
+            //                {5, 5, 0, 5, 0}
+            //                };
+
+            //Console.WriteLine(p.aStarSearch(matrix, 0, 0, 0, 4));
+
+            //Point p1 = new Point(1, 1);
+            //Point p2 = new Point(-1, 1);
+            //Point p3 = new Point(-1, -1);
+
+            //Console.WriteLine(p.isReflected(new List<Point> { p1, p2 }));
+            //Console.WriteLine(p.isReflected(new List<Point> { p1, p3 }));
+
+            //Console.WriteLine(p.minReplaceNumber(233614));
+
+            //char[,] chars = new char[,] {   {'b','a','l','l'},
+            //                                {'a','r','e','a'},
+            //                                {'l','e','a','d'},
+            //                                {'l','a','d','y'}
+            //                            };
+
+            //Console.WriteLine(p.isWordSquare(chars));
+
+            //Console.WriteLine(p.numStrings(3));
+
+            //char[,] map = new char[,] {
+            //                            {' ','X',' ',' '},
+            //                            {'X',' ','W','X'},
+            //                            {' ','X',' ',' '}
+            //                          };
+            //Console.WriteLine(p.bombEnemy(map));
+
+            //Console.WriteLine(p.longestPath("dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"));
+            //Console.WriteLine(p.longestPath("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"));
+
+            //int[] result = p.countSmaller(new int[] { 10, 2, -2, 5, 4 });
+            //int[] result = p.countSmaller(new int[] { 3, 2, 2, 6, 1 });
+            //foreach (int i in result)
+            //{
+            //    Console.Write(i + "  ");
+            //}
+
+            //int[,] matrix = new int[,] {
+            //    {0,1,0,0,},
+            //    {0,1,1,1,},
+            //    {1,1,1,0,},
+            //    {0,1,1,1,},
+            //    {0,1,0,0,}
+            //};
+            //Console.WriteLine(p.numIslands1(matrix));
             #endregion
 
-            Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
+            //int[] result = p.longMult(new int[] { 1, 2, 3, 4 }, new int[] { 9, 1 });
+            //foreach (int i in result)
+            //{
+            //    Console.Write(i);
+            //}
+
+            //Console.WriteLine(p.isWordSquare(new List<string> { "bass", "auto", "star", "sore" }));
+            //Console.WriteLine(p.isWordSquare(new List<string> { "bass", "tuto", "stir", "sore" }));
+
+            //Console.WriteLine(p.closestSequence(new List<int> { 1, 2, 6 }, new List<int> { 0, 1, 3, 4, 5 }));
+
+            //Console.WriteLine(p.groupPoints(5, new int[,] { { 0, 1 }, { 4, 3 }, { 4, 0 } }));
+
+            //ArrayRange range = new ArrayRange(10);
+            //range.Toggle(0, 3);
+            //Console.WriteLine(range.getState(2));
+            //Console.WriteLine(range.getState(5));
+
+            //range.Toggle(1, 4);
+            //Console.WriteLine(range.getState(2));
+            //Console.WriteLine(range.getState(5));
+
+            //range.Toggle(2, 5);
+            //Console.WriteLine(range.getState(2));
+            //Console.WriteLine(range.getState(5));
+
+            //int[] res = p.prodRange(new int[] { 1, 2, 3, 4 });
+            //foreach (int i in res)
+            //{
+            //    Console.WriteLine(i);
+            //}
+
+            //int[] arr = { 1, 3, 6, 1, 0, 9 };
+            //Console.WriteLine(p.jumpMin(arr));
+            //Console.WriteLine(p.minJumps(arr));
+
+            List<List<int>> seq = p.getOrderedSequences(new List<int> { 10, 15, 25 }, new List<int> { 1, 5, 20, 30 });
+            foreach (List<int> list in seq)
+            {
+                foreach (int i in list)
+                {
+                    Console.Write(i + "  ");
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public List<List<int>> getOrderedSequences(List<int> a, List<int> b)
+        {
+            List<List<int>> seq = new List<List<int>>();
+            getSequences(a, b, 0, 0, true, true, seq, new List<int>());
+            return seq;
+        }
+
+        private void getSequences(List<int> a, List<int> b, int i, int j, bool isA, bool canEnd, List<List<int>> seq, List<int> curr)
+        {
+
+            if (canEnd && curr.Count() > 0)
+                seq.Add(curr);
+
+            List<int> list = a;
+            int ind = i;
+
+            if (!isA)
+            {
+                list = b;
+                ind = j;
+            }
+
+            if (ind >= list.Count())
+                return;
+
+            for (int k = ind; k < list.Count(); k++)
+            {
+                if (curr.Count() == 0 || list[k] > curr[curr.Count() - 1])
+                {
+                    List<int> currCopy = new List<int>(curr);
+                    currCopy.Add(list[k]);
+                    getSequences(a, b, (isA) ? i + 1 : i, (isA) ? j : j + 1, !isA, !isA, seq, currCopy);
+                }
+            }
+
+        }
+
+
+        public int jumpMin(int[] array)
+        {
+            if (array == null || array.Count() < 2)
+                return 0;
+
+            int len = array.Count();
+            int[] memo = new int[len];
+            memo[len - 1] = 0;
+
+            for (int i = len - 2; i >= 0; i--)
+            {
+                if (array[i] <= 0)
+                    memo[i] = Int32.MaxValue;
+                else if (array[i] + i >= len - 1)
+                    memo[i] = 1;
+                else
+                {
+                    int min = Int32.MaxValue;
+                    for (int j = 1; j <= array[i]; j++)
+                    {
+                        min = Math.Min(min, memo[i + j]);
+                    }
+                    memo[i] = (min == Int32.MaxValue) ? min : min + 1;
+                }
+            }
+            return memo[0];
+        }
+
+        public int[] prodRange(int[] array)
+        {
+            if (array == null || array.Count() < 2)
+                return null;
+
+            int len = array.Count();
+
+            int[] prodLeft = new int[len];
+            int[] prodRight = new int[len];
+
+            prodLeft[0] = 1;
+            prodRight[len - 1] = 1;
+
+            for (int i = 1; i < len; i++)
+            {
+                prodLeft[i] = prodLeft[i - 1] * array[i - 1];
+                prodRight[len - i - 1] = prodRight[len - i] * array[len - i];
+            }
+
+            int[] result = new int[len];
+            for (int i = 0; i < len; i++)
+            {
+                result[i] = prodLeft[i] * prodRight[i];
+            }
+
+            return result;
+        }
+
+        public class ArrayRange
+        {
+            private int[] array;
+
+            public ArrayRange(int len)
+            {
+                array = new int[len];
+            }
+
+            public void Toggle(int l, int h)
+            {
+                if (l >= 0 && l < array.Length && h >= 0 && h < array.Length && l <= h)
+                {
+                    array[l]++;
+                    if(h < array.Length)
+                        array[h + 1] = Math.Abs(array[h + 1] - 1);
+                }
+            }
+
+            public bool getState(int index)
+            {
+                if (index >= array.Length || index < 0)
+                    return false;
+
+                int val = array[0];
+                bool ret = false;
+                for (int i = 1; i <= index; i++)
+                {
+                    val += array[i];
+                }
+                return (((val % 2) == 0) ? false : true);
+            }
+
+        }
+
+        public class DisNode
+        {
+            public int value;
+            public int groupId;
+            public DisNode rep;
+
+            public DisNode(int v, int id)
+            {
+                value = v;
+                groupId = id;
+                rep = this;
+            }
+        }
+
+        public class DisGroup
+        {
+            public int groupId;
+            public List<DisNode> nodes;
+            public DisGroup(int id)
+            {
+                groupId = id;
+                nodes = new List<DisNode>();
+            }
+            public void Merge(DisGroup group)
+            {
+                DisNode newRep = nodes[0].rep;
+                foreach (DisNode node in group.nodes)
+                {
+                    node.groupId = groupId;
+                    node.rep = newRep;
+                    nodes.Add(node);
+                }
+            }
+        }
+
+        public int groupPoints(int n, int[,] friends)
+        {
+            Dictionary<int, DisNode> nodeMap = new Dictionary<int, DisNode>();
+            Dictionary<int, DisGroup> groupMap = new Dictionary<int, DisGroup>();
+
+            for (int i = 0; i < n; i++)
+            {
+                DisGroup group = new DisGroup(i);
+                DisNode node = new DisNode(i, i);
+                group.nodes.Add(node);
+                nodeMap.Add(i, node);
+                groupMap.Add(i, group);
+            }
+
+            for (int i = 0; i < friends.GetLength(0); i++)
+            {
+                int a = friends[i, 0];
+                int b = friends[i, 1];
+                DisGroup gA = findGroup(a, groupMap, nodeMap);
+                DisGroup gB = findGroup(b, groupMap, nodeMap);
+                if (gA.nodes[0].rep != gB.nodes[0].rep)
+                {
+                    if (gA.nodes.Count() > gB.nodes.Count())
+                    {
+                        int oldId = nodeMap[b].groupId;
+                        gA.Merge(gB);
+                        groupMap.Remove(oldId);
+                    }
+                    else
+                    {
+                        int oldId = nodeMap[a].groupId;
+                        gB.Merge(gA);
+                        groupMap.Remove(oldId);
+                    }
+                }
+            }
+
+            return groupMap.Keys.Count();
+        }
+
+        private DisGroup findGroup(int a, Dictionary<int, DisGroup> groupMap, Dictionary<int, DisNode> nodeMap)
+        {
+            DisNode node = nodeMap[a];
+            return groupMap[node.groupId];
+        }
+
+        public int closestSequence(List<int> list1, List<int> list2)
+        {
+            return closestSequenceInner(list1, 0, list2, 0);
+        }
+
+        private int closestSequenceInner(List<int> list1, int index1, List<int> list2, int index2)
+        {
+            if (index1 == list1.Count() && index2 == list2.Count())
+                return 0;
+            if ((index1 >= list1.Count()) || (index2 >= list2.Count()) || (list1.Count() - index1 > list2.Count() - index2))
+                return Int32.MaxValue;
+            int val1 = closestSequenceInner(list1, index1 + 1, list2, index2 + 1);
+            int val2 = closestSequenceInner(list1, index1, list2, index2 + 1);
+            if (val1 == Int32.MaxValue && val2 == Int32.MaxValue)
+                return val1;
+            if (val1 == Int32.MaxValue)
+                return val2;
+            if (val2 == Int32.MaxValue)
+                return Math.Abs(list1[index1] - list2[index2]) + val1;
+            return Math.Min(Math.Abs(list1[index1] - list2[index2]) + val1, val2);
+        }
+
+
+        public bool isWordSquare(List<string> words)
+        {
+            if (words == null || words.Count() == 0)
+                return false;
+
+            TrieNode root = new TrieNode();
+            int len = words[0].Length;
+
+            foreach (string word in words)
+            {
+                if (word.Length != len)
+                    return false;
+                this.addWordToTrie(root, word);
+            }
+
+            char[,] wordSquare = new char[len, len];
+
+            return isWordSquareCheck(wordSquare, 0, words, root);
+        }
+
+        private bool isWordSquareCheck(char[,] wordSquare, int index, List<string> words, TrieNode node)
+        {
+            if (index >= wordSquare.GetLength(0))
+                return true;
+            foreach (string word in words)
+            {
+                if (canFit(wordSquare, word, index, node))
+                {
+                    char[,] newWordSquare = addWord(wordSquare, word, index);
+                    if (isWordSquareCheck(newWordSquare, index + 1, words, node))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool canFit(char[,] wordSquare, string word, int index, TrieNode root)
+        {
+            for (int i = 0; i < index; i++)
+            {
+                if (wordSquare[index, i] != word[i])
+                    return false;
+
+                if (root.next[word[i] - 'a'] == null)
+                    return false;
+
+                root = root.next[word[i] - 'a'];
+            }
+            return true;
+        }
+
+        private char[,] addWord(char[,] wordSquare, string word, int index)
+        {
+            char[,] words = new char[wordSquare.GetLength(0), wordSquare.GetLength(1)];
+            for (int i = 0; i < wordSquare.GetLength(0); i++)
+            {
+                for (int j = 0; j < wordSquare.GetLength(1); j++)
+                {
+                    words[i, j] = wordSquare[i, j];
+                }
+            }
+
+            for (int i = index; i < word.Length; i++)
+            {
+                words[index, i] = word[i];
+                words[i, index] = word[i];
+            }
+
+            return words;
+        }
+
+        //public class TrieNode
+        //{
+        //    public TrieNode[] next;
+        //    public bool isWordEnd;
+        //    public TrieNode()
+        //    {
+        //        next = new TrieNode[26];
+        //        isWordEnd = false;
+        //    }
+        //}
+
+        //private void addWordToTrie(TrieNode node, string s)
+        //{
+
+        //    for (int i = 0; i < s.Length; i++)
+        //    {
+        //        if (node.next[s[i] - 'a'] == null)
+        //            node.next[s[i] - 'a'] = new TrieNode();
+        //        node = node.next[s[i] - 'a'];
+        //    }
+        //    node.wordEnd = true;
+        //}
+
+        public int[] longMult(int[] a, int[] b)
+        {
+            if (a == null || a.Count() == 0 || b == null || b.Count() == 0)
+                return null;
+
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < a.Count() + b.Count() + 1; i++)
+            {
+                result.Add(0);
+            }
+
+            for (int i = 0; i < a.Count(); i++)
+            {
+                int carry = 0;
+                for (int j = 0; j < b.Count(); j++)
+                {
+                    int res = (a[i] * b[j]) + carry + result[i + j];
+                    result[i + j] = res % 10;
+                    carry = res / 10;
+                }
+                int ctr = i + b.Count();
+                while (carry != 0)
+                {
+                    int res = result[ctr] + carry;
+                    result[ctr] = res % 10;
+                    carry = res / 10;
+                    ctr++;
+                }
+            }
+
+            while (true)
+            {
+                if (result[result.Count() - 1] == 0)
+                    result.RemoveAt(result.Count() - 1);
+                else
+                    break;
+            }
+            return result.ToArray();
+        }
+
+        public interface IIterator
+        {
+            bool HasElements();
+            int GetNext();
+        }
+
+        public class SingleStream : IIterator
+        {
+            private Stack<IIterator> stack;
+            public SingleStream(List<IIterator> list)
+            {
+                stack = new Stack<IIterator>();
+                foreach (IIterator i in list)
+                {
+                    stack.Push(i);
+                }
+            }
+
+            public bool HasElements()
+            {
+                if (!stack.Any())
+                    return false;
+
+                return true;
+            }
+
+            public int GetNext()
+            {
+                int value = Int32.MinValue;
+                while (true)
+                {
+                    if (!stack.Any())
+                    {
+                        break;
+                    }
+                    IIterator iter = stack.Pop();
+
+                    if (iter.HasElements())
+                    {
+                        value = iter.GetNext();
+                        if (iter.HasElements())
+                        {
+                            stack.Push(iter);
+                        }
+                        break;
+                    }
+                }
+                return value;
+            }
+        }
+        
+        public enum MapCellType { Land, Water, Visited };
+
+        public int numIslands1(int[,] map)
+        {
+            if (map == null)
+                return 0;
+
+            int rows = map.GetLength(0);
+            int cols = map.GetLength(1);
+
+            int numIslands = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (map[i, j] == (int)MapCellType.Land)
+                    {
+                        numIslands++;
+                        mapFloodFill(map, i, j, rows, cols);
+                    }
+                }
+            }
+            return numIslands;
+        }
+
+        private void mapFloodFill(int[,] map, int row, int col, int rows, int cols)
+        {
+            map[row, col] = (int)MapCellType.Visited;
+            if (row > 0 && map[row - 1, col] == (int)MapCellType.Land)
+                mapFloodFill(map, row - 1, col, rows, cols);
+
+            if (row < rows - 1 && map[row + 1, col] == (int)MapCellType.Land)
+                mapFloodFill(map, row + 1, col, rows, cols);
+
+            if (col > 0 && map[row, col - 1] == (int)MapCellType.Land)
+                mapFloodFill(map, row, col - 1, rows, cols);
+
+            if (col < cols - 1 && map[row, col + 1] == (int)MapCellType.Land)
+                mapFloodFill(map, row, col + 1, rows, cols);
+        }
+
+        public class NumSmallerNode
+        {
+            public int value;
+            public int rep;
+            public int numLeft;
+
+            public NumSmallerNode left;
+            public NumSmallerNode right;
+
+            public NumSmallerNode(int v, int n)
+            {
+                value = v;
+                rep = 1;
+                numLeft = n;
+                left = null;
+                right = null;
+            }
+        }
+
+        public int[] countSmaller(int[] nums)
+        {
+            if (nums == null || nums.Count() == 0)
+                return null;
+
+            NumSmallerNode root = null;
+
+            int[] result = new int[nums.Count()];
+
+            for (int i = nums.Count() - 1; i >= 0; i--)
+            {
+                root = insert(root, i, nums[i], result, 0);
+            }
+
+            return result;
+        }
+
+        public NumSmallerNode insert(NumSmallerNode root, int index, int num, int[] result, int preSum)
+        {
+            if (root == null)
+            {
+                root = new NumSmallerNode(num, 0);
+                result[index] = preSum;
+            }
+            else if (root.value == num)
+            {
+                root.rep++;
+                result[index] = preSum + root.numLeft;
+            }
+            else if (root.value < num)
+            {
+                root.numLeft++;
+                root.left = insert(root.left, index, num, result, preSum);
+            }
+            else
+            {
+                root.right = insert(root.right, index, num, result, preSum + root.rep + root.numLeft);
+            }
+            return root;
+        }
+
+        public class FileNode
+        {
+            public int depth;
+            public string name;
+            public int len;
+            public int totLen;
+            public List<FileNode> children;
+
+            public FileNode(int d, string n)
+            {
+                depth = d;
+                name = n;
+                len = name.Length;
+                totLen = len;
+                children = new List<FileNode>();
+            }
+        }
+
+        public int longestPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return 0;
+
+            string[] tokens = path.Split(new char[] { '\n' });
+
+            List<FileNode> list = new List<FileNode>();
+
+            foreach (string token in tokens)
+            {
+                int ctr = 0;
+                while (token[ctr] == '\t')
+                {
+                    ctr++;
+                }
+                FileNode node = new FileNode(ctr, token.Substring(ctr));
+                list.Add(node);
+            }
+
+            int index = 1;
+            int maxLen = Int32.MinValue;
+            Stack<FileNode> stack = new Stack<FileNode>();
+            stack.Push(list[0]);
+
+            while (index < list.Count())
+            {
+                FileNode node = stack.Pop();
+                FileNode newNode = list[index];
+                if (node.depth + 1 == newNode.depth)
+                {
+                    stack.Push(node);
+                    newNode.totLen += node.totLen;
+                    stack.Push(newNode);
+                    index++;
+                    if (newNode.name.Contains('.'))
+                        maxLen = Math.Max(maxLen, newNode.totLen);
+                }
+                else if (node.depth == newNode.depth)
+                {
+                    newNode.totLen += (node.totLen - node.len);
+                    stack.Push(newNode);
+                    index++;
+                    if (newNode.name.Contains('.'))
+                        maxLen = Math.Max(maxLen, newNode.totLen);
+                }
+                else
+                {
+                    while (node.depth > newNode.depth)
+                    {
+                        node = stack.Pop();
+                    }
+                    stack.Push(node);
+                }
+            }
+
+            return maxLen;
+        }
+
+        public int bombEnemy(char[,] map)
+        {
+            if (map == null || map.GetLength(0) == 0 || map.GetLength(1) == 0)
+                return 0;
+
+            int rows = map.GetLength(0);
+            int cols = map.GetLength(1);
+
+            int[,] rowVals = new int[rows, cols];
+            int[,] colVals = new int[rows, cols];
+
+            int[,] rowValsRev = new int[rows, cols];
+            int[,] colValsRev = new int[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (map[i, j] == ' ')
+                    {
+                        rowVals[i, j] = (j == 0) ? 0 : rowVals[i, j - 1];
+                        colVals[i, j] = (i == 0) ? 0 : colVals[i - 1, j];
+                    }
+                    else if (map[i, j] == 'X')
+                    {
+                        rowVals[i, j] = (j == 0) ? 1 : rowVals[i, j - 1] + 1;
+                        colVals[i, j] = (i == 0) ? 1 : colVals[i - 1, j] + 1;
+                    }
+                    else //'W'
+                    {
+                        rowVals[i, j] = 0;
+                        colVals[i, j] = 0;
+                    }
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(rowVals[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(colVals[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            for (int i = rows - 1; i >= 0; i--)
+            {
+                for (int j = cols - 1; j >= 0; j--)
+                {
+                    if (map[i, j] != 'W')
+                    {
+                        int temp = (j == cols - 1) ? 0 : (map[i, j + 1] == 'X') ? rowValsRev[i, j + 1] + 1 : rowValsRev[i, j + 1];
+                        rowValsRev[i, j] += temp;
+                        temp = (i == rows - 1) ? 0 : (map[i + 1, j] == 'X') ? colValsRev[i + 1, j] + 1 : colValsRev[i + 1, j];
+                        colValsRev[i, j] += temp;
+                    }
+                }
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(rowValsRev[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    Console.Write(colValsRev[i, j] + "\t");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+
+            int max = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (map[i, j] == ' ')
+                        max = Math.Max(max, rowVals[i, j] + colVals[i, j] + rowValsRev[i, j] + colValsRev[i, j]);
+                }
+            }
+
+            return max;
+        }
+
+        public int numStrings(int n)
+        {
+            List<string> combos = new List<string>();
+            numStringsInner(0, n, 1, 0, string.Empty, combos);
+
+            foreach (string s in combos)
+            {
+                Console.WriteLine(s);
+            }
+            return combos.Count();
+        }
+
+        public void numStringsInner(int currIndex, int n, int numB, int numC, string str, List<string> combos)
+        {
+            if (currIndex == n)
+            {
+                combos.Add(str);
+                return;
+            }
+
+            numStringsInner(currIndex + 1, n, numB, 0, str + 'a', combos);
+
+            if (numB != 0)
+                numStringsInner(currIndex + 1, n, numB - 1, 0, str + 'b', combos);
+
+            if (numC != 2)
+                numStringsInner(currIndex + 1, n, numB, numC + 1, str + 'c', combos);
+        }
+
+        public bool isWordSquare(char[,] chars)
+        {
+            if (chars == null || chars.GetLength(0) != chars.GetLength(1))
+                return false;
+
+            for (int i = 0; i < chars.GetLength(0); i++)
+            {
+                for (int j = i; j < chars.GetLength(1); j++)
+                {
+                    if (chars[i, j] != chars[j, i])
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        public int minReplaceNumber(int num)
+        {
+            if (num <= 0)
+                return 0;
+
+            List<int> nums = new List<int>();
+            int temp = num;
+            while (temp != 0)
+            {
+                nums.Add(temp % 10);
+                temp /= 10;
+            }
+
+            int min = Int32.MaxValue;
+
+            for (int i = 1; i < nums.Count(); i++)
+            {
+                int maxIndex = i;
+                if (nums[i] > nums[i - 1])
+                    maxIndex = i - 1;
+                int cand = removeDigit(num, maxIndex);
+                min = Math.Min(min, cand);
+            }
+
+            return min;
+        }
+
+        private int removeDigit(int num, int index)
+        {
+            return (int)(((int)(num / Math.Pow(10, index + 1)) * Math.Pow(10, index)) + (num % Math.Pow(10, index)));
+        }
+
+        public class Point
+        {
+            public int x;
+            public int y;
+            public Point(int _x, int _y)
+            {
+                x = _x;
+                y = _y;
+            }
+
+            public override bool Equals(Object o)
+            {
+                Point p = o as Point;
+                if (p == null)
+                    return false;
+                else return (x == p.x && y == p.y);
+            }
+
+            public override int GetHashCode()
+            {
+                return x * 31 + y * 17;
+            }
+        }
+
+        public bool isReflected(List<Point> points)
+        {
+            if (points == null || points.Count == 0)
+                return false;
+
+            HashSet<Point> set = new HashSet<Point>();
+
+            int minX = Int32.MaxValue;
+            int maxX = Int32.MinValue;
+
+            foreach (Point p in points)
+            {
+                minX = Math.Min(minX, p.x);
+                maxX = Math.Max(maxX, p.x);
+                set.Add(p);
+            }
+
+            int sum = minX + maxX;
+
+            foreach (Point p in points)
+            {
+                if (!set.Contains(new Point(sum - p.x, p.y)))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public class AStarNode
+        {
+            public int x;
+            public int y;
+            public int heuristic;
+            public int cost;
+            public int totalCost;
+
+            public AStarNode(int _x, int _y, int _h, int _c)
+            {
+                x = _x;
+                y = _y;
+                heuristic = _h;
+                cost = _c;
+                totalCost = cost + heuristic;
+            }
+        }
+
+        public int aStarSearch(int[,] map, int sx, int sy, int ex, int ey)
+        {
+            bool[,] visited = new bool[map.GetLength(0), map.GetLength(1)];
+            List<AStarNode> list = new List<AStarNode>();
+            int dist = Math.Abs(sx - ex) + Math.Abs(sy - ey);
+            list.Add(new AStarNode(sx, sy, dist,0));
+
+            while (list.Count() != 0)
+            {
+                AStarNode node = list[0];
+                list.RemoveAt(0);
+
+                if (node.x == ex && node.y == ey)
+                    return node.cost;
+
+                visited[node.x, node.y] = true;
+
+                if (node.x > 0 && map[node.x - 1, node.y] != 1 && visited[node.x - 1, node.y] == false)
+                    list.Add(new AStarNode(node.x - 1, node.y, Math.Abs(node.x - 1 - ex) + Math.Abs(node.y - ey), node.cost+1));
+
+                if (node.x < map.GetLength(0)-1 && map[node.x + 1, node.y] != 1 && visited[node.x + 1, node.y] == false)
+                    list.Add(new AStarNode(node.x + 1, node.y, Math.Abs(node.x + 1 - ex) + Math.Abs(node.y - ey), node.cost + 1));
+
+                if (node.y > 0 && map[node.x, node.y - 1] != 1 && visited[node.x, node.y - 1] == false)
+                    list.Add(new AStarNode(node.x, node.y - 1, Math.Abs(node.x - ex) + Math.Abs(node.y - 1 - ey), node.cost + 1));
+
+                if (node.y < map.GetLength(1)-1 && map[node.x, node.y + 1] != 1 && visited[node.x, node.y + 1] == false)
+                    list.Add(new AStarNode(node.x, node.y + 1, Math.Abs(node.x - ex) + Math.Abs(node.y + 1 - ey), node.cost + 1));
+
+                list = list.OrderBy(n => n.totalCost).ToList();
+            }
+
+            return Int32.MaxValue;
+        }
+
+        public class BinaryIndexedTree
+        {
+            private int[] tree;
+            private int MaxVal;
+
+            public BinaryIndexedTree()
+            {
+                tree = new int[17];
+                MaxVal = 16;
+            }
+
+            public int read(int idx)
+            {
+                int sum = 0;
+                while (idx > 0)
+                {
+                    sum += tree[idx];
+                    idx -= (idx & -idx);
+                }
+                return sum;
+            }
+
+            public void update(int idx, int val)
+            {
+                while (idx <= MaxVal)
+                {
+                    tree[idx] += val;
+                    idx += (idx & -idx);
+                }
+            }
+        }
+
+        public void BitTest()
+        {
+            BinaryIndexedTree bit = new BinaryIndexedTree();
+            bit.update(2, 10);
+            Console.WriteLine(bit.read(0));
+            Console.WriteLine(bit.read(16));
+            Console.WriteLine("==================");
+            bit.update(4, 10);
+            Console.WriteLine(bit.read(0));
+            Console.WriteLine(bit.read(16));
+            Console.WriteLine("==================");
+            bit.update(5, 10);
+            Console.WriteLine(bit.read(0));
+            Console.WriteLine(bit.read(16));
+            Console.WriteLine("==================");
+            bit.update(8, 10);
+            Console.WriteLine(bit.read(0));
+            Console.WriteLine(bit.read(16));
+            Console.WriteLine("==================");
+            bit.update(14, 10);
+            Console.WriteLine(bit.read(0));
+            Console.WriteLine(bit.read(16));
+            Console.WriteLine("==================");
+        }
+
+        public int getLastNode(List<int> l, int n)
+        {
+            // null checks
+            if (l == null || l.Count() == 0 || n <= 0)
+                return -1;
+
+            if (l.Count() == 1)
+                return l[0];
+
+            LinkedList<int> list = new LinkedList<int>();
+            for (int i = 0; i < l.Count(); i++)
+            {
+                list.AddLast(i);
+            }
+
+            foreach (var v in list)
+            {
+                Console.Write(v + "  ");
+            }
+            Console.WriteLine();
+
+            LinkedListNode<int> node = list.First;
+            for (int i = 0; i < l.Count() - 1; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    if (node.Next == null)
+                        node = list.First;
+                    else
+                        node = node.Next;
+                }
+                LinkedListNode<int> nextNode = node.Next;
+                if (nextNode == null)
+                    nextNode = list.First;
+                list.Remove(node);
+                node = nextNode;
+
+                foreach (var v in list)
+                {
+                    Console.Write(v + "  ");
+                }
+                Console.WriteLine();
+            }
+
+            return l[list.First.Value];
+        }
+
+        public int maxNonContinuousSum(int[] array)
+        {
+            if (array == null || array.Count() <= 0)
+                return -1;
+
+            int next = 0, skip = 0;
+
+            for (int i = array.Length - 1; i >= 0; i--)
+            {
+                int max = Math.Max(skip + array[i], next);
+                skip = next;
+                next = max;
+            }
+
+            return next;
+        }
+
+        public int minJumps2(int[] array)
+        {
+            if (array == null || array.Length < 1)
+                return 0;
+
+            int[] memo = new int[array.Length];
+            memo[memo.Length - 1] = 0;
+
+            for (int i = array.Length - 2; i >= 0; i--)
+            {
+                if (array[i] <= 0)
+                    memo[i] = Int32.MaxValue;
+                else if (i + array[i] >= array.Length - 1)
+                    memo[i] = 1;
+                else
+                {
+                    int min = Int32.MaxValue;
+                    for (int j = 1; j <= array[i]; j++)
+                    {
+                        min = Math.Min(min, array[i + j]);
+                    }
+                    memo[i] = (min == Int32.MaxValue) ? min : min + 1;
+                }
+            }
+
+            return memo[0];
+        }
+
+        public class TrieNode
+        {
+            public TrieNode[] next;
+            public bool wordEnd;
+
+            public TrieNode()
+            {
+                next = new TrieNode[26];
+                wordEnd = false;
+            }
+        }
+
+        public List<List<string>> getWordsSplit(string s, List<string> dict)
+        {
+            if (string.IsNullOrEmpty(s) || dict == null || dict.Count == 0)
+                return null;
+
+            TrieNode root = new TrieNode();
+
+            foreach (string w in dict)
+            {
+                this.addWordToTrie(root, w.ToLowerInvariant());
+            }
+
+            List<List<string>> splits = new List<List<string>>();
+
+            getSplitsInner(s, root, root, splits, new List<string>(), string.Empty, 0);
+
+            return splits;
+        }
+
+        private void addWordToTrie(TrieNode root, string s)
+        {
+            TrieNode node = root;
+            
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (node.next[s[i] - 'a'] == null)
+                {
+                    node.next[s[i] - 'a'] = new TrieNode();
+                }
+                node = node.next[s[i] - 'a'];
+            }
+            node.wordEnd = true;
+        }
+
+        private void getSplitsInner(string s, TrieNode oRoot, TrieNode root, List<List<string>> splits, List<string> currSplit, string currWord, int index)
+        {
+            if (index >= s.Length)
+            {
+                splits.Add(currSplit);
+                return;
+            }
+            currWord += s[index];
+            if (root.next[s[index] - 'a'] != null)
+            {
+                if (root.next[s[index] - 'a'].wordEnd == true)
+                {
+                    List<string> splitCopy = new List<string>(currSplit);
+                    splitCopy.Add(currWord);
+                    getSplitsInner(s, oRoot, oRoot, splits, splitCopy, string.Empty, index + 1);
+                }
+                getSplitsInner(s, oRoot, root.next[s[index] - 'a'], splits, currSplit, currWord, index + 1);
+            }
+        }
+
+        public List<string> permuteString1(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return null;
+
+            List<string> permutations = new List<string>();
+
+            permuteStringInner(s.ToCharArray().ToList<char>(), permutations, new List<char>());
+
+            return permutations;
+        }
+
+        private void permuteStringInner(List<char> chars, List<string> permutations, List<char> currState)
+        {
+            if (chars.Count == 0)
+            {
+                permutations.Add(new string(currState.ToArray()));
+            }
+
+            List<char> charsCopy = new List<char>(chars);
+            for (int i = 0; i < charsCopy.Count; i++)
+            {
+                char ch = chars[i];
+                List<char> stateCopy = new List<char>(currState);
+                stateCopy.Add(ch);
+                charsCopy.Remove(ch);
+                permuteStringInner(charsCopy, permutations, stateCopy);
+                charsCopy.Add(ch);
+            }
+
+        }
+
+        public int minTrianglePathSum(List<List<int>> triangle)
+        {
+            if (triangle == null || triangle.Count == 0)
+                return 0;
+
+            List<int> memo = new List<int>();
+
+            for (int i = 0; i < (triangle[triangle.Count - 1]).Count; i++)
+            {
+                memo.Add((triangle[triangle.Count - 1])[i]);
+            }
+
+            for (int i = triangle.Count - 2; i >= 0; i--)
+            {
+                for (int j = 0; j < triangle[i].Count; j++)
+                {
+                    memo[j] = (triangle[i])[j] + Math.Min(memo[j], memo[j + 1]);
+                }
+            }
+
+            return memo[0];
+        }
+
+        public enum CellType { Land, Water, Visited };
+
+        public int numIslands3(int[,] matrix)
+        {
+            if (matrix == null)
+                return -1;
+
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            int numIslands = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (matrix[i, j] == (int)CellType.Land)
+                    {
+                        innerFill(matrix, i, j, rows, cols);
+                        numIslands++;
+                    }
+                }
+            }
+            return numIslands;
+        }
+
+        private void innerFill(int[,] matrix, int r, int c, int rows, int cols)
+        {
+            matrix[r, c] = (int)CellType.Visited;
+
+            if (r > 0 && matrix[r - 1, c] == (int)CellType.Land)
+                innerFill(matrix, r - 1, c, rows, cols);
+            if (r < rows - 1 && matrix[r + 1, c] == (int)CellType.Land)
+                innerFill(matrix, r + 1, c, rows, cols);
+            if (c > 0 && matrix[r, c - 1] == (int)CellType.Land)
+                innerFill(matrix, r, c - 1, rows, cols);
+            if (c < cols - 1 && matrix[r, c + 1] == (int)CellType.Land)
+                innerFill(matrix, r, c + 1, rows, cols);
+        }
+
+        public int trapRainWater(int[] array)
+        {
+            if (array == null || array.Length < 1)
+                return -1;
+
+            int[] lMax = new int[array.Length];
+            int[] rMax = new int[array.Length];
+            int water = 0;
+
+            lMax[0] = array[0];
+            rMax[rMax.Length - 1] = array[array.Length - 1];
+
+            for (int i = 1; i < array.Length; i++)
+            {
+                lMax[i] = Math.Max(array[i], lMax[i - 1]);
+                rMax[array.Length - i - 1] = Math.Max(rMax[array.Length - i], array[array.Length - 1 - i]);
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                water += (Math.Min(lMax[i], rMax[i]) - array[i]);
+            }
+            return water;
+        }
+
+        public int knapSackProblem1(List<KnapSack> knapsacks, int weightLimit)
+        {
+            if (knapsacks == null || knapsacks.Count() == 0 || weightLimit == 0)
+                return -1;
+
+            int[,] memo = new int[knapsacks.Count(), weightLimit + 1];
+
+            for (int i = 0; i < knapsacks.Count(); i++)
+            {
+                for (int j = 0; j < weightLimit + 1; j++)
+                {
+                    if (i == 0)
+                    {
+                        memo[i, j] = (j >= knapsacks[i].weight) ? memo[i, j] = knapsacks[i].value : 0;
+                    }
+                    else
+                    {
+                        if (j < knapsacks[i].weight)
+                            memo[i, j] = memo[i - 1, j];
+                        else
+                            memo[i, j] = Math.Max(memo[i - 1, j], knapsacks[i].value + memo[i - 1, j - knapsacks[i].weight]);
+                    }
+
+                }
+            }
+
+            return memo[knapsacks.Count() - 1, weightLimit];
         }
 
         public int findInRotatedArray(int[] array, int n)
@@ -707,7 +2124,6 @@ namespace MyRandomSamples
             return s.Substring(index, len);
         }
 
-
         public int getTrianglePathSum(List<List<int>> triangle)
         {
             if (triangle == null || triangle.Count() == 0)
@@ -731,7 +2147,6 @@ namespace MyRandomSamples
             return memo[0];
         }
 
-
         public enum Suit
         {
             Spade,
@@ -742,7 +2157,13 @@ namespace MyRandomSamples
 
         public class Card
         {
-            public Suit suit;
+            private Suit suit;
+
+            public Suit Suit
+            {
+                get { return suit; }
+                set { suit = value; }
+            }
             public char num;
 
             public Card(Suit s, char c)
@@ -1387,7 +2808,6 @@ namespace MyRandomSamples
 
         }
 
-
         public bool isListEqualSplit(int[] nums)
         {
             if (nums == null || nums.Count() < 2)
@@ -1465,7 +2885,6 @@ namespace MyRandomSamples
         {
             return (int)(hash * primes[add - 'a'] / primes[remove - 'a']);
         }
-
 
         public class RandomizedSet
         {
@@ -2585,7 +4004,6 @@ namespace MyRandomSamples
             }
 
         }
-
 
         public void moveColors(int[] colors)
         {
