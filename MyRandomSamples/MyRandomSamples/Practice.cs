@@ -630,6 +630,46 @@ namespace MyRandomSamples
                 }
                 Console.WriteLine();
             }
+
+            Console.WriteLine(p.longestCommonSubstring1("qwqweabcdeqweqwe", "abcdelmlkmlkm"));
+        }
+
+        public string longestCommonSubstring1(string s, string t)
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
+                return string.Empty;
+
+            int[,] memo = new int[s.Length, t.Length];
+            int maxLen = 1;
+            int endIndex = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                for (int j = 0; j < t.Length; j++)
+                {
+                    if (i == 0 || j == 0)
+                    {
+                        memo[i, j] = (s[i] == t[j]) ? 1 : 0;
+                    }
+                    else
+                    {
+                        memo[i, j] = 0;
+                        if (s[i] == t[j])
+                        {
+                            int temp = memo[i - 1, j - 1] + 1;
+                            if (temp > maxLen)
+                            {
+                                maxLen = temp;
+                                endIndex = i;
+                            }
+                            memo[i, j] = temp;
+                        }
+
+                    }
+                }
+            }
+
+            return s.Substring(endIndex - maxLen + 1, maxLen);
         }
 
         public List<List<int>> getOrderedSequences(List<int> a, List<int> b)
