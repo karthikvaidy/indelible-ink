@@ -589,7 +589,7 @@ namespace MyRandomSamples
             //Console.WriteLine(p.jumpMin(arr));
             //Console.WriteLine(p.minJumps(arr));
 
-                        //Console.WriteLine(p.numIslands2(matrix));
+            //Console.WriteLine(p.numIslands2(matrix));
 
 
             //Console.WriteLine(p.AlienDictionary(new string[] { "wrt", "wrf", "er", "ett", "rftt" }));
@@ -621,17 +621,249 @@ namespace MyRandomSamples
             //}
             #endregion
 
-            List<List<int>> seq = p.getOrderedSequences(new List<int> { 10, 15, 25 }, new List<int> { 1, 5, 20, 30 });
-            foreach (List<int> list in seq)
+            //List<List<int>> seq = p.getOrderedSequences(new List<int> { 10, 15, 25 }, new List<int> { 1, 5, 20, 30 });
+            //foreach (List<int> list in seq)
+            //{
+            //    foreach (int i in list)
+            //    {
+            //        Console.Write(i + "  ");
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //Console.WriteLine(p.longestCommonSubstring1("qwqweabcdeqweqwe", "abcdelmlkmlkm"));
+
+            //Line l1 = new Line(0, 0, 0, 10, 10);
+            //Line l2 = new Line(1, 10, 0, 0, 10);
+            //Line l3 = new Line(2, 20, 0, 50, 10);
+            //Line l4 = new Line(3, 0, 0, -10, -10);
+            //Line l5 = new Line(4, -10, 0, 0, -10);
+
+            //List<Tuple<Line, Line>> intersections = p.GetIntersections(new List<Line> { l1, l2, l3, l4, l5 });
+
+            //foreach(Tuple<Line,Line> tuple in intersections)
+            //{
+            //    Console.WriteLine(tuple.Item1.id + " " + tuple.Item2.id);
+            //}
+
+            //Console.WriteLine(p.rotateStr("abcde", 2));
+
+            //Console.WriteLine(p.removeSpaces("I   live   on     earth"));
+
+            Console.WriteLine(p.IndexToRemoveForPalindrome("aaab"));
+            Console.WriteLine(p.IndexToRemoveForPalindrome("baa"));
+            Console.WriteLine(p.IndexToRemoveForPalindrome("aaa"));
+        }
+
+        public int IndexToRemoveForPalindrome(string s)
+        {
+            if (s == null)
+                return -1;
+
+            int i = 0;
+            int j = s.Length - 1;
+
+            while (i < j)
             {
-                foreach (int i in list)
+                if (s[i] != s[j])
                 {
-                    Console.Write(i + "  ");
+                    if (isPalin(s, i + 1, j))
+                        return i;
+                    else if (isPalin(s, i, j - 1))
+                        return j;
+                    return -1;
                 }
-                Console.WriteLine();
+                i++;
+                j--;
+            }
+            return -1;
+        }
+
+        private bool isPalin(string s, int i, int j)
+        {
+            while (i < j)
+            {
+                if (s[i] != s[j])
+                    return false;
+                i++;
+                j--;
+            }
+            return true;
+        }
+
+        public string removeSpaces(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            List<char> chars = new List<char>();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                char ch = s[i];
+                chars.Add(ch);
+
+                while (i < s.Length && s[i] == ' ')
+                {
+                    i++;
+                }
+
+                if (ch == ' ')
+                    i--;
             }
 
-            Console.WriteLine(p.longestCommonSubstring1("qwqweabcdeqweqwe", "abcdelmlkmlkm"));
+            return new string(chars.ToArray());
+        }
+
+        public string rotateStr(string s, int k)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+
+            if (k < 0)
+                return null; // exception!?
+
+            if (k % s.Length == 0)
+                return s;
+
+            k = k % s.Length;
+            char[] chars = s.ToCharArray();
+
+            int currIndex = 0;
+            int newIndex = k;
+            char temp = chars[k];
+            char currChar = chars[currIndex];
+            char newChar = chars[newIndex];
+
+            while (newIndex != 0)
+            {
+                chars[newIndex] = currChar;
+                currIndex = newIndex;
+                newIndex = (newIndex + k) % s.Length;
+
+                currChar = newChar;
+                newChar = chars[newIndex];
+            }
+            chars[0] = temp;
+
+            return new string(chars);
+        }
+
+        public class LinePoint
+        {
+            public int lineId;
+            public int x;
+            public int y;
+            public bool isStart;
+            public LinePoint(int id, int _x, int _y, bool start)
+            {
+                lineId = id; x = _x; y = _y; isStart = start;
+            }
+
+            public override int GetHashCode()
+            {
+                return (17 * lineId + 23 * x + 97 * y);
+            }
+
+            public override bool Equals(object obj)
+            {
+                LinePoint lp = obj as LinePoint;
+                return (lp.lineId == lineId && lp.x == x && lp.y == y);
+            }
+        }
+
+        public class Line
+        {
+            public int id;
+            public LinePoint start;
+            public LinePoint end;
+
+            public Line(int i, int startX, int startY, int endX, int endY)
+            {
+                id = i;
+                start = new LinePoint(id, startX, startY, true);
+                end = new LinePoint(id, endX, endY, false);
+            }
+
+            public override int GetHashCode()
+            {
+                return 7 * id + start.GetHashCode() + end.GetHashCode();
+            }
+
+            public override bool Equals(object obj)
+            {
+                Line l = obj as Line;
+                return (l.id == id && l.start == start && l.end == end);
+            }
+        }
+
+        public List<Tuple<Line, Line>> GetIntersections(List<Line> lines)
+        {
+            if (lines == null || lines.Count() < 2)
+                return null;
+
+            Dictionary<int, Line> map = new Dictionary<int, Line>();
+            HashSet<Line> set = new HashSet<Line>();
+            List<LinePoint> list = new List<LinePoint>();
+
+            foreach (Line l in lines)
+            {
+                map.Add(l.id, l);
+
+                list.Add(l.start);
+                list.Add(l.end);
+            }
+
+            list.Sort((l1, l2) => l1.x.CompareTo(l2.x));
+            List<Tuple<Line, Line>> result = new List<Tuple<Line, Line>>();
+            foreach (LinePoint point in list)
+            {
+                Line l = map[point.lineId];
+                if (!set.Contains(l))
+                {
+                    // check for intersections,
+                    List<Line> intersections = getIntersections(l, set);
+                    foreach (var item in intersections)
+                    {
+                        Tuple<Line, Line> t = new Tuple<Line, Line>(item, l);
+                        result.Add(t);
+                    }
+                    // add to set
+                    set.Add(l);
+                }
+                else
+                {
+                    // get line id, get line and remove line from set
+                    set.Remove(map[point.lineId]);
+                }
+
+            }
+
+            return result;
+        }
+
+        private List<Line> getIntersections(Line l, HashSet<Line> lines)
+        {
+            List<Line> result = new List<Line>();
+
+            foreach (Line line in lines)
+            {
+                if (doesIntersect(line, l) || doesIntersect(l, line))
+                    result.Add(line);
+            }
+
+            return result;
+        }
+
+        private bool doesIntersect(Line a, Line b)
+        {
+            if (
+                ((Math.Min(b.start.x, b.end.x) <= Math.Min(a.start.x, a.end.x)) && (Math.Max(b.start.x, b.end.x) >= Math.Max(a.start.x, a.end.x)))
+                &&
+                ((Math.Min(b.start.y, b.end.y) <= Math.Min(a.start.y, a.end.y)) && (Math.Max(b.start.y, b.end.y) >= Math.Max(a.start.y, a.end.y)))
+                )
+                return true;
+            return false;
         }
 
         public string longestCommonSubstring1(string s, string t)
